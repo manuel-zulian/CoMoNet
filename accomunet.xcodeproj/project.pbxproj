@@ -64,7 +64,7 @@
 			dependencies = (
 			);
 			name = accomunet;
-			passBuildSettingsInEnvironment = 1;
+			passBuildSettingsInEnvironment = 0;
 			productName = accomunet;
 		};
 /* End PBXLegacyTarget section */
