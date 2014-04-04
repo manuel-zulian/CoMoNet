@@ -3905,7 +3905,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet)
 
 void GenesisMiner()
 {
-        fPrintToConsole = false;
+        fPrintToConsole = true;
         //
         // Create new block
         //

@@ -25,10 +25,10 @@ public:
         // The message start string is designed to be unlikely to occur in normal data.
         // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
         // a large 4-byte int at any alignment.
-        pchMessageStart[0] = 0xf0;
-        pchMessageStart[1] = 0xda;
-        pchMessageStart[2] = 0xbb;
-        pchMessageStart[3] = 0xd2;
+        pchMessageStart[0] = 0xf4;
+        pchMessageStart[1] = 0xd7;
+        pchMessageStart[2] = 0xbf;
+        pchMessageStart[3] = 0xca;
         vAlertPubKey = ParseHex("04fc9702847840aaf195de8442ebecedf5b095cdbb9bc716bda9110971b28a49e0ead8564ff0db22209e0374782c093bb899692d524e9d6a6956e7c5ecbcd68284");
         nDefaultPort = 28333;
         nRPCPort = 28332;
@@ -44,7 +44,7 @@ public:
         //     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73)
         //     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)
         //   vMerkleTree: 4a5e1e
-        const char* pszTimestamp = "The Times 09/Jul/2013 Globo caught bribing Receita Federal employee to rob R$615M worth tax evasion documents.";
+        const char* pszTimestamp = "The Times 03/Apr/2014 Obama signs law on loan guarantees for Ukraine, imposition of sanctions against Russia.";
         CTransaction txNew;
         txNew.message = CScript() << string(pszTimestamp);
         txNew.userName = CScript() << string("nobody");
@@ -57,15 +57,12 @@ public:
         genesis.nTime    = 1384394255;
         //genesis.nBits    = 0x1d00ffff;
         genesis.nBits    = 0x1f03ffff;
-        genesis.nNonce   = 2934;
+        genesis.nNonce   = 3957;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("9915158279673d101912be80f25c20627f1dd8bf5231e7c46bfec5ed19737f44"));
+        assert(hashGenesisBlock == uint256("5f48b2b6244090ac4534c42eed3d631af899cee368dda8380a3ef50debcf1f36"));
 
-        vSeeds.push_back(CDNSSeedData("twister.net.co", "seed.twister.net.co"));
-        vSeeds.push_back(CDNSSeedData("gombadi.com", "dnsseed.gombadi.com"));
-        vSeeds.push_back(CDNSSeedData("twister.net.co", "seed2.twister.net.co"));
-        vSeeds.push_back(CDNSSeedData("twister.net.co", "seed3.twister.net.co"));
+        //vSeeds.push_back(CDNSSeedData("twister.net.co", "seed.twister.net.co"));
 
         base58Prefixes[PUBKEY_ADDRESS] = 0;
         base58Prefixes[SCRIPT_ADDRESS] = 5;
