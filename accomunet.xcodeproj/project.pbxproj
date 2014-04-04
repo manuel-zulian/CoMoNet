@@ -1,0 +1,211 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		7FEA9C1B18EEA597002F3385 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7FEA9C1C18EEA597002F3385 /* autotool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autotool.sh; sourceTree = "<group>"; };
+		7FEA9C1D18EEA597002F3385 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
+		7FEA9C1E18EEA597002F3385 /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		7FEA9C1F18EEA597002F3385 /* contrib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = contrib; sourceTree = "<group>"; };
+		7FEA9C2018EEA597002F3385 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		7FEA9C2118EEA597002F3385 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = doc; sourceTree = "<group>"; };
+		7FEA9C2218EEA597002F3385 /* INSTALL */ = {isa = PBXFileReference; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
+		7FEA9C2318EEA597002F3385 /* libtorrent */ = {isa = PBXFileReference; lastKnownFileType = folder; path = libtorrent; sourceTree = "<group>"; };
+		7FEA9C2418EEA597002F3385 /* m4 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = m4; sourceTree = "<group>"; };
+		7FEA9C2518EEA597002F3385 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		7FEA9C2618EEA597002F3385 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		7FEA9C2718EEA597002F3385 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; path = share; sourceTree = "<group>"; };
+		7FEA9C2818EEA597002F3385 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		7FEA9C2918EEA597002F3385 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
+		7FEA9C2A18EEA597002F3385 /* twister-qt.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = "twister-qt.pro"; sourceTree = "<group>"; };
+		7FEA9C2B18EEA597002F3385 /* twister-test.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "twister-test.py"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		7FDA426418EEA55200BE8B4F = {
+			isa = PBXGroup;
+			children = (
+				7FEA9C1B18EEA597002F3385 /* .gitignore */,
+				7FEA9C1C18EEA597002F3385 /* autotool.sh */,
+				7FEA9C1D18EEA597002F3385 /* bootstrap.sh */,
+				7FEA9C1E18EEA597002F3385 /* configure.ac */,
+				7FEA9C1F18EEA597002F3385 /* contrib */,
+				7FEA9C2018EEA597002F3385 /* COPYING */,
+				7FEA9C2118EEA597002F3385 /* doc */,
+				7FEA9C2218EEA597002F3385 /* INSTALL */,
+				7FEA9C2318EEA597002F3385 /* libtorrent */,
+				7FEA9C2418EEA597002F3385 /* m4 */,
+				7FEA9C2518EEA597002F3385 /* Makefile.am */,
+				7FEA9C2618EEA597002F3385 /* README.md */,
+				7FEA9C2718EEA597002F3385 /* share */,
+				7FEA9C2818EEA597002F3385 /* src */,
+				7FEA9C2918EEA597002F3385 /* TODO.md */,
+				7FEA9C2A18EEA597002F3385 /* twister-qt.pro */,
+				7FEA9C2B18EEA597002F3385 /* twister-test.py */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		7FDA426918EEA55200BE8B4F /* accomunet */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION) -j4";
+			buildConfigurationList = 7FDA426C18EEA55200BE8B4F /* Build configuration list for PBXLegacyTarget "accomunet" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = accomunet;
+			passBuildSettingsInEnvironment = 1;
+			productName = accomunet;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		7FDA426518EEA55200BE8B4F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Andrea Passaglia";
+			};
+			buildConfigurationList = 7FDA426818EEA55200BE8B4F /* Build configuration list for PBXProject "accomunet" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7FDA426418EEA55200BE8B4F;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7FDA426918EEA55200BE8B4F /* accomunet */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		7FDA426A18EEA55200BE8B4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7FDA426B18EEA55200BE8B4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7FDA426D18EEA55200BE8B4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7FDA426E18EEA55200BE8B4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7FDA426818EEA55200BE8B4F /* Build configuration list for PBXProject "accomunet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FDA426A18EEA55200BE8B4F /* Debug */,
+				7FDA426B18EEA55200BE8B4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7FDA426C18EEA55200BE8B4F /* Build configuration list for PBXLegacyTarget "accomunet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FDA426D18EEA55200BE8B4F /* Debug */,
+				7FDA426E18EEA55200BE8B4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7FDA426518EEA55200BE8B4F /* Project object */;
+}
