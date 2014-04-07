@@ -63,7 +63,7 @@ Therefore it is possible to run multiple twisterd instances at the same machine:
     $ twisterd -datadir=/tmp/twister2 -port=30002 -daemon -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=40002
     $ twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=40001 addnode <external-ip>:30002 onetry
 
-Note: some features (like block generation and dht put/get) do now work unless
+Note: some features (like block generation and dht put/get) do not work unless
 the network has at least two nodes, like these two instances in the example above.
 
 Wire protocol

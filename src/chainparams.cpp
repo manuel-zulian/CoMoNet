@@ -16,7 +16,7 @@
 
 unsigned int pnSeed[] =
 {
-    0x0300a8c0 // 192.168.0.3 (default port)
+    0x0100007F // 127.0.0.1
 };
 
 class CMainParams : public CChainParams {
@@ -33,7 +33,7 @@ public:
         nDefaultPort = 28333;
         nRPCPort = 28332;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
-        nTxBits = 0x1e00ffff;
+        nTxBits = 0x1f00ffff;
         nSubsidyHalvingInterval = 210000;
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot

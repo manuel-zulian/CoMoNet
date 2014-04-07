@@ -190,7 +190,7 @@
 		7FEA9C1B18EEA597002F3385 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7FEA9C1C18EEA597002F3385 /* autotool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autotool.sh; sourceTree = "<group>"; };
 		7FEA9C1D18EEA597002F3385 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
-		7FEA9C1E18EEA597002F3385 /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		7FEA9C1E18EEA597002F3385 /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; usesTabs = 1; };
 		7FEA9C1F18EEA597002F3385 /* contrib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = contrib; sourceTree = "<group>"; };
 		7FEA9C2018EEA597002F3385 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		7FEA9C2118EEA597002F3385 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = doc; sourceTree = "<group>"; };

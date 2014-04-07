@@ -937,7 +937,7 @@ bool acceptSignedPost(char const *data, int data_size, std::string username, int
                     sprintf(errbuf,"expected piece '%d' got '%d'",
                            seq, k);
                 } else if( !validatePostNumberForUser(username, k) ) {
-                    sprintf(errbuf,"too much posts from user '%s' rejecting post",
+                    sprintf(errbuf,"too many posts from user '%s' rejecting post",
                             username.c_str());
                 } else if( height < 0 || (height > getBestHeight()+1 && getBestHeight() > 0) ) {
                     sprintf(errbuf,"post from future not accepted (height: %d > %d)",

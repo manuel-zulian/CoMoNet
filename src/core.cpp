@@ -101,17 +101,22 @@ uint256 CTransaction::GetUsernameHash() const
 std::string CTransaction::ToString() const
 {
     std::string str;
-    str += strprintf("CTransaction(hash=%s, ver=%d, message.size=%"PRIszu", userName.size=%"PRIszu", pubKey.size=%"PRIszu")\n",
-        GetHash().ToString().substr(0,10).c_str(),
-        nVersion,
-        message.size(),
-        userName.size(),
-        pubKey.size());
+    str += strprintf("CTransaction(hash=%s, ver=%d, message.size=%"PRIszu", userName.size=%"PRIszu", pubKey.size=%"PRIszu", accumulator.size=%"PRIszu")\n",
+                     GetHash().ToString().substr(0,10).c_str(),
+                     nVersion,
+                     message.size(),
+                     userName.size(),
+                     pubKey.size(),
+                     accumulator.size());
     if( message.size() ) {
-      str += "    message: " + message.ToString() + "\n";
+        str += "    message: " + message.ToString() + "\n";
+    } else if ( accumulator.size() ) {
+        str += "    userName (groupName): " + userName.ToString() + "\n";
+        str += "    pubKey: " + pubKey.ToString() + "\n";
+        str += "    accumulator: " + accumulator.ToString() + "\n";
     } else {
-      str += "    userName: " + userName.ToString() + "\n";
-      str += "    pubKey: " + pubKey.ToString() + "\n";
+        str += "    userName (groupName): " + userName.ToString() + "\n";
+        str += "    pubKey: " + pubKey.ToString() + "\n";
     }
     return str;
 }
@@ -210,7 +215,7 @@ uint256 CBlock::BuildMerkleTree() const
 {
     vMerkleTree.clear();
     BOOST_FOREACH(const CTransaction& tx, vtx)
-        vMerkleTree.push_back(tx.GetHash());
+    vMerkleTree.push_back(tx.GetHash());
     int j = 0;
     for (int nSize = vtx.size(); nSize > 1; nSize = (nSize + 1) / 2)
     {
@@ -259,13 +264,13 @@ uint256 CBlock::CheckMerkleBranch(uint256 hash, const std::vector<uint256>& vMer
 void CBlock::print() const
 {
     printf("CBlock(hash=%s, PoW=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%"PRIszu")\n",
-        GetHash().ToString().c_str(),
-        GetPoWHash().ToString().c_str(),
-        nVersion,
-        hashPrevBlock.ToString().c_str(),
-        hashMerkleRoot.ToString().c_str(),
-        nTime, nBits, nNonce,
-        vtx.size());
+           GetHash().ToString().c_str(),
+           GetPoWHash().ToString().c_str(),
+           nVersion,
+           hashPrevBlock.ToString().c_str(),
+           hashMerkleRoot.ToString().c_str(),
+           nTime, nBits, nNonce,
+           vtx.size());
     for (unsigned int i = 0; i < vtx.size(); i++)
     {
         printf("  ");

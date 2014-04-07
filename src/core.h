@@ -184,22 +184,24 @@ public:
     CScript message;
     CScript userName;
     CScript pubKey;
+    CScript accumulator;
     unsigned int nNonce;
 
     CTransaction()
     {
         SetNull();
     }
-
+    
     IMPLEMENT_SERIALIZE
     (
-        READWRITE(this->nVersion);
-        nVersion = this->nVersion;
-        READWRITE(message);
-        READWRITE(userName);
-        READWRITE(pubKey);
-        READWRITE(nNonce);
-    )
+     READWRITE(this->nVersion);
+     nVersion = this->nVersion;
+     READWRITE(message);
+     READWRITE(userName);
+     READWRITE(pubKey);
+     READWRITE(nNonce);
+     READWRITE(accumulator);
+     )
 
     void SetNull()
     {
@@ -207,12 +209,13 @@ public:
         message.clear();
         userName.clear();
         pubKey.clear();
+        accumulator.clear();
         nNonce = 0;
     }
 
     bool IsNull() const
     {
-        return (message.empty() && userName.empty() && pubKey.empty());
+        return (message.empty() && userName.empty() && pubKey.empty() && accumulator.empty());
     }
 
     uint256 GetHash() const;
@@ -229,7 +232,8 @@ public:
         return (a.nVersion  == b.nVersion &&
                 a.message   == b.message &&
                 a.userName  == b.userName &&
-                a.pubKey    == b.pubKey);
+                a.pubKey    == b.pubKey &&
+                a.accumulator==b.accumulator);
     }
 
     friend bool operator!=(const CTransaction& a, const CTransaction& b)

@@ -1011,7 +1011,7 @@ class CTxMemPool
 {
 public:
     mutable CCriticalSection cs;
-    std::map<uint256, CTransaction> mapTx; // [MF] hash is txhash again
+    std::map<uint256, CTransaction> mapTx; // [MF] hash is txhash again [AP] mappa delle transazioni in mempool <hash,tx>
 
     bool accept(CValidationState &state, CTransaction &tx, bool fLimitFree, bool* pfMissingInputs);
     bool addUnchecked(const uint256& userhash, CTransaction &tx);
