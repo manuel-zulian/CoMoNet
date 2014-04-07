@@ -961,14 +961,34 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				OTHER_CFLAGS = (
+					"-I/usr/local/Cellar/boost/1.55.0_1/include/",
+					"-I/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers/",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/boost/1.55.0_1/include/",
+					"-I/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers/",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		7FEA9C3918EEE897002F3385 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = (
+					"-I/usr/local/Cellar/boost/1.55.0_1/include/",
+					"-I/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers/",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/boost/1.55.0_1/include/",
+					"-I/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers/",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
