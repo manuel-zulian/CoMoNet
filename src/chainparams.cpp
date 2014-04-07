@@ -33,7 +33,7 @@ public:
         nDefaultPort = 28333;
         nRPCPort = 28332;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
-        nTxBits = 0x1f00ffff;
+        nTxBits = 0x1f02ffff;
         nSubsidyHalvingInterval = 210000;
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot
@@ -56,11 +56,11 @@ public:
         genesis.nHeight  = 0;
         genesis.nTime    = 1384394255;
         //genesis.nBits    = 0x1d00ffff;
-        genesis.nBits    = 0x1f03ffff;
-        genesis.nNonce   = 3957;
+        genesis.nBits    = 0x1f02ffff;
+        genesis.nNonce   = 133578;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("5f48b2b6244090ac4534c42eed3d631af899cee368dda8380a3ef50debcf1f36"));
+        assert(hashGenesisBlock == uint256("a81bf0ec06de6b6b45609495c633b71947b7fc9f3e7b8bbbeccd10e011f3c8a6"));
 
         //vSeeds.push_back(CDNSSeedData("twister.net.co", "seed.twister.net.co"));
 
