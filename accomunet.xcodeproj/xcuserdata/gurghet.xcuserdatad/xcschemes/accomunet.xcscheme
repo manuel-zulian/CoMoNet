@@ -44,15 +44,27 @@
       </PathRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-datadir=/tmp/hybrid1"
+            argument = "-datadir=/tmp/nodo07"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-port=30001"
+            argument = "-rpcuser=user"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-rpcport=40001"
+            argument = "-rpcpassword=pwd"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-rpcallowip=127.0.0.1"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-port=26607"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-rpcport=27607"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

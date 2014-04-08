@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>accomunet-doc.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>accomunet.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +12,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>7F0F7E3018F40ADD00856D53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7F0F7E5018F40ADE00856D53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7F0F7E6E18F46DE400856D53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7FDA426918EEA55200BE8B4F</key>
 		<dict>
 			<key>primary</key>
