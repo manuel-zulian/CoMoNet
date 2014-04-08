@@ -1,0 +1,106 @@
+#!/bin/bash
+
+NUM_NODI=$2
+if [ "$1" = "start" ]; then
+    if [ -z $2 ]; then
+	echo -e "usage:\n50nodes-exp start <num_nodes>"
+	exit 0
+    fi
+    echo $2 > ./.global_vars
+    echo "$0: creo i $NUM_NODI nodi"
+    for i in $(seq -f %02g 01 $NUM_NODI)
+    do
+	if [ ! -d /tmp/nodo$i ]; then
+	    mkdir /tmp/nodo$i
+	fi
+	./twisterd -datadir=/tmp/nodo$i -port=266$i -rpcport=276$i -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 &
+	sleep 0.2
+    done
+    echo -n "Starting servers"
+    while true
+    do
+	echo -n "."
+	sleep 5
+	declare -a arrNThreads=($(top -l 1 | grep twisterd | awk '{print $5}'))
+	areTheyAll24=true
+	for nthreads in "${arrNThreads[@]}"
+	do
+	    if [ $nthreads != 23 ] && [ $nthreads != 24 ] && [ $nthreads != 25 ]; then
+		areTheyAll24=false
+		break
+	    fi
+	done
+	if [ $areTheyAll24 = true ]; then
+	    break
+	fi
+    done
+    echo "Servers initialized."
+elif [ "$1" = "connect" ]; then
+    if [ "$2" != "" ] && [ "$3" != "" ]; then
+	./50nodes-exp cmd $2 addnode 127.0.0.1:266$(printf %02g $3) onetry
+	echo "connecting $2 to $3"
+	exit 0
+    fi
+    NUM_NODI=$(cat ./.global_vars)
+    echo "$0: connetto i $NUM_NODI nodi"
+    for i in $(seq 1 $NUM_NODI)
+    do
+	n=$(($RANDOM%(($NUM_NODI/10)+2)))
+	if (( $n > 0 )); then
+	    echo "will connect $i to $n nodes:"
+	    for s in $(seq 1 $n)
+	    do
+		r=$RANDOM
+		if ((($r%$NUM_NODI)+1==$i)); then
+		    continue
+		fi
+		randomPort=$((($r%$NUM_NODI)+1))
+		portFrom=$(printf %02g $i)
+		portToConnect="266$(printf %02g $randomPort)"
+		./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$portFrom addnode 127.0.0.1:$portToConnect onetry
+		echo "connecting $i to $((($r%$NUM_NODI)+1))"
+		sleep 0.7
+	    done
+	fi
+    done
+elif [ "$1" = "cmd" ]; then
+    if (($#<3)); then
+	echo -e "usage:\n50nodes-exp cmd <node> <command> [params]\ntry command help on any node"
+	exit 0
+    fi
+    args=($@)
+    params=${args[2]}
+    for i in $(seq 3 $#)
+    do
+	params=$params" "${args[$i]}
+    done
+    echo "sending command '$params' to port 276$(printf %02g $2)"
+    ./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) $params
+elif [ "$1" = "stop" ]; then
+    NUM_NODI=$(cat ./.global_vars)
+    echo "$0: distruggo i $NUM_NODI nodi"
+    for i in $(seq -f %02g 01 $NUM_NODI)
+    do
+	./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$i stop
+    done
+
+    echo -n "waiting for processes to end gracefully"
+    while true
+    do
+	echo -n "."
+	sleep 5
+	if [ -z "$(pgrep twisterd)" ]; then
+	    echo -e "\nprocessi terminati."
+	    break
+	fi
+    done
+
+    if [ "$2" != "pause" ]; then
+	for i in $(seq -f %02g 1 $NUM_NODI)
+	do
+	    cd /tmp/nodo$i
+	    ls | grep -v debug.log | xargs rm -rf
+	done
+	echo "file cancellati"
+    fi
+fi
