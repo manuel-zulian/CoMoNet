@@ -1444,6 +1444,7 @@ Value newpostmsg(const Array& params, bool fHelp)
 
     entry v;
     // [MF] Warning: findLastPublicPostLocalUser requires that we follow ourselves
+    // [AP] I don't think this is enforced anywhere
     int lastk = findLastPublicPostLocalUser(strUsername);
     if( lastk >= 0 )
         v["userpost"]["lastk"] = lastk;

@@ -197,7 +197,7 @@ void node_impl::bootstrap(std::vector<udp::endpoint> const& nodes
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	TORRENT_LOG(node) << "bootstrapping with " << count << " nodes";
 #endif
-    printf( RED "bootstrapping with %d nodes" RESET,
+    printf( RED "bootstrapping with %d nodes\n" RESET,
 		   ap_count);
 	r->start();
 }
@@ -322,6 +322,8 @@ namespace
 			<< " res: " << resource
 			<< " nodes: " << v.size() << " ]" ;
 #endif
+        // [AP]
+		printf( RED "sending putData [ username: %s res: %s nodes: %d ]" RESET, username, resource, v.size());
         
 		// create a dummy traversal_algorithm
 		boost::intrusive_ptr<traversal_algorithm> algo(
@@ -437,7 +439,7 @@ void node_impl::putData(std::string const &username, std::string const &resource
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	TORRENT_LOG(node) << "putData [ username: " << info_hash << " res: " << resource << " ]" ;
 #endif
-	printf( RED "putData: username=%s,res=%s,multi=%d sig_user=%s\n" RESET,
+	printf( RED "putData: username=%s,res=%s,multi=%d, sig_user=%s\n" RESET,
 		   username.c_str(), resource.c_str(), multi, sig_user.c_str());
 
     // construct p dictionary and sign it
@@ -664,7 +666,7 @@ bool node_impl::save_storage(entry &save) const {
     if( m_storage_table.size() == 0 )
         return did_something;
 
-    printf("node dht: saving storage... (storage_table.size = %lu)\n", m_storage_table.size());
+    printf( RED "node dht: saving storage... (storage_table.size = %lu)\n" RESET, m_storage_table.size());
 
     for (dht_storage_table_t::const_iterator i = m_storage_table.begin(),
          iend(m_storage_table.end()); i != iend; ++i )
@@ -920,8 +922,9 @@ namespace
 	}
 }
 
-// verifies that a message has all the required
-// entries and returns them in ret
+/* general-purpose verifier:
+ *		verifies that a message has all the required
+ *		entries and returns them in ret					*/
 bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry const* ret[]
 	, int size , char* error, int error_size)
 {
@@ -944,7 +947,7 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 	{
 		key_desc_t const& k = desc[i];
 
-//		fprintf(stderr, "looking for %s in %s\n", k.name, print_entry(*msg).c_str());
+		printf(RED "looking for %s in %s\n" RESET, k.name, print_entry(*msg).c_str());
 
 		ret[i] = msg->dict_find(k.name);
 		// none_t means any type
@@ -1259,12 +1262,18 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		sha1_hash target = hasher(targetbuf.first,targetbuf.second).final();
 
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		printf("PUT target={%s,%s,%s} from=%s:%d\n"
+		printf( RED "PUT target={%s,%s,%s} from=%s:%d\n" RESET
 			, msg_keys[mk_n]->string_value().c_str()
 			, msg_keys[mk_r]->string_value().c_str()
 			, msg_keys[mk_t]->string_value().c_str()
 			, m.addr.address().to_string().c_str(), m.addr.port());
 #endif
+		// [AP]
+		printf( RED "PUT target={%s,%s,%s} from=%s:%d\n" RESET
+			   , msg_keys[mk_n]->string_value().c_str()
+			   , msg_keys[mk_r]->string_value().c_str()
+			   , msg_keys[mk_t]->string_value().c_str()
+			   , m.addr.address().to_string().c_str(), m.addr.port());
 
 		// verify the write-token. tokens are only valid to write to
 		// specific target hashes. it must match the one we got a "get" for
@@ -1443,6 +1452,13 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			, msg_keys[mk_t]->string_value().c_str()
 			, m.addr.address().to_string().c_str(), m.addr.port());
 #endif
+		// [AP]
+		printf(RED "GET target={%s,%s,%s} from=%s:%d\n" RESET
+			   , msg_keys[mk_n]->string_value().c_str()
+			   , msg_keys[mk_r]->string_value().c_str()
+			   , msg_keys[mk_t]->string_value().c_str()
+			   , m.addr.address().to_string().c_str(), m.addr.port());
+		
 		reply["token"] = generate_token(m.addr, target.to_string().c_str());
 
 		nodes_t n;
@@ -1455,7 +1471,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		if( msg_keys[mk_r]->string_value() == "tracker" ) {
 			lookup_peers(target, 20, reply, false, false);
 			entry::list_type& pe = reply["values"].list();
-			//printf("tracker=> replying with %d peers\n", pe.size());
+			printf( RED "tracker=> replying with %d peers\n" RESET, pe.size());
 		} else {
 			dht_storage_table_t::iterator i = m_storage_table.find(target);
 			if (i != m_storage_table.end())

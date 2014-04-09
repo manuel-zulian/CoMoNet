@@ -644,6 +644,7 @@ bool CWalletTx::AcceptWalletTransaction()
 
 
 // Return transaction in tx, and if it was found inside a block, its hash is placed in hashBlock
+// [AP] dove hashBlock è una variabile passata
 bool GetTransaction(const std::string &username, CTransaction &txOut, uint256 &hashBlock, int maxHeight)
 {
     if( maxHeight < 0 )
@@ -658,7 +659,7 @@ bool GetTransaction(const std::string &username, CTransaction &txOut, uint256 &h
             uint256 txid = SerializeHash(make_pair(username,height));
 
             CDiskTxPos postx;
-            if (pblocktree->ReadTxIndex(txid, postx)) {
+            if (pblocktree->ReadTxIndex(txid, postx)) { // [AP] penso che dica dove si trova la transazione se è in un blocco
                 CAutoFile file(OpenBlockFile(postx, true), SER_DISK, CLIENT_VERSION);
                 CBlockHeader header;
                 try {
