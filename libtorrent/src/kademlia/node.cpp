@@ -322,8 +322,7 @@ namespace
 			<< " res: " << resource
 			<< " nodes: " << v.size() << " ]" ;
 #endif
-        // [AP]
-		printf( RED "sending putData [ username: %s res: %s nodes: %d ]" RESET, username, resource, v.size());
+        // [AP] lo stamperà quanto sopra?
         
 		// create a dummy traversal_algorithm
 		boost::intrusive_ptr<traversal_algorithm> algo(

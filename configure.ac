@@ -156,9 +156,9 @@ AC_ARG_ENABLE(
   [logging],
   [AS_HELP_STRING(
     [--enable-logging],
-    [enable logging to disk (use value "verbose" to enable verbose peer wire logging or "errors" limit logging to errors ) [default=no]])],
+    [enable logging to disk (use value "verbose" to enable verbose peer wire logging or "errors" limit logging to errors ) [default=verbose]])],
   [[ARG_ENABLE_LOGGING=$enableval]],
-  [[ARG_ENABLE_LOGGING=no]]
+  [[ARG_ENABLE_LOGGING=verbose]]
 )
 
 AC_ARG_ENABLE(
