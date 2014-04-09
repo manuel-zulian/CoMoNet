@@ -63,6 +63,26 @@ elif [ "$1" = "connect" ]; then
 	    done
 	fi
     done
+elif [ "$1" = "simul" ]; then
+    echo "per mettere in background: ctrl-z; bg %1"
+    if (($#<2)); then
+	echo -e "usage:\n50nodes-exp simul <node> &"
+	exit 0
+    fi
+    while true
+    do
+	nUtente=$(date +%s | shasum5.16 --algorithm 256 | base64 | head -c 4 ; echo)
+	echo "$2: createwalletuser utente$nUtente"
+	./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) createwalletuser utente$nUtente
+	./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) sendnewusertransaction utente$nUtente
+	sleep 10
+	for k in 1 2 3
+	do
+	    echo "$2: newpostmsg utente$nUtente $k \"utente$nUtente Says Ciao$k\""
+	    ./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) newpostmsg utente$nUtente $k "utente$nUtente Says Ciao$k"
+	    sleep 5
+	done
+    done
 elif [ "$1" = "cmd" ]; then
     if (($#<3)); then
 	echo -e "usage:\n50nodes-exp cmd <node> <command> [params]\ntry command help on any node"

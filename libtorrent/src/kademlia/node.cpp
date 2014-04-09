@@ -181,19 +181,24 @@ void node_impl::bootstrap(std::vector<udp::endpoint> const& nodes
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	int count = 0;
 #endif
-
+    //[AP] non so come si attiva il verbose logging quindi ci metto il mio
+    int ap_count = 0;
+    
 	for (std::vector<udp::endpoint>::const_iterator i = nodes.begin()
 		, end(nodes.end()); i != end; ++i)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 		++count;
 #endif
+        ++ap_count;
 		r->add_entry(node_id(0), *i, observer::flag_initial);
 	}
 	
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	TORRENT_LOG(node) << "bootstrapping with " << count << " nodes";
 #endif
+    printf( RED "bootstrapping with %d nodes" RESET,
+		   ap_count);
 	r->start();
 }
 
@@ -317,7 +322,7 @@ namespace
 			<< " res: " << resource
 			<< " nodes: " << v.size() << " ]" ;
 #endif
-
+        
 		// create a dummy traversal_algorithm
 		boost::intrusive_ptr<traversal_algorithm> algo(
 			new traversal_algorithm(node, (node_id::min)()));
@@ -432,7 +437,7 @@ void node_impl::putData(std::string const &username, std::string const &resource
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	TORRENT_LOG(node) << "putData [ username: " << info_hash << " res: " << resource << " ]" ;
 #endif
-	printf("putData: username=%s,res=%s,multi=%d sig_user=%s\n",
+	printf( RED "putData: username=%s,res=%s,multi=%d sig_user=%s\n" RESET,
 		   username.c_str(), resource.c_str(), multi, sig_user.c_str());
 
     // construct p dictionary and sign it
