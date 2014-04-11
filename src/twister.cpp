@@ -49,7 +49,7 @@ static CCriticalSection cs_twister;
 static map<std::string, bool> m_specialResources;
 enum ExpireResType { SimpleNoExpire, NumberedNoExpire, PostNoExpireRecent };
 static map<std::string, ExpireResType> m_noExpireResources;
-static map<std::string, torrent_handle> m_userTorrent;
+static map<std::string, torrent_handle> m_userTorrent; // ogni torrent è un utente
 static boost::scoped_ptr<CLevelDB> m_swarmDb;
 
 static CCriticalSection cs_spamMsg;
@@ -77,6 +77,13 @@ sha1_hash dhtTargetHash(std::string const &username, std::string const &resource
     return hasher(buf.data(), buf.size()).final();
 }
 
+/**
+ * Starts the torrent for the specified user.
+ * @param username the user for which we start the torrent for
+ * @param following whathere we should follow said user or not
+ * @return	a torrent handle to the user's torrent, a torrent handle
+ *			describes a torrent
+ */
 torrent_handle startTorrentUser(std::string const &username, bool following)
 {
     bool userInTxDb = usernameExists(username); // keep this outside cs_twister to avoid deadlock
@@ -87,7 +94,7 @@ torrent_handle startTorrentUser(std::string const &username, bool following)
     if( !m_userTorrent.count(username) ) {
         sha1_hash ih = dhtTargetHash(username, "tracker", "m");
 
-        printf("adding torrent for [%s,tracker]\n", username.c_str());
+        printf(GREEN "adding torrent for [%s,tracker]\n" RESET, username.c_str());
         add_torrent_params tparams;
         tparams.info_hash = ih;
         tparams.name = username;
@@ -1018,8 +1025,10 @@ bool usernameExists(std::string const &username)
 }
 
 
-/*
-"userpost" :
+/**
+ This method creates a signed userpost in the specified dictionary.
+ @code
+ "userpost" :
 {
         "n" : username,
         "k" : seq number,
@@ -1037,8 +1046,20 @@ bool usernameExists(std::string const &username)
         }
 }
 "sig_userpost" : signature by userpost.n
+ @endcode
+ @param v the post will be saved in v["userpost"]
+ @param username
+ @param k is the sequence number
+ @param msg contains the message as a string
+ @param rt contains the user retweeting the message (used only if msg is empty)
+ @param sig_rt the signature of the retweeting user (used only if msg is empty)
+ @param dm an encrypted direct message (used only if the message end the retweeting fields are empty)
+ @param reply_n the user of the original post
+ @param reply_k the number of the message of the user which we are replying to
+ @return true if the signing was successful, false otherwise
+ @warning	this method returns true if the signing was successful, this doesn't mean that the message itself
+			respects any given rule. The message could be junk and be signed regardless.
 */
-
 bool createSignedUserpost(entry &v, std::string const &username, int k,
                           std::string const &msg,               // either msg.size() or
                           entry const *rt, entry const *sig_rt, // rt != NULL or
@@ -1442,7 +1463,7 @@ Value newpostmsg(const Array& params, bool fHelp)
         strReplyK = boost::lexical_cast<std::string>(replyK);
     }
 
-    entry v;
+    entry v; // è un variant-type, in questo caso è un dizionario
     // [MF] Warning: findLastPublicPostLocalUser requires that we follow ourselves
     // [AP] I don't think this is enforced anywhere
     int lastk = findLastPublicPostLocalUser(strUsername);
@@ -1450,7 +1471,7 @@ Value newpostmsg(const Array& params, bool fHelp)
         v["userpost"]["lastk"] = lastk;
 
     if( !createSignedUserpost(v, strUsername, k, strMsg,
-                         NULL, NULL, NULL,
+                         NULL, NULL, NULL,	// not an rt, nor a dm
                          strReplyN, replyK) )
         throw JSONRPCError(RPC_INTERNAL_ERROR,"error signing post with private key of user");
 

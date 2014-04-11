@@ -313,11 +313,13 @@ namespace
              entry const &p, std::string const &sig_p, std::string const &sig_user)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		TORRENT_LOG(node) << "sending putData [ username: [AP] missing data"; //<< username
-			//<< " res: " << resource
-			//<< " nodes: " << v.size() << " ]" ;
+		TORRENT_LOG(node) << "sending putData [ username: [AP] missing data" << p["target"]["n"]
+			<< " res: " << p["target"]["r"]
+			<< " nodes: " << v.size() << " ]" ;
 #endif
         // [AP] le righe sopra danno errori, forse MF non le ha mai usate
+		// [AP] dovrei averle riparate se è vero che stiamo realmente mandando quel messaggio!
+		// controllare se il messaggio mandato è effettivamente quello
         
 		// create a dummy traversal_algorithm
 		boost::intrusive_ptr<traversal_algorithm> algo(
@@ -426,6 +428,8 @@ void node_impl::announce(std::string const& trackerName, sha1_hash const& info_h
 	}
 }
 
+	/**
+	 */
 void node_impl::putData(std::string const &username, std::string const &resource, bool multi,
                         entry const &value, std::string const &sig_user,
                         boost::int64_t timeutc, int seq)
