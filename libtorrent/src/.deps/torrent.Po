@@ -1173,6 +1173,8 @@ libtorrent/src/torrent.o: libtorrent/src/torrent.cpp \
   libtorrent/include/libtorrent/parse_url.hpp \
   libtorrent/include/libtorrent/bencode.hpp \
   libtorrent/include/libtorrent/peer_connection.hpp \
+  libtorrent/include/libtorrent/debug.hpp \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream \
   /usr/local/include/boost/smart_ptr.hpp \
   /usr/local/include/boost/scoped_array.hpp \
   /usr/local/include/boost/smart_ptr/scoped_array.hpp \
@@ -1189,8 +1191,6 @@ libtorrent/src/torrent.o: libtorrent/src/torrent.cpp \
   /usr/local/include/boost/smart_ptr/allocate_shared_array.hpp \
   /usr/local/include/boost/smart_ptr/detail/allocate_array_helper.hpp \
   libtorrent/include/libtorrent/stat.hpp \
-  libtorrent/include/libtorrent/debug.hpp \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream \
   libtorrent/include/libtorrent/piece_block_progress.hpp \
   libtorrent/include/libtorrent/bandwidth_limit.hpp \
   libtorrent/include/libtorrent/socket_type_fwd.hpp \
@@ -3868,6 +3868,10 @@ libtorrent/include/libtorrent/bencode.hpp:
 
 libtorrent/include/libtorrent/peer_connection.hpp:
 
+libtorrent/include/libtorrent/debug.hpp:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream:
+
 /usr/local/include/boost/smart_ptr.hpp:
 
 /usr/local/include/boost/scoped_array.hpp:
@@ -3899,10 +3903,6 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 /usr/local/include/boost/smart_ptr/detail/allocate_array_helper.hpp:
 
 libtorrent/include/libtorrent/stat.hpp:
-
-libtorrent/include/libtorrent/debug.hpp:
-
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream:
 
 libtorrent/include/libtorrent/piece_block_progress.hpp:
 

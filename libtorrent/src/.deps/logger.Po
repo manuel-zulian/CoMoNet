@@ -542,6 +542,11 @@ libtorrent/src/logger.o: libtorrent/src/logger.cpp \
   libtorrent/include/libtorrent/ptime.hpp \
   libtorrent/include/libtorrent/lazy_entry.hpp \
   libtorrent/include/libtorrent/peer_connection.hpp \
+  libtorrent/include/libtorrent/debug.hpp \
+  libtorrent/include/libtorrent/thread.hpp \
+  /usr/local/include/boost/asio/detail/event.hpp \
+  /usr/local/include/boost/asio/detail/posix_event.hpp \
+  /usr/local/include/boost/asio/detail/assert.hpp \
   /usr/local/include/boost/smart_ptr.hpp \
   /usr/local/include/boost/scoped_ptr.hpp \
   /usr/local/include/boost/smart_ptr/scoped_ptr.hpp \
@@ -704,11 +709,6 @@ libtorrent/src/logger.o: libtorrent/src/logger.cpp \
   libtorrent/include/libtorrent/escape_string.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iomanip \
   libtorrent/include/libtorrent/stat.hpp \
-  libtorrent/include/libtorrent/debug.hpp \
-  libtorrent/include/libtorrent/thread.hpp \
-  /usr/local/include/boost/asio/detail/event.hpp \
-  /usr/local/include/boost/asio/detail/posix_event.hpp \
-  /usr/local/include/boost/asio/detail/assert.hpp \
   libtorrent/include/libtorrent/alert.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/deque \
   /usr/local/include/boost/preprocessor/repetition/enum_params_with_a_default.hpp \
@@ -1995,6 +1995,16 @@ libtorrent/include/libtorrent/lazy_entry.hpp:
 
 libtorrent/include/libtorrent/peer_connection.hpp:
 
+libtorrent/include/libtorrent/debug.hpp:
+
+libtorrent/include/libtorrent/thread.hpp:
+
+/usr/local/include/boost/asio/detail/event.hpp:
+
+/usr/local/include/boost/asio/detail/posix_event.hpp:
+
+/usr/local/include/boost/asio/detail/assert.hpp:
+
 /usr/local/include/boost/smart_ptr.hpp:
 
 /usr/local/include/boost/scoped_ptr.hpp:
@@ -2320,16 +2330,6 @@ libtorrent/include/libtorrent/escape_string.hpp:
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iomanip:
 
 libtorrent/include/libtorrent/stat.hpp:
-
-libtorrent/include/libtorrent/debug.hpp:
-
-libtorrent/include/libtorrent/thread.hpp:
-
-/usr/local/include/boost/asio/detail/event.hpp:
-
-/usr/local/include/boost/asio/detail/posix_event.hpp:
-
-/usr/local/include/boost/asio/detail/assert.hpp:
 
 libtorrent/include/libtorrent/alert.hpp:
 

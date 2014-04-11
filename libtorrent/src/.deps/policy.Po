@@ -224,9 +224,17 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/cwctype \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/cctype \
   /usr/include/wctype.h /usr/include/_types/_wctrans_t.h \
-  /usr/local/include/boost/smart_ptr.hpp \
-  /usr/local/include/boost/scoped_ptr.hpp \
-  /usr/local/include/boost/smart_ptr/scoped_ptr.hpp \
+  libtorrent/include/libtorrent/debug.hpp \
+  libtorrent/include/libtorrent/config.hpp \
+  /usr/local/include/boost/version.hpp /usr/include/inttypes.h \
+  /usr/include/AvailabilityMacros.h \
+  libtorrent/include/libtorrent/file.hpp \
+  libtorrent/include/libtorrent/error_code.hpp \
+  /usr/local/include/boost/system/error_code.hpp \
+  /usr/local/include/boost/system/config.hpp \
+  /usr/local/include/boost/system/api_config.hpp \
+  /usr/local/include/boost/config/auto_link.hpp \
+  /usr/local/include/boost/cstdint.hpp \
   /usr/local/include/boost/assert.hpp /usr/include/assert.h \
   /usr/include/stdlib.h /usr/include/sys/wait.h \
   /usr/include/sys/_types/_id_t.h /usr/include/sys/signal.h \
@@ -267,10 +275,10 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_03 \
   /usr/include/locale.h /usr/include/_locale.h /usr/include/xlocale.h \
   /usr/include/_xlocale.h /usr/include/xlocale/_ctype.h \
-  /usr/include/xlocale/__wctype.h /usr/include/xlocale/_stdio.h \
-  /usr/include/xlocale/_stdlib.h /usr/include/xlocale/_string.h \
-  /usr/include/xlocale/_time.h /usr/include/xlocale/_wchar.h \
-  /usr/include/xlocale/_wctype.h \
+  /usr/include/xlocale/__wctype.h /usr/include/xlocale/_inttypes.h \
+  /usr/include/xlocale/_stdio.h /usr/include/xlocale/_stdlib.h \
+  /usr/include/xlocale/_string.h /usr/include/xlocale/_time.h \
+  /usr/include/xlocale/_wchar.h /usr/include/xlocale/_wctype.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/streambuf \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/istream \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/ostream \
@@ -286,8 +294,50 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/include/sys/_types/_fsfilcnt_t.h /usr/include/_types/_nl_item.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/bitset \
   /usr/local/include/boost/current_function.hpp \
+  /usr/local/include/boost/operators.hpp \
+  /usr/local/include/boost/iterator.hpp \
+  /usr/local/include/boost/cerrno.hpp \
+  /usr/local/include/boost/config/abi_prefix.hpp \
+  /usr/local/include/boost/config/abi_suffix.hpp \
+  libtorrent/include/libtorrent/string_util.hpp \
+  libtorrent/include/libtorrent/size_type.hpp \
+  libtorrent/include/libtorrent/intrusive_ptr_base.hpp \
+  /usr/local/include/boost/detail/atomic_count.hpp \
+  /usr/local/include/boost/smart_ptr/detail/atomic_count.hpp \
+  /usr/local/include/boost/smart_ptr/detail/sp_has_sync.hpp \
+  /usr/local/include/boost/smart_ptr/detail/atomic_count_gcc_x86.hpp \
+  /usr/local/include/boost/intrusive_ptr.hpp \
+  /usr/local/include/boost/smart_ptr/intrusive_ptr.hpp \
+  /usr/local/include/boost/smart_ptr/detail/sp_convertible.hpp \
   /usr/local/include/boost/smart_ptr/detail/sp_nullptr_t.hpp \
+  /usr/local/include/boost/config/no_tr1/functional.hpp \
   /usr/local/include/boost/smart_ptr/detail/operator_bool.hpp \
+  libtorrent/include/libtorrent/assert.hpp \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/sstream \
+  /usr/include/sys/uio.h /usr/include/sys/_types/_iovec_t.h \
+  /usr/include/fcntl.h /usr/include/sys/fcntl.h \
+  /usr/include/sys/_types/_o_sync.h /usr/include/sys/_types/_o_dsync.h \
+  /usr/include/sys/_types/_s_ifmt.h /usr/include/sys/_types/_filesec_t.h \
+  /usr/include/dirent.h /usr/include/sys/dirent.h \
+  libtorrent/include/libtorrent/thread.hpp \
+  libtorrent/include/libtorrent/time.hpp \
+  libtorrent/include/libtorrent/ptime.hpp \
+  /usr/local/include/boost/asio/detail/thread.hpp \
+  /usr/local/include/boost/asio/detail/config.hpp \
+  /usr/local/include/boost/asio/detail/posix_thread.hpp \
+  /usr/local/include/boost/asio/detail/noncopyable.hpp \
+  /usr/local/include/boost/asio/detail/push_options.hpp \
+  /usr/local/include/boost/asio/detail/pop_options.hpp \
+  /usr/local/include/boost/asio/detail/mutex.hpp \
+  /usr/local/include/boost/asio/detail/posix_mutex.hpp \
+  /usr/local/include/boost/asio/detail/scoped_lock.hpp \
+  /usr/local/include/boost/asio/detail/event.hpp \
+  /usr/local/include/boost/asio/detail/posix_event.hpp \
+  /usr/local/include/boost/asio/detail/assert.hpp \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream \
+  /usr/local/include/boost/smart_ptr.hpp \
+  /usr/local/include/boost/scoped_ptr.hpp \
+  /usr/local/include/boost/smart_ptr/scoped_ptr.hpp \
   /usr/local/include/boost/scoped_array.hpp \
   /usr/local/include/boost/smart_ptr/scoped_array.hpp \
   /usr/local/include/boost/shared_ptr.hpp \
@@ -297,11 +347,9 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/smart_ptr/detail/shared_count.hpp \
   /usr/local/include/boost/smart_ptr/bad_weak_ptr.hpp \
   /usr/local/include/boost/smart_ptr/detail/sp_counted_base.hpp \
-  /usr/local/include/boost/smart_ptr/detail/sp_has_sync.hpp \
   /usr/local/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp \
   /usr/local/include/boost/detail/sp_typeinfo.hpp \
   /usr/local/include/boost/smart_ptr/detail/sp_counted_impl.hpp \
-  /usr/local/include/boost/smart_ptr/detail/sp_convertible.hpp \
   /usr/local/include/boost/smart_ptr/detail/spinlock_pool.hpp \
   /usr/local/include/boost/smart_ptr/detail/spinlock.hpp \
   /usr/local/include/boost/smart_ptr/detail/spinlock_sync.hpp \
@@ -311,9 +359,6 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/smart_ptr/shared_array.hpp \
   /usr/local/include/boost/weak_ptr.hpp \
   /usr/local/include/boost/smart_ptr/weak_ptr.hpp \
-  /usr/local/include/boost/intrusive_ptr.hpp \
-  /usr/local/include/boost/smart_ptr/intrusive_ptr.hpp \
-  /usr/local/include/boost/config/no_tr1/functional.hpp \
   /usr/local/include/boost/enable_shared_from_this.hpp \
   /usr/local/include/boost/smart_ptr/enable_shared_from_this.hpp \
   /usr/local/include/boost/make_shared.hpp \
@@ -408,7 +453,6 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/preprocessor/iteration/detail/bounds/upper1.hpp \
   /usr/local/include/boost/utility/detail/in_place_factory_suffix.hpp \
   /usr/local/include/boost/optional/optional_fwd.hpp \
-  /usr/local/include/boost/cstdint.hpp \
   /usr/local/include/boost/pool/pool.hpp \
   /usr/local/include/boost/pool/poolfwd.hpp \
   /usr/local/include/boost/pool/detail/mutex.hpp \
@@ -417,18 +461,9 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/config/requires_threads.hpp \
   /usr/local/include/boost/thread/pthread/mutex.hpp \
   /usr/local/include/boost/thread/detail/config.hpp \
-  /usr/local/include/boost/config/auto_link.hpp \
   /usr/local/include/boost/thread/exceptions.hpp \
   /usr/local/include/boost/system/system_error.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/cassert \
-  /usr/local/include/boost/system/error_code.hpp \
-  /usr/local/include/boost/system/config.hpp \
-  /usr/local/include/boost/system/api_config.hpp \
-  /usr/local/include/boost/operators.hpp \
-  /usr/local/include/boost/iterator.hpp \
-  /usr/local/include/boost/cerrno.hpp \
-  /usr/local/include/boost/config/abi_prefix.hpp \
-  /usr/local/include/boost/config/abi_suffix.hpp \
   /usr/local/include/boost/thread/lock_types.hpp \
   /usr/local/include/boost/thread/detail/move.hpp \
   /usr/local/include/boost/type_traits/is_convertible.hpp \
@@ -504,7 +539,6 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/date_time/adjust_functors.hpp \
   /usr/local/include/boost/date_time/wrapping_int.hpp \
   /usr/local/include/boost/date_time/date_generators.hpp \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/sstream \
   /usr/local/include/boost/date_time/date_clock_device.hpp \
   /usr/local/include/boost/date_time/date_iterator.hpp \
   /usr/local/include/boost/date_time/time_system_split.hpp \
@@ -553,7 +587,6 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/thread/pthread/pthread_mutex_scoped_lock.hpp \
   /usr/local/include/boost/chrono/system_clocks.hpp \
   /usr/local/include/boost/chrono/detail/system.hpp \
-  /usr/local/include/boost/version.hpp \
   /usr/local/include/boost/chrono/clock_string.hpp \
   /usr/local/include/boost/chrono/ceil.hpp \
   /usr/local/include/boost/math/common_factor_ct.hpp \
@@ -562,43 +595,10 @@ libtorrent/src/policy.o: libtorrent/src/policy.cpp \
   /usr/local/include/boost/aligned_storage.hpp \
   libtorrent/include/libtorrent/buffer.hpp \
   libtorrent/include/libtorrent/invariant_check.hpp \
-  libtorrent/include/libtorrent/assert.hpp \
-  libtorrent/include/libtorrent/config.hpp /usr/include/inttypes.h \
-  /usr/include/xlocale/_inttypes.h /usr/include/AvailabilityMacros.h \
   libtorrent/include/libtorrent/peer_id.hpp \
   libtorrent/include/libtorrent/escape_string.hpp \
-  libtorrent/include/libtorrent/size_type.hpp \
-  libtorrent/include/libtorrent/error_code.hpp \
-  libtorrent/include/libtorrent/string_util.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iomanip \
   libtorrent/include/libtorrent/stat.hpp \
-  libtorrent/include/libtorrent/debug.hpp \
-  libtorrent/include/libtorrent/file.hpp \
-  libtorrent/include/libtorrent/intrusive_ptr_base.hpp \
-  /usr/local/include/boost/detail/atomic_count.hpp \
-  /usr/local/include/boost/smart_ptr/detail/atomic_count.hpp \
-  /usr/local/include/boost/smart_ptr/detail/atomic_count_gcc_x86.hpp \
-  /usr/include/sys/uio.h /usr/include/sys/_types/_iovec_t.h \
-  /usr/include/fcntl.h /usr/include/sys/fcntl.h \
-  /usr/include/sys/_types/_o_sync.h /usr/include/sys/_types/_o_dsync.h \
-  /usr/include/sys/_types/_s_ifmt.h /usr/include/sys/_types/_filesec_t.h \
-  /usr/include/dirent.h /usr/include/sys/dirent.h \
-  libtorrent/include/libtorrent/thread.hpp \
-  libtorrent/include/libtorrent/time.hpp \
-  libtorrent/include/libtorrent/ptime.hpp \
-  /usr/local/include/boost/asio/detail/thread.hpp \
-  /usr/local/include/boost/asio/detail/config.hpp \
-  /usr/local/include/boost/asio/detail/posix_thread.hpp \
-  /usr/local/include/boost/asio/detail/noncopyable.hpp \
-  /usr/local/include/boost/asio/detail/push_options.hpp \
-  /usr/local/include/boost/asio/detail/pop_options.hpp \
-  /usr/local/include/boost/asio/detail/mutex.hpp \
-  /usr/local/include/boost/asio/detail/posix_mutex.hpp \
-  /usr/local/include/boost/asio/detail/scoped_lock.hpp \
-  /usr/local/include/boost/asio/detail/event.hpp \
-  /usr/local/include/boost/asio/detail/posix_event.hpp \
-  /usr/local/include/boost/asio/detail/assert.hpp \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream \
   libtorrent/include/libtorrent/alert.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/deque \
   /usr/local/include/boost/preprocessor/repetition/enum_params_with_a_default.hpp \
@@ -1761,11 +1761,29 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/include/_types/_wctrans_t.h:
 
-/usr/local/include/boost/smart_ptr.hpp:
+libtorrent/include/libtorrent/debug.hpp:
 
-/usr/local/include/boost/scoped_ptr.hpp:
+libtorrent/include/libtorrent/config.hpp:
 
-/usr/local/include/boost/smart_ptr/scoped_ptr.hpp:
+/usr/local/include/boost/version.hpp:
+
+/usr/include/inttypes.h:
+
+/usr/include/AvailabilityMacros.h:
+
+libtorrent/include/libtorrent/file.hpp:
+
+libtorrent/include/libtorrent/error_code.hpp:
+
+/usr/local/include/boost/system/error_code.hpp:
+
+/usr/local/include/boost/system/config.hpp:
+
+/usr/local/include/boost/system/api_config.hpp:
+
+/usr/local/include/boost/config/auto_link.hpp:
+
+/usr/local/include/boost/cstdint.hpp:
 
 /usr/local/include/boost/assert.hpp:
 
@@ -1881,6 +1899,8 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/include/xlocale/__wctype.h:
 
+/usr/include/xlocale/_inttypes.h:
+
 /usr/include/xlocale/_stdio.h:
 
 /usr/include/xlocale/_stdlib.h:
@@ -1931,9 +1951,103 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/local/include/boost/current_function.hpp:
 
+/usr/local/include/boost/operators.hpp:
+
+/usr/local/include/boost/iterator.hpp:
+
+/usr/local/include/boost/cerrno.hpp:
+
+/usr/local/include/boost/config/abi_prefix.hpp:
+
+/usr/local/include/boost/config/abi_suffix.hpp:
+
+libtorrent/include/libtorrent/string_util.hpp:
+
+libtorrent/include/libtorrent/size_type.hpp:
+
+libtorrent/include/libtorrent/intrusive_ptr_base.hpp:
+
+/usr/local/include/boost/detail/atomic_count.hpp:
+
+/usr/local/include/boost/smart_ptr/detail/atomic_count.hpp:
+
+/usr/local/include/boost/smart_ptr/detail/sp_has_sync.hpp:
+
+/usr/local/include/boost/smart_ptr/detail/atomic_count_gcc_x86.hpp:
+
+/usr/local/include/boost/intrusive_ptr.hpp:
+
+/usr/local/include/boost/smart_ptr/intrusive_ptr.hpp:
+
+/usr/local/include/boost/smart_ptr/detail/sp_convertible.hpp:
+
 /usr/local/include/boost/smart_ptr/detail/sp_nullptr_t.hpp:
 
+/usr/local/include/boost/config/no_tr1/functional.hpp:
+
 /usr/local/include/boost/smart_ptr/detail/operator_bool.hpp:
+
+libtorrent/include/libtorrent/assert.hpp:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/sstream:
+
+/usr/include/sys/uio.h:
+
+/usr/include/sys/_types/_iovec_t.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/sys/fcntl.h:
+
+/usr/include/sys/_types/_o_sync.h:
+
+/usr/include/sys/_types/_o_dsync.h:
+
+/usr/include/sys/_types/_s_ifmt.h:
+
+/usr/include/sys/_types/_filesec_t.h:
+
+/usr/include/dirent.h:
+
+/usr/include/sys/dirent.h:
+
+libtorrent/include/libtorrent/thread.hpp:
+
+libtorrent/include/libtorrent/time.hpp:
+
+libtorrent/include/libtorrent/ptime.hpp:
+
+/usr/local/include/boost/asio/detail/thread.hpp:
+
+/usr/local/include/boost/asio/detail/config.hpp:
+
+/usr/local/include/boost/asio/detail/posix_thread.hpp:
+
+/usr/local/include/boost/asio/detail/noncopyable.hpp:
+
+/usr/local/include/boost/asio/detail/push_options.hpp:
+
+/usr/local/include/boost/asio/detail/pop_options.hpp:
+
+/usr/local/include/boost/asio/detail/mutex.hpp:
+
+/usr/local/include/boost/asio/detail/posix_mutex.hpp:
+
+/usr/local/include/boost/asio/detail/scoped_lock.hpp:
+
+/usr/local/include/boost/asio/detail/event.hpp:
+
+/usr/local/include/boost/asio/detail/posix_event.hpp:
+
+/usr/local/include/boost/asio/detail/assert.hpp:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream:
+
+/usr/local/include/boost/smart_ptr.hpp:
+
+/usr/local/include/boost/scoped_ptr.hpp:
+
+/usr/local/include/boost/smart_ptr/scoped_ptr.hpp:
 
 /usr/local/include/boost/scoped_array.hpp:
 
@@ -1953,15 +2067,11 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/local/include/boost/smart_ptr/detail/sp_counted_base.hpp:
 
-/usr/local/include/boost/smart_ptr/detail/sp_has_sync.hpp:
-
 /usr/local/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp:
 
 /usr/local/include/boost/detail/sp_typeinfo.hpp:
 
 /usr/local/include/boost/smart_ptr/detail/sp_counted_impl.hpp:
-
-/usr/local/include/boost/smart_ptr/detail/sp_convertible.hpp:
 
 /usr/local/include/boost/smart_ptr/detail/spinlock_pool.hpp:
 
@@ -1980,12 +2090,6 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 /usr/local/include/boost/weak_ptr.hpp:
 
 /usr/local/include/boost/smart_ptr/weak_ptr.hpp:
-
-/usr/local/include/boost/intrusive_ptr.hpp:
-
-/usr/local/include/boost/smart_ptr/intrusive_ptr.hpp:
-
-/usr/local/include/boost/config/no_tr1/functional.hpp:
 
 /usr/local/include/boost/enable_shared_from_this.hpp:
 
@@ -2179,8 +2283,6 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/local/include/boost/optional/optional_fwd.hpp:
 
-/usr/local/include/boost/cstdint.hpp:
-
 /usr/local/include/boost/pool/pool.hpp:
 
 /usr/local/include/boost/pool/poolfwd.hpp:
@@ -2197,29 +2299,11 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/local/include/boost/thread/detail/config.hpp:
 
-/usr/local/include/boost/config/auto_link.hpp:
-
 /usr/local/include/boost/thread/exceptions.hpp:
 
 /usr/local/include/boost/system/system_error.hpp:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/cassert:
-
-/usr/local/include/boost/system/error_code.hpp:
-
-/usr/local/include/boost/system/config.hpp:
-
-/usr/local/include/boost/system/api_config.hpp:
-
-/usr/local/include/boost/operators.hpp:
-
-/usr/local/include/boost/iterator.hpp:
-
-/usr/local/include/boost/cerrno.hpp:
-
-/usr/local/include/boost/config/abi_prefix.hpp:
-
-/usr/local/include/boost/config/abi_suffix.hpp:
 
 /usr/local/include/boost/thread/lock_types.hpp:
 
@@ -2371,8 +2455,6 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/local/include/boost/date_time/date_generators.hpp:
 
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/sstream:
-
 /usr/local/include/boost/date_time/date_clock_device.hpp:
 
 /usr/local/include/boost/date_time/date_iterator.hpp:
@@ -2469,8 +2551,6 @@ libtorrent/include/libtorrent/peer_connection.hpp:
 
 /usr/local/include/boost/chrono/detail/system.hpp:
 
-/usr/local/include/boost/version.hpp:
-
 /usr/local/include/boost/chrono/clock_string.hpp:
 
 /usr/local/include/boost/chrono/ceil.hpp:
@@ -2487,93 +2567,13 @@ libtorrent/include/libtorrent/buffer.hpp:
 
 libtorrent/include/libtorrent/invariant_check.hpp:
 
-libtorrent/include/libtorrent/assert.hpp:
-
-libtorrent/include/libtorrent/config.hpp:
-
-/usr/include/inttypes.h:
-
-/usr/include/xlocale/_inttypes.h:
-
-/usr/include/AvailabilityMacros.h:
-
 libtorrent/include/libtorrent/peer_id.hpp:
 
 libtorrent/include/libtorrent/escape_string.hpp:
 
-libtorrent/include/libtorrent/size_type.hpp:
-
-libtorrent/include/libtorrent/error_code.hpp:
-
-libtorrent/include/libtorrent/string_util.hpp:
-
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iomanip:
 
 libtorrent/include/libtorrent/stat.hpp:
-
-libtorrent/include/libtorrent/debug.hpp:
-
-libtorrent/include/libtorrent/file.hpp:
-
-libtorrent/include/libtorrent/intrusive_ptr_base.hpp:
-
-/usr/local/include/boost/detail/atomic_count.hpp:
-
-/usr/local/include/boost/smart_ptr/detail/atomic_count.hpp:
-
-/usr/local/include/boost/smart_ptr/detail/atomic_count_gcc_x86.hpp:
-
-/usr/include/sys/uio.h:
-
-/usr/include/sys/_types/_iovec_t.h:
-
-/usr/include/fcntl.h:
-
-/usr/include/sys/fcntl.h:
-
-/usr/include/sys/_types/_o_sync.h:
-
-/usr/include/sys/_types/_o_dsync.h:
-
-/usr/include/sys/_types/_s_ifmt.h:
-
-/usr/include/sys/_types/_filesec_t.h:
-
-/usr/include/dirent.h:
-
-/usr/include/sys/dirent.h:
-
-libtorrent/include/libtorrent/thread.hpp:
-
-libtorrent/include/libtorrent/time.hpp:
-
-libtorrent/include/libtorrent/ptime.hpp:
-
-/usr/local/include/boost/asio/detail/thread.hpp:
-
-/usr/local/include/boost/asio/detail/config.hpp:
-
-/usr/local/include/boost/asio/detail/posix_thread.hpp:
-
-/usr/local/include/boost/asio/detail/noncopyable.hpp:
-
-/usr/local/include/boost/asio/detail/push_options.hpp:
-
-/usr/local/include/boost/asio/detail/pop_options.hpp:
-
-/usr/local/include/boost/asio/detail/mutex.hpp:
-
-/usr/local/include/boost/asio/detail/posix_mutex.hpp:
-
-/usr/local/include/boost/asio/detail/scoped_lock.hpp:
-
-/usr/local/include/boost/asio/detail/event.hpp:
-
-/usr/local/include/boost/asio/detail/posix_event.hpp:
-
-/usr/local/include/boost/asio/detail/assert.hpp:
-
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/fstream:
 
 libtorrent/include/libtorrent/alert.hpp:
 
