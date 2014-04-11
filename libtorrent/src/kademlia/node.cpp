@@ -431,7 +431,7 @@ void node_impl::putData(std::string const &username, std::string const &resource
                         boost::int64_t timeutc, int seq)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	TORRENT_LOG(node) << "putData [ username: [AP] missing data"; //<< info_hash << " res: " << resource << " ]" ;
+	TORRENT_LOG(node) << "putData [ username: " << username.c_str() << " res: " << resource.c_str() << " ]" ;
 #endif
 	printf( RED "putData: username=%s,res=%s,multi=%d, sig_user=%s\n" RESET,
 		   username.c_str(), resource.c_str(), multi, sig_user.c_str());

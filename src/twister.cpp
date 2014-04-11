@@ -1431,7 +1431,7 @@ Value newpostmsg(const Array& params, bool fHelp)
 
     string strUsername = params[0].get_str();
     int k              = params[1].get_int();
-    string strK        = boost::lexical_cast<std::string>(k);
+    string strK        = boost::lexical_cast<std::string>(k); // lexical_cast è una semplice conversione
     string strMsg      = params[2].get_str();
 
     string strReplyN, strReplyK;

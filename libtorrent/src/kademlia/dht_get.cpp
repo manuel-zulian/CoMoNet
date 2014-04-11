@@ -125,7 +125,7 @@ void dht_get_observer::reply(msg const& m)
 			values_list.push_back(entry());
 			values_list.back() = *e;
 		}
-	//printf("dht_get::reply from %s:%d with %d entries\n", m.addr.address().to_string().c_str(), m.addr.port(), values_list.size());
+	printf(RED "dht_get::reply from %s:%d with %d entries\n" RESET, m.addr.address().to_string().c_str(), m.addr.port(), values_list.size());
 		static_cast<dht_get*>(m_algorithm.get())->got_data(values_list);
 	} else {
 		// special case for trackers (non-signed content)
@@ -235,8 +235,8 @@ dht_get::dht_get(
 	set_target(target);
 
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	//TORRENT_LOG(traversal) << "[" << this << "] NEW"
-	//	" target: " << target << " k: " << m_node.m_table.bucket_size();
+	TORRENT_LOG(traversal) << "[" << this << "] NEW"
+		" target: " << target << " k: " << m_node.m_table.bucket_size();
 #endif
 	node.m_table.for_each_node(&add_entry_fun, 0, (traversal_algorithm*)this);
 }
