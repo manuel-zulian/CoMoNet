@@ -568,6 +568,7 @@ libtorrent/src/kademlia/refresh.o: libtorrent/src/kademlia/refresh.cpp \
   /usr/local/include/boost/asio/read.hpp \
   /usr/local/include/boost/asio/impl/read.hpp \
   libtorrent/include/libtorrent/union_endpoint.hpp \
+  libtorrent/include/libtorrent/time.hpp \
   libtorrent/include/libtorrent/session_settings.hpp \
   libtorrent/include/libtorrent/version.hpp \
   libtorrent/include/libtorrent/kademlia/observer.hpp \
@@ -748,7 +749,6 @@ libtorrent/src/kademlia/refresh.o: libtorrent/src/kademlia/refresh.cpp \
   libtorrent/include/libtorrent/kademlia/node.hpp \
   libtorrent/include/libtorrent/io.hpp \
   libtorrent/include/libtorrent/thread.hpp \
-  libtorrent/include/libtorrent/time.hpp \
   /usr/local/include/boost/asio/detail/event.hpp \
   /usr/local/include/boost/asio/detail/posix_event.hpp \
   /usr/local/include/boost/asio/detail/assert.hpp \
@@ -2048,6 +2048,8 @@ libtorrent/include/libtorrent/socket.hpp:
 
 libtorrent/include/libtorrent/union_endpoint.hpp:
 
+libtorrent/include/libtorrent/time.hpp:
+
 libtorrent/include/libtorrent/session_settings.hpp:
 
 libtorrent/include/libtorrent/version.hpp:
@@ -2409,8 +2411,6 @@ libtorrent/include/libtorrent/kademlia/node.hpp:
 libtorrent/include/libtorrent/io.hpp:
 
 libtorrent/include/libtorrent/thread.hpp:
-
-libtorrent/include/libtorrent/time.hpp:
 
 /usr/local/include/boost/asio/detail/event.hpp:
 

@@ -95,8 +95,8 @@ void dht_get_observer::reply(msg const& m)
 			<< " branch-factor: " << m_algorithm->branch_factor()
 			<< " addr: " << m.addr
 			<< " id: " << node_id(id->string_ptr())
-			<< " distance: " << distance_exp(m_algorithm->target(), node_id(id->string_ptr()))
-			<< " p: " << ((end - peers) / 6);
+			<< " distance: " << distance_exp(m_algorithm->target(), node_id(id->string_ptr()));
+			//<< " p: " << ((end - peers) / 6); questa linea da problem [AP]
 #endif
 		entry::list_type values_list;
 		for (int i = 0; i < n->list_size(); ++i)

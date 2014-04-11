@@ -69,18 +69,18 @@ elif [ "$1" = "simul" ]; then
 	echo -e "usage:\n50nodes-exp simul <node> &"
 	exit 0
     fi
-    while true
+    for u in 1 2 3
     do
-	nUtente=$(date +%s | shasum5.16 --algorithm 256 | base64 | head -c 4 ; echo)
+	nUtente=$(date +%s | shasum5.16 --algorithm 256 | base64 | head -c 4 | tr '[:upper:]' '[:lower:]' )
 	echo "$2: createwalletuser utente$nUtente"
 	./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) createwalletuser utente$nUtente
 	./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) sendnewusertransaction utente$nUtente
-	sleep 10
-	for k in 1 2 3
+	sleep 5
+	for k in 1 2 3 4 5
 	do
 	    echo "$2: newpostmsg utente$nUtente $k \"utente$nUtente Says Ciao$k\""
 	    ./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) newpostmsg utente$nUtente $k "utente$nUtente Says Ciao$k"
-	    sleep 5
+	    sleep 10
 	done
     done
 elif [ "$1" = "cmd" ]; then
@@ -108,7 +108,7 @@ elif [ "$1" = "stop" ]; then
     while true
     do
 	echo -n "."
-	sleep 5
+	sleep 2
 	if [ -z "$(pgrep twisterd)" ]; then
 	    echo -e "\nprocessi terminati."
 	    break
@@ -123,4 +123,19 @@ elif [ "$1" = "stop" ]; then
 	done
 	echo "file cancellati"
     fi
+elif [ "$1" = "sequence" ]; then
+    if [ "$2" == "" ]; then
+	echo "Usage $0 $1 <num_nodes>"
+	echo "Connects <num_nodes> in a ring start a miner in the last one and prompt the first so send some messages."
+	exit 0
+    fi
+
+    $0 start $2
+    for i in $(seq 2 $2)
+    do
+	$0 connect $(($i-1)) $i
+	sleep 0.1
+    done
+    $0 cmd $2 setgenerate true 1
+    $0 simul 1
 fi

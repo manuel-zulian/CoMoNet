@@ -33,6 +33,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/pch.hpp"
 #include "libtorrent/socket.hpp"
 
+#include "init.h"
+
 #include <boost/bind.hpp>
 
 #include <libtorrent/io.hpp>

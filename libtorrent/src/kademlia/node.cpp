@@ -262,11 +262,6 @@ void node_impl::incoming(msg const& m)
 				TORRENT_LOG(node) << "INCOMING ERROR: " << err->list_string_value_at(1);
 			}
 #endif
-			lazy_entry const* err = m.message.dict_find_list("e");
-			if (err && err->list_size() >= 2)
-			{
-				printf("INCOMING ERROR: %s\n", err->list_string_value_at(1).c_str());
-			}
 			break;
 		}
 	}
@@ -318,11 +313,11 @@ namespace
              entry const &p, std::string const &sig_p, std::string const &sig_user)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		TORRENT_LOG(node) << "sending putData [ username: " << username
-			<< " res: " << resource
-			<< " nodes: " << v.size() << " ]" ;
+		TORRENT_LOG(node) << "sending putData [ username: [AP] missing data"; //<< username
+			//<< " res: " << resource
+			//<< " nodes: " << v.size() << " ]" ;
 #endif
-        // [AP] lo stamperà quanto sopra?
+        // [AP] le righe sopra danno errori, forse MF non le ha mai usate
         
 		// create a dummy traversal_algorithm
 		boost::intrusive_ptr<traversal_algorithm> algo(
@@ -333,7 +328,7 @@ namespace
 			, end(v.end()); i != end; ++i)
 		{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-			TORRENT_LOG(node) << "  putData-distance: " << (160 - distance_exp(ih, i->first.id));
+			TORRENT_LOG(node) << "  putData-distance: [AP] missing data"; //<< (160 - distance_exp(ih, i->first.id));
 #endif
 
 			void* ptr = node.m_rpc.allocate_observer();
@@ -436,7 +431,7 @@ void node_impl::putData(std::string const &username, std::string const &resource
                         boost::int64_t timeutc, int seq)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	TORRENT_LOG(node) << "putData [ username: " << info_hash << " res: " << resource << " ]" ;
+	TORRENT_LOG(node) << "putData [ username: [AP] missing data"; //<< info_hash << " res: " << resource << " ]" ;
 #endif
 	printf( RED "putData: username=%s,res=%s,multi=%d, sig_user=%s\n" RESET,
 		   username.c_str(), resource.c_str(), multi, sig_user.c_str());
@@ -473,7 +468,7 @@ void node_impl::getData(std::string const &username, std::string const &resource
 			boost::function<void(bool, bool)> fdone)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	TORRENT_LOG(node) << "getData [ username: " << info_hash << " res: " << resource << " ]" ;
+	TORRENT_LOG(node) << "getData [ username: [AP] missing data"; //<< info_hash << " res: " << resource << " ]" ;
 #endif
 	// search for nodes with ids close to id or with peers
 	// for info-hash id. callback is used to return data.

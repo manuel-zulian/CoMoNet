@@ -126,9 +126,15 @@ public:
 	libtorrent::dht::log& name ## _log() \
 	{ \
 		static std::ofstream log_file("dht.log", std::ios::app); \
-		static libtorrent::dht::log instance(#name, log_file); \
+		std::string LogName(#name); \
+		std::string twoDigits(GetDataDir().string().substr(GetDataDir().string().length() - 2, 2)); \
+		assert(twoDigits.length()==2); \
+		std::string* log_id = new std::string(LogName + ";" + twoDigits); \
+		char const* provino = log_id->c_str(); \
+		static libtorrent::dht::log instance(provino, log_file); \
 		return instance; \
 	}
+// [AP] the above code leaks memory (namely the string)
 
 #define TORRENT_LOG(name) \
 	if (libtorrent::dht::inverted_log_event event_object__ = name ## _log()); \
