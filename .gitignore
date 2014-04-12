@@ -8,8 +8,17 @@ src/test_bitcoin
 *.rej
 *.orig
 *.o
+*.Po
 *.patch
 .bitcoin
+
+twisterd
+/build-aux
+
+# emacs
+*~
+\#*\#
+.\#
 
 # http://www.gnu.org/software/automake
 
@@ -34,12 +43,17 @@ Makefile.in
 #
 *.lo
 
+#
+/libtorrent_logs*
+dht*.txt
+dht*.log
 
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
 bitcoin-qt
 Bitcoin-Qt.app
+libtool
 
 # Unit-tests
 Makefile.test
@@ -56,3 +70,16 @@ qrc_*.cpp
 build
 
 !src/leveldb-*/Makefile
+
+#50nodes-exp script
+.global_vars
+
+#xcode
+*.deps
+*.dirstamp
+*UserInterfaceState.xcuserstate
+
+#xcode documentation
+Twisterd.xcodeproj
+#xcode debugging
+accomunet.xcodeproj/xcuserdata/gurghet.xcuserdatad/xcdebugger/
