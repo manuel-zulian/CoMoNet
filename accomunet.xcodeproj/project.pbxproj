@@ -7,15 +7,6 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		7F0F7E3B18F40ADD00856D53 /* accumunet-doc-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "accumunet-doc-Info.plist"; sourceTree = "<group>"; };
-		7F0F7E3D18F40ADD00856D53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7F0F7E3F18F40ADD00856D53 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7F0F7E4118F40ADD00856D53 /* accumunet-doc-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "accumunet-doc-Prefix.pch"; sourceTree = "<group>"; };
-		7F0F7E4318F40ADD00856D53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		7F0F7E4518F40ADD00856D53 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		7F0F7E4618F40ADD00856D53 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7F0F7E4918F40ADD00856D53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7F0F7E4B18F40ADD00856D53 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7FEA9C1B18EEA597002F3385 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7FEA9C1C18EEA597002F3385 /* autotool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autotool.sh; sourceTree = "<group>"; };
 		7FEA9C1D18EEA597002F3385 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
@@ -36,30 +27,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		7F0F7E3918F40ADD00856D53 /* accumunet-doc */ = {
-			isa = PBXGroup;
-			children = (
-				7F0F7E4518F40ADD00856D53 /* AppDelegate.h */,
-				7F0F7E4618F40ADD00856D53 /* AppDelegate.m */,
-				7F0F7E4818F40ADD00856D53 /* MainMenu.xib */,
-				7F0F7E4B18F40ADD00856D53 /* Images.xcassets */,
-				7F0F7E3A18F40ADD00856D53 /* Supporting Files */,
-			);
-			path = "accumunet-doc";
-			sourceTree = "<group>";
-		};
-		7F0F7E3A18F40ADD00856D53 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7F0F7E3B18F40ADD00856D53 /* accumunet-doc-Info.plist */,
-				7F0F7E3C18F40ADD00856D53 /* InfoPlist.strings */,
-				7F0F7E3F18F40ADD00856D53 /* main.m */,
-				7F0F7E4118F40ADD00856D53 /* accumunet-doc-Prefix.pch */,
-				7F0F7E4218F40ADD00856D53 /* Credits.rtf */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		7FDA426418EEA55200BE8B4F = {
 			isa = PBXGroup;
 			children = (
@@ -80,7 +47,6 @@
 				7FEA9C2918EEA597002F3385 /* TODO.md */,
 				7FEA9C2A18EEA597002F3385 /* twister-qt.pro */,
 				7FEA9C2B18EEA597002F3385 /* twister-test.py */,
-				7F0F7E3918F40ADD00856D53 /* accumunet-doc */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,33 +93,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXVariantGroup section */
-		7F0F7E3C18F40ADD00856D53 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F0F7E3D18F40ADD00856D53 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7F0F7E4218F40ADD00856D53 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F0F7E4318F40ADD00856D53 /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		7F0F7E4818F40ADD00856D53 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F0F7E4918F40ADD00856D53 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7FDA426A18EEA55200BE8B4F /* Debug */ = {

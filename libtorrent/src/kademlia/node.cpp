@@ -313,7 +313,7 @@ namespace
              entry const &p, std::string const &sig_p, std::string const &sig_user)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		TORRENT_LOG(node) << "sending putData [ username: [AP] missing data" << p["target"]["n"]
+		TORRENT_LOG(node) << "sending putData [ username: " << p["target"]["n"]
 			<< " res: " << p["target"]["r"]
 			<< " nodes: " << v.size() << " ]" ;
 #endif
@@ -321,7 +321,7 @@ namespace
 		// [AP] dovrei averle riparate se è vero che stiamo realmente mandando quel messaggio!
 		// controllare se il messaggio mandato è effettivamente quello
         
-		// create a dummy traversal_algorithm
+		// create a dummy traversal_algorithm [AP] perché?
 		boost::intrusive_ptr<traversal_algorithm> algo(
 			new traversal_algorithm(node, (node_id::min)()));
 
@@ -330,7 +330,16 @@ namespace
 			, end(v.end()); i != end; ++i)
 		{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-			TORRENT_LOG(node) << "  putData-distance: [AP] missing data"; //<< (160 - distance_exp(ih, i->first.id));
+			entry::dictionary_type target_dict;
+			target_dict["n"] = p["target"]["n"];
+			target_dict["r"] = p["target"]["r"];
+			target_dict["t"] = p["target"]["t"];
+			std::vector<char> ih_buffer;
+			sha1_hash ih;
+			bencode(std::back_inserter(ih_buffer), target_dict);
+			ih = hasher(ih_buffer.data(), ih_buffer.size()).final();
+			
+			TORRENT_LOG(node) << "  putData-distance: " << (160 - distance_exp(ih, i->first.id));
 #endif
 
 			void* ptr = node.m_rpc.allocate_observer();
@@ -340,7 +349,7 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["z"] = "q";
+			//e["z"] = "q";
 			e["q"] = "putData";
 			entry& a = e["x"];
 			a["token"] = i->second;
@@ -463,7 +472,7 @@ void node_impl::putData(std::string const &username, std::string const &resource
 	// for info-hash id. then send putData to them.
 	boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
 		 boost::bind(&nop),
-         boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true));
+         boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true)); // fa questo quando trova i nodi
 	ta->start();
 }
 
@@ -1266,12 +1275,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			, msg_keys[mk_t]->string_value().c_str()
 			, m.addr.address().to_string().c_str(), m.addr.port());
 #endif
-		// [AP]
-		printf( RED "PUT target={%s,%s,%s} from=%s:%d\n" RESET
-			   , msg_keys[mk_n]->string_value().c_str()
-			   , msg_keys[mk_r]->string_value().c_str()
-			   , msg_keys[mk_t]->string_value().c_str()
-			   , m.addr.address().to_string().c_str(), m.addr.port());
 
 		// verify the write-token. tokens are only valid to write to
 		// specific target hashes. it must match the one we got a "get" for

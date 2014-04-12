@@ -73,8 +73,10 @@ bool compare_ref(node_id const& n1, node_id const& n2, node_id const& ref)
 	return false;
 }
 
-// returns n in: 2^n <= distance(n1, n2) < 2^(n+1)
-// useful for finding out which bucket a node belongs to
+/**Find out the number of the bucket a node belongs to
+ * @param n1 info-hash representing the first node
+ * @param n2 info-hash representing the second node
+ * @return n such that 2^n <= distance(n1, n2) < 2^(n+1) */
 int distance_exp(node_id const& n1, node_id const& n2)
 {
 	int byte = node_id::size - 1;
