@@ -181,24 +181,19 @@ void node_impl::bootstrap(std::vector<udp::endpoint> const& nodes
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	int count = 0;
 #endif
-    //[AP] non so come si attiva il verbose logging quindi ci metto il mio
-    int ap_count = 0;
-    
+
 	for (std::vector<udp::endpoint>::const_iterator i = nodes.begin()
 		, end(nodes.end()); i != end; ++i)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 		++count;
 #endif
-        ++ap_count;
 		r->add_entry(node_id(0), *i, observer::flag_initial);
 	}
 	
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	TORRENT_LOG(node) << "bootstrapping with " << count << " nodes";
 #endif
-    printf( RED "bootstrapping with %d nodes\n" RESET,
-		   ap_count);
 	r->start();
 }
 
@@ -349,7 +344,7 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			//e["z"] = "q";
+			e["z"] = "q";
 			e["q"] = "putData";
 			entry& a = e["x"];
 			a["token"] = i->second;
@@ -474,8 +469,18 @@ void node_impl::putData(std::string const &username, std::string const &resource
 	// for info-hash id. then send putData to them.
 	boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
 		 boost::bind(&nop),
-         boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true)); // fa questo quando trova i nodi
-	ta->start();
+         boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true));
+
+    // store it locally so it will be automatically refreshed with the rest
+    dht_storage_item item(str_p, sig_p, sig_user);
+    item.local_add_time = time(NULL);
+    std::vector<char> vbuf;
+    bencode(std::back_inserter(vbuf), value);
+    std::pair<char const*, int> bufv = std::make_pair(vbuf.data(), vbuf.size());
+    store_dht_item(item, ta->target(), multi, seq, height, bufv);
+    
+    // now send it to the network (start transversal algorithm)
+    ta->start();
 }
 
 void node_impl::getData(std::string const &username, std::string const &resource, bool multi,
@@ -1403,13 +1408,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			, msg_keys[mk_t]->string_value().c_str()
 			, m.addr.address().to_string().c_str(), m.addr.port());
 #endif
-		// [AP]
-		printf(RED "GET target={%s,%s,%s} from=%s:%d\n" RESET
-			   , msg_keys[mk_n]->string_value().c_str()
-			   , msg_keys[mk_r]->string_value().c_str()
-			   , msg_keys[mk_t]->string_value().c_str()
-			   , m.addr.address().to_string().c_str(), m.addr.port());
-		
 		reply["token"] = generate_token(m.addr, target.to_string().c_str());
 
 		nodes_t n;

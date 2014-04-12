@@ -53,7 +53,7 @@ static CCriticalSection cs_twister;
 static map<std::string, bool> m_specialResources;
 enum ExpireResType { SimpleNoExpire, NumberedNoExpire, PostNoExpireRecent };
 static map<std::string, ExpireResType> m_noExpireResources;
-static map<std::string, torrent_handle> m_userTorrent; // ogni torrent è un utente
+static map<std::string, torrent_handle> m_userTorrent; // ogni torrent è un utente <utente, torrent>
 static boost::scoped_ptr<CLevelDB> m_swarmDb;
 
 static CCriticalSection cs_spamMsg;
@@ -91,12 +91,12 @@ sha1_hash dhtTargetHash(std::string const &username, std::string const &resource
 torrent_handle startTorrentUser(std::string const &username, bool following)
 {
     bool userInTxDb = usernameExists(username); // keep this outside cs_twister to avoid deadlock
-    if( !userInTxDb )
+    if( !userInTxDb ) // questo utente non esiste e quindi è illegale aprire un torrent per lui
         return torrent_handle();
 
     LOCK(cs_twister);
-    if( !m_userTorrent.count(username) ) {
-        sha1_hash ih = dhtTargetHash(username, "tracker", "m");
+    if( !m_userTorrent.count(username) ) { // se non esistono torrent per l'utente
+        sha1_hash ih = dhtTargetHash(username, "tracker", "m"); // l'info-hash di questo torrent
 
         printf(GREEN "adding torrent for [%s,tracker]\n" RESET, username.c_str());
         add_torrent_params tparams;
