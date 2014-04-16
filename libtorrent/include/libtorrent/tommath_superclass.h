@@ -1,7 +1,8 @@
 /* super class file for PK algos */
 
 /* default ... include all MPI */
-//#define LTM_ALL
+#define LTM_ALL
+// [AP] including all funcs since I don't know which one will i use
 
 // these are the only functions used by libtorrent
 #define BN_MP_EXPTMOD_C

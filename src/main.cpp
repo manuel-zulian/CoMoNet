@@ -643,8 +643,10 @@ bool CWalletTx::AcceptWalletTransaction()
 }
 
 
+/**
 // Return transaction in tx, and if it was found inside a block, its hash is placed in hashBlock
 // [AP] dove hashBlock è una variabile passata
+ */
 bool GetTransaction(const std::string &username, CTransaction &txOut, uint256 &hashBlock, int maxHeight)
 {
     if( maxHeight < 0 )

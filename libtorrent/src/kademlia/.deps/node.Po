@@ -1300,7 +1300,133 @@ libtorrent/src/kademlia/node.o: libtorrent/src/kademlia/node.cpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/stack \
   /usr/local/include/boost/filesystem/convenience.hpp src/netbase.h \
   src/compat.h /usr/include/ifaddrs.h src/key.h src/hash.h \
-  /usr/local/opt/openssl/include/openssl/ripemd.h
+  /usr/local/opt/openssl/include/openssl/ripemd.h \
+  libtorrent/include/../../src/accumunet.h src/bignum.h src/script.h \
+  /usr/local/include/boost/foreach.hpp \
+  /usr/local/include/boost/range/end.hpp \
+  /usr/local/include/boost/range/config.hpp \
+  /usr/local/include/boost/range/detail/implementation_help.hpp \
+  /usr/local/include/boost/range/detail/common.hpp \
+  /usr/local/include/boost/range/detail/sfinae.hpp \
+  /usr/local/include/boost/range/iterator.hpp \
+  /usr/local/include/boost/range/mutable_iterator.hpp \
+  /usr/local/include/boost/range/detail/extract_optional_type.hpp \
+  /usr/local/include/boost/range/const_iterator.hpp \
+  /usr/local/include/boost/range/begin.hpp \
+  /usr/local/include/boost/range/rend.hpp \
+  /usr/local/include/boost/range/reverse_iterator.hpp \
+  /usr/local/include/boost/range/rbegin.hpp \
+  /usr/local/include/boost/variant.hpp \
+  /usr/local/include/boost/variant/variant.hpp \
+  /usr/local/include/boost/variant/detail/config.hpp \
+  /usr/local/include/boost/variant/variant_fwd.hpp \
+  /usr/local/include/boost/blank_fwd.hpp \
+  /usr/local/include/boost/preprocessor/enum_shifted_params.hpp \
+  /usr/local/include/boost/mpl/limits/list.hpp \
+  /usr/local/include/boost/variant/detail/substitute_fwd.hpp \
+  /usr/local/include/boost/variant/detail/backup_holder.hpp \
+  /usr/local/include/boost/variant/detail/enable_recursive_fwd.hpp \
+  /usr/local/include/boost/variant/detail/forced_return.hpp \
+  /usr/local/include/boost/variant/detail/generic_result_type.hpp \
+  /usr/local/include/boost/variant/detail/initializer.hpp \
+  /usr/local/include/boost/variant/recursive_wrapper_fwd.hpp \
+  /usr/local/include/boost/variant/detail/move.hpp \
+  /usr/local/include/boost/move/move.hpp \
+  /usr/local/include/boost/move/iterator.hpp \
+  /usr/local/include/boost/move/algorithm.hpp \
+  /usr/local/include/boost/variant/detail/make_variant_list.hpp \
+  /usr/local/include/boost/mpl/list.hpp \
+  /usr/local/include/boost/mpl/list/list20.hpp \
+  /usr/local/include/boost/mpl/list/list10.hpp \
+  /usr/local/include/boost/mpl/list/list0.hpp \
+  /usr/local/include/boost/mpl/list/aux_/push_front.hpp \
+  /usr/local/include/boost/mpl/list/aux_/item.hpp \
+  /usr/local/include/boost/mpl/list/aux_/tag.hpp \
+  /usr/local/include/boost/mpl/list/aux_/pop_front.hpp \
+  /usr/local/include/boost/mpl/list/aux_/push_back.hpp \
+  /usr/local/include/boost/mpl/list/aux_/front.hpp \
+  /usr/local/include/boost/mpl/list/aux_/clear.hpp \
+  /usr/local/include/boost/mpl/list/aux_/O1_size.hpp \
+  /usr/local/include/boost/mpl/list/aux_/size.hpp \
+  /usr/local/include/boost/mpl/list/aux_/empty.hpp \
+  /usr/local/include/boost/mpl/list/aux_/begin_end.hpp \
+  /usr/local/include/boost/mpl/list/aux_/iterator.hpp \
+  /usr/local/include/boost/mpl/list/aux_/include_preprocessed.hpp \
+  /usr/local/include/boost/mpl/list/aux_/preprocessed/plain/list10.hpp \
+  /usr/local/include/boost/mpl/list/aux_/preprocessed/plain/list20.hpp \
+  /usr/local/include/boost/mpl/aux_/preprocessed/gcc/list.hpp \
+  /usr/local/include/boost/variant/detail/over_sequence.hpp \
+  /usr/local/include/boost/variant/detail/visitation_impl.hpp \
+  /usr/local/include/boost/variant/detail/cast_storage.hpp \
+  /usr/local/include/boost/variant/detail/hash_variant.hpp \
+  /usr/local/include/boost/variant/static_visitor.hpp \
+  /usr/local/include/boost/variant/apply_visitor.hpp \
+  /usr/local/include/boost/variant/detail/apply_visitor_unary.hpp \
+  /usr/local/include/boost/variant/detail/apply_visitor_binary.hpp \
+  /usr/local/include/boost/variant/detail/apply_visitor_delayed.hpp \
+  /usr/local/include/boost/blank.hpp \
+  /usr/local/include/boost/detail/templated_streams.hpp \
+  /usr/local/include/boost/type_traits/is_empty.hpp \
+  /usr/local/include/boost/type_traits/is_stateless.hpp \
+  /usr/local/include/boost/mpl/front.hpp \
+  /usr/local/include/boost/mpl/aux_/front_impl.hpp \
+  /usr/local/include/boost/mpl/max_element.hpp \
+  /usr/local/include/boost/mpl/sizeof.hpp \
+  /usr/local/include/boost/variant/detail/variant_io.hpp \
+  /usr/local/include/boost/variant/recursive_variant.hpp \
+  /usr/local/include/boost/variant/detail/enable_recursive.hpp \
+  /usr/local/include/boost/variant/detail/substitute.hpp \
+  /usr/local/include/boost/mpl/aux_/preprocessor/repeat.hpp \
+  /usr/local/include/boost/variant/recursive_wrapper.hpp \
+  /usr/local/include/boost/mpl/equal.hpp \
+  /usr/local/include/boost/variant/get.hpp \
+  /usr/local/include/boost/variant/visitor_ptr.hpp \
+  /usr/local/include/boost/variant/bad_visit.hpp src/keystore.h \
+  src/crypter.h src/sync.h src/threadsafety.h \
+  /usr/local/include/boost/signals2/signal.hpp \
+  /usr/local/include/boost/signals2/connection.hpp \
+  /usr/local/include/boost/signals2/detail/null_output_iterator.hpp \
+  /usr/local/include/boost/function_output_iterator.hpp \
+  /usr/local/include/boost/signals2/detail/unique_lock.hpp \
+  /usr/local/include/boost/signals2/slot.hpp \
+  /usr/local/include/boost/signals2/detail/signals_common.hpp \
+  /usr/local/include/boost/signals2/signal_base.hpp \
+  /usr/local/include/boost/signals2/detail/signals_common_macros.hpp \
+  /usr/local/include/boost/signals2/detail/tracked_objects_visitor.hpp \
+  /usr/local/include/boost/signals2/slot_base.hpp \
+  /usr/local/include/boost/signals2/detail/foreign_ptr.hpp \
+  /usr/local/include/boost/signals2/expired_slot.hpp \
+  /usr/local/include/boost/signals2/trackable.hpp \
+  /usr/local/include/boost/signals2/preprocessed_slot.hpp \
+  /usr/local/include/boost/preprocessor/repetition.hpp \
+  /usr/local/include/boost/preprocessor/repetition/deduce_r.hpp \
+  /usr/local/include/boost/preprocessor/repetition/deduce_z.hpp \
+  /usr/local/include/boost/preprocessor/repetition/enum_params_with_defaults.hpp \
+  /usr/local/include/boost/preprocessor/repetition/enum_shifted.hpp \
+  /usr/local/include/boost/preprocessor/repetition/enum_trailing.hpp \
+  /usr/local/include/boost/preprocessor/repetition/enum_trailing_binary_params.hpp \
+  /usr/local/include/boost/signals2/detail/preprocessed_arg_type.hpp \
+  /usr/local/include/boost/signals2/detail/preprocessed_arg_type_template.hpp \
+  /usr/local/include/boost/signals2/detail/slot_template.hpp \
+  /usr/local/include/boost/signals2/detail/replace_slot_function.hpp \
+  /usr/local/include/boost/signals2/detail/result_type_wrapper.hpp \
+  /usr/local/include/boost/signals2/detail/slot_groups.hpp \
+  /usr/local/include/boost/signals2/detail/slot_call_iterator.hpp \
+  /usr/local/include/boost/signals2/detail/auto_buffer.hpp \
+  /usr/local/include/boost/signals2/optional_last_value.hpp \
+  /usr/local/include/boost/signals2/mutex.hpp \
+  /usr/local/include/boost/signals2/detail/lwm_pthreads.hpp \
+  /usr/local/include/boost/signals2/preprocessed_signal.hpp \
+  /usr/local/include/boost/preprocessor/arithmetic.hpp \
+  /usr/local/include/boost/preprocessor/arithmetic/div.hpp \
+  /usr/local/include/boost/preprocessor/arithmetic/mul.hpp \
+  /usr/local/include/boost/preprocessor/iteration.hpp \
+  /usr/local/include/boost/preprocessor/iteration/local.hpp \
+  /usr/local/include/boost/preprocessor/iteration/self.hpp \
+  /usr/local/include/boost/signals2/detail/signal_template.hpp \
+  src/../libtorrent/include/libtorrent/tommath.h \
+  libtorrent/include/libtorrent/tommath_class.h \
+  libtorrent/include/libtorrent/tommath_superclass.h
 
 libtorrent/include/libtorrent/pch.hpp:
 
@@ -4089,3 +4215,265 @@ src/key.h:
 src/hash.h:
 
 /usr/local/opt/openssl/include/openssl/ripemd.h:
+
+libtorrent/include/../../src/accumunet.h:
+
+src/bignum.h:
+
+src/script.h:
+
+/usr/local/include/boost/foreach.hpp:
+
+/usr/local/include/boost/range/end.hpp:
+
+/usr/local/include/boost/range/config.hpp:
+
+/usr/local/include/boost/range/detail/implementation_help.hpp:
+
+/usr/local/include/boost/range/detail/common.hpp:
+
+/usr/local/include/boost/range/detail/sfinae.hpp:
+
+/usr/local/include/boost/range/iterator.hpp:
+
+/usr/local/include/boost/range/mutable_iterator.hpp:
+
+/usr/local/include/boost/range/detail/extract_optional_type.hpp:
+
+/usr/local/include/boost/range/const_iterator.hpp:
+
+/usr/local/include/boost/range/begin.hpp:
+
+/usr/local/include/boost/range/rend.hpp:
+
+/usr/local/include/boost/range/reverse_iterator.hpp:
+
+/usr/local/include/boost/range/rbegin.hpp:
+
+/usr/local/include/boost/variant.hpp:
+
+/usr/local/include/boost/variant/variant.hpp:
+
+/usr/local/include/boost/variant/detail/config.hpp:
+
+/usr/local/include/boost/variant/variant_fwd.hpp:
+
+/usr/local/include/boost/blank_fwd.hpp:
+
+/usr/local/include/boost/preprocessor/enum_shifted_params.hpp:
+
+/usr/local/include/boost/mpl/limits/list.hpp:
+
+/usr/local/include/boost/variant/detail/substitute_fwd.hpp:
+
+/usr/local/include/boost/variant/detail/backup_holder.hpp:
+
+/usr/local/include/boost/variant/detail/enable_recursive_fwd.hpp:
+
+/usr/local/include/boost/variant/detail/forced_return.hpp:
+
+/usr/local/include/boost/variant/detail/generic_result_type.hpp:
+
+/usr/local/include/boost/variant/detail/initializer.hpp:
+
+/usr/local/include/boost/variant/recursive_wrapper_fwd.hpp:
+
+/usr/local/include/boost/variant/detail/move.hpp:
+
+/usr/local/include/boost/move/move.hpp:
+
+/usr/local/include/boost/move/iterator.hpp:
+
+/usr/local/include/boost/move/algorithm.hpp:
+
+/usr/local/include/boost/variant/detail/make_variant_list.hpp:
+
+/usr/local/include/boost/mpl/list.hpp:
+
+/usr/local/include/boost/mpl/list/list20.hpp:
+
+/usr/local/include/boost/mpl/list/list10.hpp:
+
+/usr/local/include/boost/mpl/list/list0.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/push_front.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/item.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/tag.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/pop_front.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/push_back.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/front.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/clear.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/O1_size.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/size.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/empty.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/begin_end.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/iterator.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/include_preprocessed.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/preprocessed/plain/list10.hpp:
+
+/usr/local/include/boost/mpl/list/aux_/preprocessed/plain/list20.hpp:
+
+/usr/local/include/boost/mpl/aux_/preprocessed/gcc/list.hpp:
+
+/usr/local/include/boost/variant/detail/over_sequence.hpp:
+
+/usr/local/include/boost/variant/detail/visitation_impl.hpp:
+
+/usr/local/include/boost/variant/detail/cast_storage.hpp:
+
+/usr/local/include/boost/variant/detail/hash_variant.hpp:
+
+/usr/local/include/boost/variant/static_visitor.hpp:
+
+/usr/local/include/boost/variant/apply_visitor.hpp:
+
+/usr/local/include/boost/variant/detail/apply_visitor_unary.hpp:
+
+/usr/local/include/boost/variant/detail/apply_visitor_binary.hpp:
+
+/usr/local/include/boost/variant/detail/apply_visitor_delayed.hpp:
+
+/usr/local/include/boost/blank.hpp:
+
+/usr/local/include/boost/detail/templated_streams.hpp:
+
+/usr/local/include/boost/type_traits/is_empty.hpp:
+
+/usr/local/include/boost/type_traits/is_stateless.hpp:
+
+/usr/local/include/boost/mpl/front.hpp:
+
+/usr/local/include/boost/mpl/aux_/front_impl.hpp:
+
+/usr/local/include/boost/mpl/max_element.hpp:
+
+/usr/local/include/boost/mpl/sizeof.hpp:
+
+/usr/local/include/boost/variant/detail/variant_io.hpp:
+
+/usr/local/include/boost/variant/recursive_variant.hpp:
+
+/usr/local/include/boost/variant/detail/enable_recursive.hpp:
+
+/usr/local/include/boost/variant/detail/substitute.hpp:
+
+/usr/local/include/boost/mpl/aux_/preprocessor/repeat.hpp:
+
+/usr/local/include/boost/variant/recursive_wrapper.hpp:
+
+/usr/local/include/boost/mpl/equal.hpp:
+
+/usr/local/include/boost/variant/get.hpp:
+
+/usr/local/include/boost/variant/visitor_ptr.hpp:
+
+/usr/local/include/boost/variant/bad_visit.hpp:
+
+src/keystore.h:
+
+src/crypter.h:
+
+src/sync.h:
+
+src/threadsafety.h:
+
+/usr/local/include/boost/signals2/signal.hpp:
+
+/usr/local/include/boost/signals2/connection.hpp:
+
+/usr/local/include/boost/signals2/detail/null_output_iterator.hpp:
+
+/usr/local/include/boost/function_output_iterator.hpp:
+
+/usr/local/include/boost/signals2/detail/unique_lock.hpp:
+
+/usr/local/include/boost/signals2/slot.hpp:
+
+/usr/local/include/boost/signals2/detail/signals_common.hpp:
+
+/usr/local/include/boost/signals2/signal_base.hpp:
+
+/usr/local/include/boost/signals2/detail/signals_common_macros.hpp:
+
+/usr/local/include/boost/signals2/detail/tracked_objects_visitor.hpp:
+
+/usr/local/include/boost/signals2/slot_base.hpp:
+
+/usr/local/include/boost/signals2/detail/foreign_ptr.hpp:
+
+/usr/local/include/boost/signals2/expired_slot.hpp:
+
+/usr/local/include/boost/signals2/trackable.hpp:
+
+/usr/local/include/boost/signals2/preprocessed_slot.hpp:
+
+/usr/local/include/boost/preprocessor/repetition.hpp:
+
+/usr/local/include/boost/preprocessor/repetition/deduce_r.hpp:
+
+/usr/local/include/boost/preprocessor/repetition/deduce_z.hpp:
+
+/usr/local/include/boost/preprocessor/repetition/enum_params_with_defaults.hpp:
+
+/usr/local/include/boost/preprocessor/repetition/enum_shifted.hpp:
+
+/usr/local/include/boost/preprocessor/repetition/enum_trailing.hpp:
+
+/usr/local/include/boost/preprocessor/repetition/enum_trailing_binary_params.hpp:
+
+/usr/local/include/boost/signals2/detail/preprocessed_arg_type.hpp:
+
+/usr/local/include/boost/signals2/detail/preprocessed_arg_type_template.hpp:
+
+/usr/local/include/boost/signals2/detail/slot_template.hpp:
+
+/usr/local/include/boost/signals2/detail/replace_slot_function.hpp:
+
+/usr/local/include/boost/signals2/detail/result_type_wrapper.hpp:
+
+/usr/local/include/boost/signals2/detail/slot_groups.hpp:
+
+/usr/local/include/boost/signals2/detail/slot_call_iterator.hpp:
+
+/usr/local/include/boost/signals2/detail/auto_buffer.hpp:
+
+/usr/local/include/boost/signals2/optional_last_value.hpp:
+
+/usr/local/include/boost/signals2/mutex.hpp:
+
+/usr/local/include/boost/signals2/detail/lwm_pthreads.hpp:
+
+/usr/local/include/boost/signals2/preprocessed_signal.hpp:
+
+/usr/local/include/boost/preprocessor/arithmetic.hpp:
+
+/usr/local/include/boost/preprocessor/arithmetic/div.hpp:
+
+/usr/local/include/boost/preprocessor/arithmetic/mul.hpp:
+
+/usr/local/include/boost/preprocessor/iteration.hpp:
+
+/usr/local/include/boost/preprocessor/iteration/local.hpp:
+
+/usr/local/include/boost/preprocessor/iteration/self.hpp:
+
+/usr/local/include/boost/signals2/detail/signal_template.hpp:
+
+src/../libtorrent/include/libtorrent/tommath.h:
+
+libtorrent/include/libtorrent/tommath_class.h:
+
+libtorrent/include/libtorrent/tommath_superclass.h:

@@ -490,6 +490,10 @@ bool IsHex(const string& str)
     return (str.size() > 0) && (str.size()%2 == 0);
 }
 
+/**
+ Turns every two characters in a string in an unsigned char
+ and returns a vector filled with them
+ */
 vector<unsigned char> ParseHex(const char* psz)
 {
     // convert hex dump to vector

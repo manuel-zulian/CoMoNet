@@ -56,6 +56,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/rsa.hpp"
 
 #include "../../src/twister.h"
+#include "../../src/accumunet.h"
 #define ENABLE_DHT_ITEM_EXPIRE
 
 namespace libtorrent { namespace dht
@@ -308,7 +309,7 @@ namespace
              entry const &p, std::string const &sig_p, std::string const &sig_user)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		TORRENT_LOG(node) << "sending putData [ username: " << p["target"]["n"]
+		TORRENT_LOG(node) << "[AP] forse non accurato vedi node.cpp:316:\nsending putData [ username: " << p["target"]["n"]
 			<< " res: " << p["target"]["r"]
 			<< " nodes: " << v.size() << " ]" ;
 #endif
@@ -1205,6 +1206,9 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		// node is not spoofing its address. So, let
 		// the table get a chance to add it.
 		m_table.node_seen(id, m.addr, 0xffff);
+		
+		// TODO: [AP] enforce accumulator here
+		
 
 		if (!m_map.empty() && int(m_map.size()) >= m_settings.max_torrents)
 		{
@@ -1239,6 +1243,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			{"p", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			    {"v", lazy_entry::none_t, 0, 0},
 			    {"seq", lazy_entry::int_t, 0, key_desc_t::optional},
+				{"witness", lazy_entry::string_t, 0, key_desc_t::optional},
 			    {"time", lazy_entry::int_t, 0, 0},
 			    {"height", lazy_entry::int_t, 0, 0},
 			    {"target", lazy_entry::dict_t, 0, key_desc_t::parse_children},
@@ -1247,12 +1252,12 @@ void node_impl::incoming_request(msg const& m, entry& e)
 				{"t", lazy_entry::string_t, 0, 0},
 		};
 		enum {mk_token=0, mk_sig_p, mk_sig_user, mk_p, mk_v,
-		      mk_seq, mk_time, mk_height, mk_target, mk_n,
+		      mk_seq, mk_witness, mk_time, mk_height, mk_target, mk_n,
 		      mk_r, mk_t};
 
 		// attempt to parse the message
-		lazy_entry const* msg_keys[12];
-		if (!verify_message(arg_ent, msg_desc, msg_keys, 12, error_string, sizeof(error_string)))
+		lazy_entry const* msg_keys[13];
+		if (!verify_message(arg_ent, msg_desc, msg_keys, 13, error_string, sizeof(error_string)))
 		{
 			incoming_error(e, error_string);
 			return;
@@ -1304,6 +1309,23 @@ void node_impl::incoming_request(msg const& m, entry& e)
 				    msg_keys[mk_sig_p]->string_value())) {
 			incoming_error(e, "invalid signature");
 			return;
+		}
+		
+		const char* received_username = msg_keys[mk_n]->string_value().c_str();
+		const char* received_rsc_type = msg_keys[mk_r]->string_value().c_str();
+		if (!strcmp(received_rsc_type, "swarm") || // if "swarm" match rcvd type OR
+			strstr(received_rsc_type, "post") != NULL // if post is contained in rcvd type
+			) { // we have to check that username is an admin
+			if (!msg_keys[mk_witness]->string_length()) {
+				// TODO: [AP] not sure this is the right way to check if the witness field is missing, maybe i'm calling string_value() on a null pointer, or lenght() on a null pointer...
+				incoming_error(e, "witness missing, forbidden action");
+				return;
+			}
+			const char* received_witness = msg_keys[mk_witness]->string_value().c_str();
+			if (!isAdmin(received_username, received_witness)) {
+				incoming_error(e, "forbidden action, must be an admin");
+				return;
+			}
 		}
 
 		if (!multi && msg_keys[mk_sig_user]->string_value() !=

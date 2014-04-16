@@ -199,8 +199,8 @@ public:
      READWRITE(message);
      READWRITE(userName);
      READWRITE(pubKey);
+	 READWRITE(accumulator);
      READWRITE(nNonce);
-     READWRITE(accumulator);
      )
 
     void SetNull()

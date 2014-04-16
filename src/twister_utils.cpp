@@ -16,48 +16,58 @@ twister_utils::twister_utils()
 {
 }
 
+/**
+ * Copy the content of a file in a vector
+ * @param filename the file to load
+ * @param v the vector of chars that will hold the file
+ * @param limit the maximum size of the file [default is 8MB]
+ * @return	0	if successful
+			-1	if error
+			-2	if file is too big
+			-3	file changed during operation or another epic error
+ */
 int load_file(std::string const& filename, std::vector<char>& v, int limit)
 {
 	FILE* f = fopen(filename.c_str(), "rb");
-	if (f == NULL)
+	if (f == NULL) // does the file even exists?
 		return -1;
-	int r = fseek(f, 0, SEEK_END);
-	if (r != 0) {
+	int r = fseek(f, 0, SEEK_END); // go at the end of the file
+	if (r != 0) { // couldn't go at the end of the file?
 		fclose(f);
 		return -1;
 	}
-	long s = ftell(f);
-	if (s < 0) {
+	long s = ftell(f); // where are we?
+	if (s < 0) { // are we really IN the file?
 		fclose(f);
 		return -1;
 	}
 
-	if (s > limit) {
+	if (s > limit) { // is the file too big?
 		fclose(f);
 		return -2;
 	}
 
-	r = fseek(f, 0, SEEK_SET);
-	if (r != 0) {
+	r = fseek(f, 0, SEEK_SET);  // no go aaaall the way back to the beginning
+	if (r != 0) { // did it work?
 		fclose(f);
 		return -1;
 	}
 
-	v.resize(s);
-	if (s == 0) {
+	v.resize(s); // set the passed vector to contain one byte per element
+	if (s == 0) { // the file is empty?
 		fclose(f);
 		return 0;
 	}
 
-	r = fread(&v[0], 1, v.size(), f);
-	if (r < 0) {
+	r = fread(&v[0], 1, v.size(), f); // put one byte in every element of v (yes, C++ vectors are contiguos deal with it!)
+	if (r < 0) { // all good?
 		fclose(f);
 		return -1;
 	}
 
 	fclose(f);
 
-	if (r != s) return -3;
+	if (r != s) return -3; // are we even in the right position?
 
 	return 0;
 }

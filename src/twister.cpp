@@ -109,7 +109,7 @@ torrent_handle startTorrentUser(std::string const &username, bool following)
         std::string filename = combine_path(tparams.save_path, to_hex(ih.to_string()) + ".resume");
         load_file(filename.c_str(), tparams.resume_data);
 
-        m_userTorrent[username] = ses->add_torrent(tparams);
+        m_userTorrent[username] = ses->add_torrent(tparams); // restituisce un handle se ha successo
         if( !following ) {
             m_userTorrent[username].auto_managed(true);
         }

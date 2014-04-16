@@ -158,6 +158,7 @@ BITCOIN_TWISTER_SOURCES = \
     src/chainparams.cpp \
     src/twister.cpp \
     src/twister_utils.cpp \
+	src/accumunet.cpp \
     $(SSE2_SOURCES)
 
 if USE_UPNP
@@ -181,3 +182,8 @@ AM_CPPFLAGS = -ftemplate-depth-100 -DBOOST_SPIRIT_THREADSAFE -D_FILE_OFFSET_BITS
     @DEBUGFLAGS@ @OPENSSL_INCLUDES@ @DB_CXX_CPPFLAGS@
 
 AM_LDFLAGS = @OPENSSL_LDFLAGS@
+
+check_SCRIPTS = greptest.sh
+TESTS = $(check_SCRIPTS)
+
+CLEANFILES = greptest.sh
