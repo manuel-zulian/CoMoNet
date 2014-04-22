@@ -1156,7 +1156,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			{"token", lazy_entry::string_t, 0, 0},
 			{"n", lazy_entry::string_t, 0, key_desc_t::optional},
 			{"seed", lazy_entry::int_t, 0, key_desc_t::optional},
-			{"implied_port", lazy_entry::int_t, 0, key_desc_t::optional},
+			{"implied_port", lazy_entry::int_t, 0, key_desc_t::optional}, // add witness
 		};
 
 		lazy_entry const* msg_keys[6];
@@ -1243,7 +1243,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			{"p", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			    {"v", lazy_entry::none_t, 0, 0},
 			    {"seq", lazy_entry::int_t, 0, key_desc_t::optional},
-				{"witness", lazy_entry::string_t, 0, key_desc_t::optional},
+				{"witness", lazy_entry::string_t, 0, key_desc_t::optional}, // add witness to the actual message
 			    {"time", lazy_entry::int_t, 0, 0},
 			    {"height", lazy_entry::int_t, 0, 0},
 			    {"target", lazy_entry::dict_t, 0, key_desc_t::parse_children},

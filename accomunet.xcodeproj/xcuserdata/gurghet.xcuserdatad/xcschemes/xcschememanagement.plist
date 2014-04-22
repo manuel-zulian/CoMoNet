@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>accumunet-doc.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>7F0F7E6E18F46DE400856D53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7FC0E5FB19064F8100A44CC9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -13,15 +13,17 @@
 #include "script.h"
 #include "../libtorrent/include/libtorrent/tommath.h"
 
+bool isAdmin(const char* username);
+
 bool isAdmin(const char* username, const char* witness);
 
 int cb(unsigned char *dst, int len, void* dat);
 
-int mapToPrime(uint256* prime_image, const std::string username);
+int mapToPrime(mp_int* prime_image, const std::string username);
 
-mp_int uint256tomp_int(uint256* src);
+bool uint256tomp_int(mp_int* dest, uint256* src);
 
-uint256 mp_intTouint256(mp_int* src);
+bool mp_intTouint256(uint256* dest, mp_int* src);
 
 void test1();
 

@@ -3,6 +3,7 @@
 #include "twister_utils.h"
 
 #include "main.h"
+#include "accumunet.h"
 #include "init.h"
 #include "bitcoinrpc.h"
 #include "txdb.h"
@@ -1494,16 +1495,23 @@ Value newpostmsg(const Array& params, bool fHelp)
     std::string errmsg;
     if( !acceptSignedPost(buf.data(),buf.size(),strUsername,k,errmsg,NULL) )
         throw JSONRPCError(RPC_INVALID_PARAMS,errmsg);
-
-    torrent_handle h = startTorrentUser(strUsername, true);
-    if( h.is_valid() ) {
-        // if member of torrent post it directly
-        h.add_piece(k,buf.data(),buf.size());
-    } else {
-        // TODO: swarm resource forwarding not implemented
-        ses->dht_putData(strUsername, "swarm", false,
-                         v, strUsername, GetAdjustedTime(), 1);
-    }
+	
+	// [AP] since only Admins can publish new torrents let's check
+	// if is not a reply and is an admin
+	if (isAdmin(strUsername.c_str()) && !strReplyN.length()) {
+		throw JSONRPCError(RPC_INTERNAL_ERROR, "the specified user is in fact an admin");
+		torrent_handle h = startTorrentUser(strUsername, true);
+		if( h.is_valid() ) {
+			// if member of torrent post it directly
+			h.add_piece(k,buf.data(),buf.size());
+		} else {
+			// TODO: swarm resource forwarding not implemented
+			ses->dht_putData(strUsername, "swarm", false,
+							 v, strUsername, GetAdjustedTime(), 1);
+		}
+	} else if (!strReplyN.length()) { // if is not an Admin
+		throw JSONRPCError(RPC_INTERNAL_ERROR, "the specified user is not an admin");
+	}
 
     // post to dht as well
     ses->dht_putData(strUsername, string("post")+strK, false,

@@ -6,7 +6,667 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7FC0E79819065E9D00A44CC9 /* accumunet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65619065E9700A44CC9 /* accumunet.cpp */; };
+		7FC0E79919065E9D00A44CC9 /* bitcoind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65719065E9700A44CC9 /* bitcoind.cpp */; };
+		7FC0E79A19065E9D00A44CC9 /* chainparams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65819065E9700A44CC9 /* chainparams.cpp */; };
+		7FC0E79B19065E9D00A44CC9 /* rpcrawtransaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65919065E9700A44CC9 /* rpcrawtransaction.cpp */; };
+		7FC0E79C19065E9D00A44CC9 /* aboutdialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65A19065E9700A44CC9 /* aboutdialog.cpp */; };
+		7FC0E79D19065E9D00A44CC9 /* accounting_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65B19065E9700A44CC9 /* accounting_tests.cpp */; };
+		7FC0E79E19065E9D00A44CC9 /* addressbookpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65C19065E9700A44CC9 /* addressbookpage.cpp */; };
+		7FC0E79F19065E9D00A44CC9 /* addresstablemodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65D19065E9700A44CC9 /* addresstablemodel.cpp */; };
+		7FC0E7A019065E9D00A44CC9 /* addrman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65E19065E9700A44CC9 /* addrman.cpp */; };
+		7FC0E7A119065E9D00A44CC9 /* alert_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65F19065E9700A44CC9 /* alert_manager.cpp */; };
+		7FC0E7A219065E9D00A44CC9 /* alert_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66019065E9700A44CC9 /* alert_tests.cpp */; };
+		7FC0E7A319065E9D00A44CC9 /* alert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66119065E9700A44CC9 /* alert.cpp */; };
+		7FC0E7A419065E9D00A44CC9 /* alert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66219065E9700A44CC9 /* alert.cpp */; };
+		7FC0E7A519065E9D00A44CC9 /* allocator_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66319065E9700A44CC9 /* allocator_tests.cpp */; };
+		7FC0E7A619065E9D00A44CC9 /* allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66419065E9700A44CC9 /* allocator.cpp */; };
+		7FC0E7A719065E9D00A44CC9 /* arena_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66519065E9700A44CC9 /* arena_test.cc */; };
+		7FC0E7A819065E9D00A44CC9 /* arena.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66619065E9700A44CC9 /* arena.cc */; };
+		7FC0E7A919065E9D00A44CC9 /* asio_ssl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66719065E9700A44CC9 /* asio_ssl.cpp */; };
+		7FC0E7AA19065E9D00A44CC9 /* asio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66819065E9700A44CC9 /* asio.cpp */; };
+		7FC0E7AB19065E9D00A44CC9 /* askpassphrasedialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66919065E9700A44CC9 /* askpassphrasedialog.cpp */; };
+		7FC0E7AC19065E9D00A44CC9 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66A19065E9700A44CC9 /* assert.cpp */; };
+		7FC0E7AD19065E9D00A44CC9 /* bandwidth_limit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66B19065E9700A44CC9 /* bandwidth_limit.cpp */; };
+		7FC0E7AE19065E9D00A44CC9 /* bandwidth_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66C19065E9700A44CC9 /* bandwidth_manager.cpp */; };
+		7FC0E7AF19065E9D00A44CC9 /* bandwidth_queue_entry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66D19065E9700A44CC9 /* bandwidth_queue_entry.cpp */; };
+		7FC0E7B019065E9D00A44CC9 /* base32_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66E19065E9700A44CC9 /* base32_tests.cpp */; };
+		7FC0E7B119065E9D00A44CC9 /* base58_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E66F19065E9700A44CC9 /* base58_tests.cpp */; };
+		7FC0E7B219065E9D00A44CC9 /* base64_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67019065E9700A44CC9 /* base64_tests.cpp */; };
+		7FC0E7B319065E9D00A44CC9 /* bignum_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67119065E9700A44CC9 /* bignum_tests.cpp */; };
+		7FC0E7B419065E9D00A44CC9 /* bitcoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67219065E9700A44CC9 /* bitcoin.cpp */; };
+		7FC0E7B519065E9D00A44CC9 /* bitcoinaddressvalidator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67319065E9700A44CC9 /* bitcoinaddressvalidator.cpp */; };
+		7FC0E7B619065E9D00A44CC9 /* bitcoinamountfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67419065E9700A44CC9 /* bitcoinamountfield.cpp */; };
+		7FC0E7B719065E9D00A44CC9 /* bitcoingui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67519065E9700A44CC9 /* bitcoingui.cpp */; };
+		7FC0E7B819065E9D00A44CC9 /* bitcoinrpc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67619065E9700A44CC9 /* bitcoinrpc.cpp */; };
+		7FC0E7B919065E9D00A44CC9 /* bitcoinstrings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67719065E9700A44CC9 /* bitcoinstrings.cpp */; };
+		7FC0E7BA19065E9D00A44CC9 /* bitcoinunits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67819065E9700A44CC9 /* bitcoinunits.cpp */; };
+		7FC0E7BB19065E9D00A44CC9 /* block_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67919065E9700A44CC9 /* block_builder.cc */; };
+		7FC0E7BC19065E9D00A44CC9 /* block.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67A19065E9700A44CC9 /* block.cc */; };
+		7FC0E7BD19065E9D00A44CC9 /* bloom_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67B19065E9700A44CC9 /* bloom_filter.cpp */; };
+		7FC0E7BE19065E9D00A44CC9 /* bloom_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67C19065E9700A44CC9 /* bloom_test.cc */; };
+		7FC0E7BF19065E9D00A44CC9 /* bloom_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67D19065E9700A44CC9 /* bloom_tests.cpp */; };
+		7FC0E7C019065E9D00A44CC9 /* bloom.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67E19065E9700A44CC9 /* bloom.cc */; };
+		7FC0E7C119065E9D00A44CC9 /* bloom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E67F19065E9700A44CC9 /* bloom.cpp */; };
+		7FC0E7C219065E9D00A44CC9 /* broadcast_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68019065E9700A44CC9 /* broadcast_socket.cpp */; };
+		7FC0E7C319065E9D00A44CC9 /* bt_peer_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68119065E9700A44CC9 /* bt_peer_connection.cpp */; };
+		7FC0E7C419065E9D00A44CC9 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68219065E9700A44CC9 /* builder.cc */; };
+		7FC0E7C519065E9D00A44CC9 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68319065E9700A44CC9 /* c.cc */; };
+		7FC0E7C619065E9D00A44CC9 /* cache_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68419065E9700A44CC9 /* cache_test.cc */; };
+		7FC0E7C719065E9D00A44CC9 /* cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68519065E9700A44CC9 /* cache.cc */; };
+		7FC0E7C819065E9D00A44CC9 /* canonical_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68619065E9700A44CC9 /* canonical_tests.cpp */; };
+		7FC0E7C919065E9D00A44CC9 /* chained_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68719065E9700A44CC9 /* chained_buffer.cpp */; };
+		7FC0E7CA19065E9D00A44CC9 /* checkblock_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68819065E9800A44CC9 /* checkblock_tests.cpp */; };
+		7FC0E7CB19065E9D00A44CC9 /* Checkpoints_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68919065E9800A44CC9 /* Checkpoints_tests.cpp */; };
+		7FC0E7CC19065E9D00A44CC9 /* checkpoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68A19065E9800A44CC9 /* checkpoints.cpp */; };
+		7FC0E7CD19065E9D00A44CC9 /* client_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68B19065E9800A44CC9 /* client_test.cpp */; };
+		7FC0E7CE19065E9D00A44CC9 /* clientmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68C19065E9800A44CC9 /* clientmodel.cpp */; };
+		7FC0E7CF19065E9D00A44CC9 /* coding_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68D19065E9800A44CC9 /* coding_test.cc */; };
+		7FC0E7D019065E9D00A44CC9 /* coding.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68E19065E9800A44CC9 /* coding.cc */; };
+		7FC0E7D119065E9D00A44CC9 /* comparator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E68F19065E9800A44CC9 /* comparator.cc */; };
+		7FC0E7D219065E9D00A44CC9 /* compress_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69019065E9800A44CC9 /* compress_tests.cpp */; };
+		7FC0E7D319065E9D00A44CC9 /* connection_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69119065E9800A44CC9 /* connection_queue.cpp */; };
+		7FC0E7D419065E9D00A44CC9 /* connection_tester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69219065E9800A44CC9 /* connection_tester.cpp */; };
+		7FC0E7D519065E9D00A44CC9 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69319065E9800A44CC9 /* ConvertUTF.cpp */; };
+		7FC0E7D619065E9D00A44CC9 /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69419065E9800A44CC9 /* core.cpp */; };
+		7FC0E7D719065E9D00A44CC9 /* corruption_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69519065E9800A44CC9 /* corruption_test.cc */; };
+		7FC0E7D819065E9D00A44CC9 /* crc32c_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69619065E9800A44CC9 /* crc32c_test.cc */; };
+		7FC0E7D919065E9D00A44CC9 /* crc32c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69719065E9800A44CC9 /* crc32c.cc */; };
+		7FC0E7DA19065E9D00A44CC9 /* create_torrent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69819065E9800A44CC9 /* create_torrent.cpp */; };
+		7FC0E7DB19065E9D00A44CC9 /* crypter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69919065E9800A44CC9 /* crypter.cpp */; };
+		7FC0E7DC19065E9D00A44CC9 /* csvmodelwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69A19065E9800A44CC9 /* csvmodelwriter.cpp */; };
+		7FC0E7DD19065E9D00A44CC9 /* db_bench_sqlite3.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69B19065E9800A44CC9 /* db_bench_sqlite3.cc */; };
+		7FC0E7DE19065E9D00A44CC9 /* db_bench_tree_db.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69C19065E9800A44CC9 /* db_bench_tree_db.cc */; };
+		7FC0E7DF19065E9D00A44CC9 /* db_bench.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69D19065E9800A44CC9 /* db_bench.cc */; };
+		7FC0E7E019065E9D00A44CC9 /* db_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69E19065E9800A44CC9 /* db_impl.cc */; };
+		7FC0E7E119065E9D00A44CC9 /* db_iter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E69F19065E9800A44CC9 /* db_iter.cc */; };
+		7FC0E7E219065E9D00A44CC9 /* db_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A019065E9800A44CC9 /* db_test.cc */; };
+		7FC0E7E319065E9D00A44CC9 /* db.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A119065E9800A44CC9 /* db.cpp */; };
+		7FC0E7E419065E9D00A44CC9 /* dbformat_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A219065E9800A44CC9 /* dbformat_test.cc */; };
+		7FC0E7E519065E9D00A44CC9 /* dbformat.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A319065E9800A44CC9 /* dbformat.cc */; };
+		7FC0E7E619065E9D00A44CC9 /* dht_get.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A419065E9800A44CC9 /* dht_get.cpp */; };
+		7FC0E7E719065E9D00A44CC9 /* dht_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A519065E9800A44CC9 /* dht_server.cpp */; };
+		7FC0E7E819065E9D00A44CC9 /* dht_tracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A619065E9800A44CC9 /* dht_tracker.cpp */; };
+		7FC0E7E919065E9D00A44CC9 /* disk_buffer_holder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A719065E9800A44CC9 /* disk_buffer_holder.cpp */; };
+		7FC0E7EA19065E9D00A44CC9 /* disk_buffer_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A819065E9800A44CC9 /* disk_buffer_pool.cpp */; };
+		7FC0E7EB19065E9D00A44CC9 /* disk_io_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6A919065E9800A44CC9 /* disk_io_thread.cpp */; };
+		7FC0E7EC19065E9D00A44CC9 /* DoS_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6AA19065E9800A44CC9 /* DoS_tests.cpp */; };
+		7FC0E7ED19065E9D00A44CC9 /* dump_torrent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6AB19065E9800A44CC9 /* dump_torrent.cpp */; };
+		7FC0E7EE19065E9D00A44CC9 /* editaddressdialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6AC19065E9800A44CC9 /* editaddressdialog.cpp */; };
+		7FC0E7EF19065E9D00A44CC9 /* entry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6AD19065E9800A44CC9 /* entry.cpp */; };
+		7FC0E7F019065E9D00A44CC9 /* enum_if.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6AE19065E9800A44CC9 /* enum_if.cpp */; };
+		7FC0E7F119065E9D00A44CC9 /* enum_net.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6AF19065E9800A44CC9 /* enum_net.cpp */; };
+		7FC0E7F219065E9D00A44CC9 /* env_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B019065E9800A44CC9 /* env_posix.cc */; };
+		7FC0E7F319065E9D00A44CC9 /* env_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B119065E9800A44CC9 /* env_test.cc */; };
+		7FC0E7F419065E9D00A44CC9 /* env_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B219065E9800A44CC9 /* env_win.cc */; };
+		7FC0E7F519065E9D00A44CC9 /* env.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B319065E9800A44CC9 /* env.cc */; };
+		7FC0E7F619065E9D00A44CC9 /* error_code.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B419065E9800A44CC9 /* error_code.cpp */; };
+		7FC0E7F719065E9D00A44CC9 /* escape_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B519065E9800A44CC9 /* escape_string.cpp */; };
+		7FC0E7F819065E9D00A44CC9 /* file_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B619065E9800A44CC9 /* file_pool.cpp */; };
+		7FC0E7F919065E9D00A44CC9 /* file_storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B719065E9800A44CC9 /* file_storage.cpp */; };
+		7FC0E7FA19065E9D00A44CC9 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B819065E9800A44CC9 /* file.cpp */; };
+		7FC0E7FB19065E9D00A44CC9 /* filename_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6B919065E9800A44CC9 /* filename_test.cc */; };
+		7FC0E7FC19065E9D00A44CC9 /* filename.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6BA19065E9800A44CC9 /* filename.cc */; };
+		7FC0E7FD19065E9D00A44CC9 /* filter_block_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6BB19065E9900A44CC9 /* filter_block_test.cc */; };
+		7FC0E7FE19065E9E00A44CC9 /* filter_block.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6BC19065E9900A44CC9 /* filter_block.cc */; };
+		7FC0E7FF19065E9E00A44CC9 /* filter_policy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6BD19065E9900A44CC9 /* filter_policy.cc */; };
+		7FC0E80019065E9E00A44CC9 /* find_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6BE19065E9900A44CC9 /* find_data.cpp */; };
+		7FC0E80119065E9E00A44CC9 /* format.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6BF19065E9900A44CC9 /* format.cc */; };
+		7FC0E80219065E9E00A44CC9 /* fragmentation_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C019065E9900A44CC9 /* fragmentation_test.cpp */; };
+		7FC0E80319065E9E00A44CC9 /* getarg_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C119065E9900A44CC9 /* getarg_tests.cpp */; };
+		7FC0E80419065E9E00A44CC9 /* guiutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C219065E9900A44CC9 /* guiutil.cpp */; };
+		7FC0E80519065E9E00A44CC9 /* gzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C319065E9900A44CC9 /* gzip.cpp */; };
+		7FC0E80619065E9E00A44CC9 /* hash.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C419065E9900A44CC9 /* hash.cc */; };
+		7FC0E80719065E9E00A44CC9 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C519065E9900A44CC9 /* hash.cpp */; };
+		7FC0E80819065E9E00A44CC9 /* hasher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C619065E9900A44CC9 /* hasher.cpp */; };
+		7FC0E80919065E9E00A44CC9 /* histogram.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C719065E9900A44CC9 /* histogram.cc */; };
+		7FC0E80A19065E9E00A44CC9 /* http_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C819065E9900A44CC9 /* http_connection.cpp */; };
+		7FC0E80B19065E9E00A44CC9 /* http_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6C919065E9900A44CC9 /* http_parser.cpp */; };
+		7FC0E80C19065E9E00A44CC9 /* http_seed_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6CA19065E9900A44CC9 /* http_seed_connection.cpp */; };
+		7FC0E80D19065E9E00A44CC9 /* http_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6CB19065E9900A44CC9 /* http_stream.cpp */; };
+		7FC0E80E19065E9E00A44CC9 /* http_tracker_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6CC19065E9900A44CC9 /* http_tracker_connection.cpp */; };
+		7FC0E80F19065E9E00A44CC9 /* i2p_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6CD19065E9900A44CC9 /* i2p_stream.cpp */; };
+		7FC0E81019065E9E00A44CC9 /* identify_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6CE19065E9900A44CC9 /* identify_client.cpp */; };
+		7FC0E81119065E9E00A44CC9 /* init.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6CF19065E9900A44CC9 /* init.cpp */; };
+		7FC0E81219065E9E00A44CC9 /* instantiate_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D019065E9900A44CC9 /* instantiate_connection.cpp */; };
+		7FC0E81319065E9E00A44CC9 /* ip_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D119065E9900A44CC9 /* ip_filter.cpp */; };
+		7FC0E81419065E9E00A44CC9 /* ip_voter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D219065E9900A44CC9 /* ip_voter.cpp */; };
+		7FC0E81519065E9E00A44CC9 /* iterator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D319065E9900A44CC9 /* iterator.cc */; };
+		7FC0E81619065E9E00A44CC9 /* json_spirit_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D419065E9900A44CC9 /* json_spirit_reader.cpp */; };
+		7FC0E81719065E9E00A44CC9 /* json_spirit_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D519065E9900A44CC9 /* json_spirit_value.cpp */; };
+		7FC0E81819065E9E00A44CC9 /* json_spirit_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D619065E9900A44CC9 /* json_spirit_writer.cpp */; };
+		7FC0E81919065E9E00A44CC9 /* key_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D719065E9900A44CC9 /* key_tests.cpp */; };
+		7FC0E81A19065E9E00A44CC9 /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D819065E9900A44CC9 /* key.cpp */; };
+		7FC0E81B19065E9E00A44CC9 /* keystore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6D919065E9900A44CC9 /* keystore.cpp */; };
+		7FC0E81C19065E9E00A44CC9 /* lazy_bdecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6DA19065E9900A44CC9 /* lazy_bdecode.cpp */; };
+		7FC0E81D19065E9E00A44CC9 /* leveldb_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6DB19065E9900A44CC9 /* leveldb_main.cc */; };
+		7FC0E81E19065E9E00A44CC9 /* leveldb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6DC19065E9900A44CC9 /* leveldb.cpp */; };
+		7FC0E81F19065E9E00A44CC9 /* log_reader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6DD19065E9900A44CC9 /* log_reader.cc */; };
+		7FC0E82019065E9E00A44CC9 /* log_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6DE19065E9900A44CC9 /* log_test.cc */; };
+		7FC0E82119065E9E00A44CC9 /* log_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6DF19065E9900A44CC9 /* log_writer.cc */; };
+		7FC0E82219065E9E00A44CC9 /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E019065E9900A44CC9 /* logger.cpp */; };
+		7FC0E82319065E9E00A44CC9 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E119065E9900A44CC9 /* logging.cc */; };
+		7FC0E82419065E9E00A44CC9 /* logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E219065E9900A44CC9 /* logging.cpp */; };
+		7FC0E82519065E9E00A44CC9 /* lsd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E319065E9900A44CC9 /* lsd.cpp */; };
+		7FC0E82619065E9E00A44CC9 /* lt_trackers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E419065E9900A44CC9 /* lt_trackers.cpp */; };
+		7FC0E82719065E9E00A44CC9 /* magnet_uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E519065E9900A44CC9 /* magnet_uri.cpp */; };
+		7FC0E82819065E9E00A44CC9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E619065E9900A44CC9 /* main.cpp */; };
+		7FC0E82919065E9E00A44CC9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E719065E9900A44CC9 /* main.cpp */; };
+		7FC0E82A19065E9E00A44CC9 /* make_torrent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E819065E9900A44CC9 /* make_torrent.cpp */; };
+		7FC0E82B19065E9E00A44CC9 /* memenv_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6E919065E9900A44CC9 /* memenv_test.cc */; };
+		7FC0E82C19065E9E00A44CC9 /* memenv.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6EA19065E9900A44CC9 /* memenv.cc */; };
+		7FC0E82D19065E9E00A44CC9 /* memtable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6EB19065E9900A44CC9 /* memtable.cc */; };
+		7FC0E82E19065E9E00A44CC9 /* merger.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6EC19065E9A00A44CC9 /* merger.cc */; };
+		7FC0E82F19065E9E00A44CC9 /* metadata_transfer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6ED19065E9A00A44CC9 /* metadata_transfer.cpp */; };
+		7FC0E83019065E9E00A44CC9 /* miner_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6EE19065E9A00A44CC9 /* miner_tests.cpp */; };
+		7FC0E83119065E9E00A44CC9 /* monitoreddatamapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6EF19065E9A00A44CC9 /* monitoreddatamapper.cpp */; };
+		7FC0E83219065E9E00A44CC9 /* mruset_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F019065E9A00A44CC9 /* mruset_tests.cpp */; };
+		7FC0E83319065E9E00A44CC9 /* multisig_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F119065E9A00A44CC9 /* multisig_tests.cpp */; };
+		7FC0E83419065E9E00A44CC9 /* natpmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F219065E9A00A44CC9 /* natpmp.cpp */; };
+		7FC0E83519065E9E00A44CC9 /* net.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F319065E9A00A44CC9 /* net.cpp */; };
+		7FC0E83619065E9E00A44CC9 /* netbase_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F419065E9A00A44CC9 /* netbase_tests.cpp */; };
+		7FC0E83719065E9E00A44CC9 /* netbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F519065E9A00A44CC9 /* netbase.cpp */; };
+		7FC0E83819065E9E00A44CC9 /* node_id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F619065E9A00A44CC9 /* node_id.cpp */; };
+		7FC0E83919065E9E00A44CC9 /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F719065E9A00A44CC9 /* node.cpp */; };
+		7FC0E83A19065E9E00A44CC9 /* notificator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F819065E9A00A44CC9 /* notificator.cpp */; };
+		7FC0E83B19065E9E00A44CC9 /* noui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6F919065E9A00A44CC9 /* noui.cpp */; };
+		7FC0E83C19065E9E00A44CC9 /* options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6FA19065E9A00A44CC9 /* options.cc */; };
+		7FC0E83D19065E9E00A44CC9 /* optionsdialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6FB19065E9A00A44CC9 /* optionsdialog.cpp */; };
+		7FC0E83E19065E9E00A44CC9 /* optionsmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6FC19065E9A00A44CC9 /* optionsmodel.cpp */; };
+		7FC0E83F19065E9E00A44CC9 /* overviewpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6FD19065E9A00A44CC9 /* overviewpage.cpp */; };
+		7FC0E84019065E9E00A44CC9 /* packet_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6FE19065E9A00A44CC9 /* packet_buffer.cpp */; };
+		7FC0E84119065E9E00A44CC9 /* parse_hash_fails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E6FF19065E9A00A44CC9 /* parse_hash_fails.cpp */; };
+		7FC0E84219065E9E00A44CC9 /* parse_request_log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70019065E9A00A44CC9 /* parse_request_log.cpp */; };
+		7FC0E84319065E9E00A44CC9 /* parse_url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70119065E9A00A44CC9 /* parse_url.cpp */; };
+		7FC0E84419065E9E00A44CC9 /* paymentserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70219065E9A00A44CC9 /* paymentserver.cpp */; };
+		7FC0E84519065E9E00A44CC9 /* pe_crypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70319065E9A00A44CC9 /* pe_crypto.cpp */; };
+		7FC0E84619065E9E00A44CC9 /* peer_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70419065E9A00A44CC9 /* peer_connection.cpp */; };
+		7FC0E84719065E9E00A44CC9 /* peer_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70519065E9A00A44CC9 /* peer_server.cpp */; };
+		7FC0E84819065E9E00A44CC9 /* piece_picker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70619065E9A00A44CC9 /* piece_picker.cpp */; };
+		7FC0E84919065E9E00A44CC9 /* pmt_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70719065E9A00A44CC9 /* pmt_tests.cpp */; };
+		7FC0E84A19065E9E00A44CC9 /* policy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70819065E9A00A44CC9 /* policy.cpp */; };
+		7FC0E84B19065E9E00A44CC9 /* port_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70919065E9A00A44CC9 /* port_posix.cc */; };
+		7FC0E84C19065E9E00A44CC9 /* port_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70A19065E9A00A44CC9 /* port_win.cc */; };
+		7FC0E84D19065E9E00A44CC9 /* protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70B19065E9A00A44CC9 /* protocol.cpp */; };
+		7FC0E84E19065E9E00A44CC9 /* puff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70C19065E9A00A44CC9 /* puff.cpp */; };
+		7FC0E84F19065E9E00A44CC9 /* qrcodedialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70D19065E9A00A44CC9 /* qrcodedialog.cpp */; };
+		7FC0E85019065E9E00A44CC9 /* qvalidatedlineedit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70E19065E9A00A44CC9 /* qvalidatedlineedit.cpp */; };
+		7FC0E85119065E9E00A44CC9 /* qvaluecombobox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E70F19065E9A00A44CC9 /* qvaluecombobox.cpp */; };
+		7FC0E85219065E9E00A44CC9 /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71019065E9A00A44CC9 /* random.cpp */; };
+		7FC0E85319065E9E00A44CC9 /* refresh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71119065E9A00A44CC9 /* refresh.cpp */; };
+		7FC0E85419065E9E00A44CC9 /* repair.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71219065E9A00A44CC9 /* repair.cc */; };
+		7FC0E85519065E9E00A44CC9 /* routing_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71319065E9A00A44CC9 /* routing_table.cpp */; };
+		7FC0E85619065E9E00A44CC9 /* rpc_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71419065E9A00A44CC9 /* rpc_manager.cpp */; };
+		7FC0E85719065E9E00A44CC9 /* rpc_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71519065E9A00A44CC9 /* rpc_tests.cpp */; };
+		7FC0E85819065E9E00A44CC9 /* rpcblockchain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71619065E9A00A44CC9 /* rpcblockchain.cpp */; };
+		7FC0E85919065E9E00A44CC9 /* rpcconsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71719065E9A00A44CC9 /* rpcconsole.cpp */; };
+		7FC0E85A19065E9E00A44CC9 /* rpcdump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71819065E9A00A44CC9 /* rpcdump.cpp */; };
+		7FC0E85B19065E9E00A44CC9 /* rpcmining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71919065E9A00A44CC9 /* rpcmining.cpp */; };
+		7FC0E85C19065E9E00A44CC9 /* rpcnet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71A19065E9A00A44CC9 /* rpcnet.cpp */; };
+		7FC0E85D19065E9E00A44CC9 /* rpcwallet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71B19065E9B00A44CC9 /* rpcwallet.cpp */; };
+		7FC0E85E19065E9E00A44CC9 /* rsa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71C19065E9B00A44CC9 /* rsa.cpp */; };
+		7FC0E85F19065E9E00A44CC9 /* rss_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71D19065E9B00A44CC9 /* rss_reader.cpp */; };
+		7FC0E86019065E9E00A44CC9 /* rss.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71E19065E9B00A44CC9 /* rss.cpp */; };
+		7FC0E86119065E9E00A44CC9 /* script_P2SH_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E71F19065E9B00A44CC9 /* script_P2SH_tests.cpp */; };
+		7FC0E86219065E9E00A44CC9 /* script_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72019065E9B00A44CC9 /* script_tests.cpp */; };
+		7FC0E86319065E9E00A44CC9 /* script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72119065E9B00A44CC9 /* script.cpp */; };
+		7FC0E86419065E9E00A44CC9 /* scrypt-sse2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72219065E9B00A44CC9 /* scrypt-sse2.cpp */; };
+		7FC0E86519065E9E00A44CC9 /* scrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72319065E9B00A44CC9 /* scrypt.cpp */; };
+		7FC0E86619065E9E00A44CC9 /* sendcoinsdialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72419065E9B00A44CC9 /* sendcoinsdialog.cpp */; };
+		7FC0E86719065E9E00A44CC9 /* sendcoinsentry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72519065E9B00A44CC9 /* sendcoinsentry.cpp */; };
+		7FC0E86819065E9E00A44CC9 /* serialize_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72619065E9B00A44CC9 /* serialize_tests.cpp */; };
+		7FC0E86919065E9E00A44CC9 /* session_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72719065E9B00A44CC9 /* session_impl.cpp */; };
+		7FC0E86A19065E9E00A44CC9 /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72819065E9B00A44CC9 /* session.cpp */; };
+		7FC0E86B19065E9E00A44CC9 /* settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72919065E9B00A44CC9 /* settings.cpp */; };
+		7FC0E86C19065E9E00A44CC9 /* setup_transfer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72A19065E9B00A44CC9 /* setup_transfer.cpp */; };
+		7FC0E86D19065E9E00A44CC9 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72B19065E9B00A44CC9 /* sha1.cpp */; };
+		7FC0E86E19065E9E00A44CC9 /* signverifymessagedialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72C19065E9B00A44CC9 /* signverifymessagedialog.cpp */; };
+		7FC0E86F19065E9E00A44CC9 /* sigopcount_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72D19065E9B00A44CC9 /* sigopcount_tests.cpp */; };
+		7FC0E87019065E9E00A44CC9 /* simple_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72E19065E9B00A44CC9 /* simple_client.cpp */; };
+		7FC0E87119065E9E00A44CC9 /* skiplist_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E72F19065E9B00A44CC9 /* skiplist_test.cc */; };
+		7FC0E87219065E9E00A44CC9 /* smart_ban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73019065E9B00A44CC9 /* smart_ban.cpp */; };
+		7FC0E87319065E9E00A44CC9 /* socket_io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73119065E9B00A44CC9 /* socket_io.cpp */; };
+		7FC0E87419065E9E00A44CC9 /* socket_type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73219065E9B00A44CC9 /* socket_type.cpp */; };
+		7FC0E87519065E9E00A44CC9 /* socks5_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73319065E9B00A44CC9 /* socks5_stream.cpp */; };
+		7FC0E87619065E9E00A44CC9 /* softcheckpoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73419065E9B00A44CC9 /* softcheckpoint.cpp */; };
+		7FC0E87719065E9E00A44CC9 /* splashscreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73519065E9B00A44CC9 /* splashscreen.cpp */; };
+		7FC0E87819065E9E00A44CC9 /* stat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73619065E9B00A44CC9 /* stat.cpp */; };
+		7FC0E87919065E9E00A44CC9 /* status.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73719065E9B00A44CC9 /* status.cc */; };
+		7FC0E87A19065E9E00A44CC9 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73819065E9B00A44CC9 /* storage.cpp */; };
+		7FC0E87B19065E9E00A44CC9 /* string_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73919065E9B00A44CC9 /* string_util.cpp */; };
+		7FC0E87C19065E9E00A44CC9 /* sync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73A19065E9B00A44CC9 /* sync.cpp */; };
+		7FC0E87D19065E9E00A44CC9 /* table_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73B19065E9B00A44CC9 /* table_builder.cc */; };
+		7FC0E87E19065E9E00A44CC9 /* table_cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73C19065E9B00A44CC9 /* table_cache.cc */; };
+		7FC0E87F19065E9E00A44CC9 /* table_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73D19065E9B00A44CC9 /* table_test.cc */; };
+		7FC0E88019065E9E00A44CC9 /* table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73E19065E9B00A44CC9 /* table.cc */; };
+		7FC0E88119065E9E00A44CC9 /* test_auto_unchoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E73F19065E9B00A44CC9 /* test_auto_unchoke.cpp */; };
+		7FC0E88219065E9E00A44CC9 /* test_bandwidth_limiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74019065E9B00A44CC9 /* test_bandwidth_limiter.cpp */; };
+		7FC0E88319065E9E00A44CC9 /* test_bdecode_performance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74119065E9B00A44CC9 /* test_bdecode_performance.cpp */; };
+		7FC0E88419065E9E00A44CC9 /* test_bencoding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74219065E9B00A44CC9 /* test_bencoding.cpp */; };
+		7FC0E88519065E9E00A44CC9 /* test_bitcoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74319065E9B00A44CC9 /* test_bitcoin.cpp */; };
+		7FC0E88619065E9E00A44CC9 /* test_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74419065E9B00A44CC9 /* test_buffer.cpp */; };
+		7FC0E88719065E9E00A44CC9 /* test_checking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74519065E9B00A44CC9 /* test_checking.cpp */; };
+		7FC0E88819065E9E00A44CC9 /* test_dht.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74619065E9B00A44CC9 /* test_dht.cpp */; };
+		7FC0E88919065E9E00A44CC9 /* test_fast_extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74719065E9B00A44CC9 /* test_fast_extension.cpp */; };
+		7FC0E88A19065E9E00A44CC9 /* test_file_storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74819065E9B00A44CC9 /* test_file_storage.cpp */; };
+		7FC0E88B19065E9E00A44CC9 /* test_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74919065E9C00A44CC9 /* test_file.cpp */; };
+		7FC0E88C19065E9E00A44CC9 /* test_hasher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74A19065E9C00A44CC9 /* test_hasher.cpp */; };
+		7FC0E88D19065E9E00A44CC9 /* test_http_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74B19065E9C00A44CC9 /* test_http_connection.cpp */; };
+		7FC0E88E19065E9E00A44CC9 /* test_ip_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74C19065E9C00A44CC9 /* test_ip_filter.cpp */; };
+		7FC0E88F19065E9E00A44CC9 /* test_lsd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74D19065E9C00A44CC9 /* test_lsd.cpp */; };
+		7FC0E89019065E9E00A44CC9 /* test_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74E19065E9C00A44CC9 /* test_main.cpp */; };
+		7FC0E89119065E9E00A44CC9 /* test_metadata_extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E74F19065E9C00A44CC9 /* test_metadata_extension.cpp */; };
+		7FC0E89219065E9E00A44CC9 /* test_natpmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75019065E9C00A44CC9 /* test_natpmp.cpp */; };
+		7FC0E89319065E9E00A44CC9 /* test_pe_crypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75119065E9C00A44CC9 /* test_pe_crypto.cpp */; };
+		7FC0E89419065E9E00A44CC9 /* test_peer_priority.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75219065E9C00A44CC9 /* test_peer_priority.cpp */; };
+		7FC0E89519065E9E00A44CC9 /* test_pex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75319065E9C00A44CC9 /* test_pex.cpp */; };
+		7FC0E89619065E9E00A44CC9 /* test_piece_picker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75419065E9C00A44CC9 /* test_piece_picker.cpp */; };
+		7FC0E89719065E9E00A44CC9 /* test_primitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75519065E9C00A44CC9 /* test_primitives.cpp */; };
+		7FC0E89819065E9E00A44CC9 /* test_privacy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75619065E9C00A44CC9 /* test_privacy.cpp */; };
+		7FC0E89919065E9E00A44CC9 /* test_rss.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75719065E9C00A44CC9 /* test_rss.cpp */; };
+		7FC0E89A19065E9E00A44CC9 /* test_session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75819065E9C00A44CC9 /* test_session.cpp */; };
+		7FC0E89B19065E9E00A44CC9 /* test_storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75919065E9C00A44CC9 /* test_storage.cpp */; };
+		7FC0E89C19065E9E00A44CC9 /* test_swarm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75A19065E9C00A44CC9 /* test_swarm.cpp */; };
+		7FC0E89D19065E9E00A44CC9 /* test_threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75B19065E9C00A44CC9 /* test_threads.cpp */; };
+		7FC0E89E19065E9E00A44CC9 /* test_torrent_parse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75C19065E9C00A44CC9 /* test_torrent_parse.cpp */; };
+		7FC0E89F19065E9E00A44CC9 /* test_torrent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75D19065E9C00A44CC9 /* test_torrent.cpp */; };
+		7FC0E8A019065E9E00A44CC9 /* test_tracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75E19065E9C00A44CC9 /* test_tracker.cpp */; };
+		7FC0E8A119065E9E00A44CC9 /* test_trackers_extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E75F19065E9C00A44CC9 /* test_trackers_extension.cpp */; };
+		7FC0E8A219065E9E00A44CC9 /* test_transfer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76019065E9C00A44CC9 /* test_transfer.cpp */; };
+		7FC0E8A319065E9E00A44CC9 /* test_upnp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76119065E9C00A44CC9 /* test_upnp.cpp */; };
+		7FC0E8A419065E9E00A44CC9 /* test_utp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76219065E9C00A44CC9 /* test_utp.cpp */; };
+		7FC0E8A519065E9E00A44CC9 /* test_web_seed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76319065E9C00A44CC9 /* test_web_seed.cpp */; };
+		7FC0E8A619065E9E00A44CC9 /* testharness.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76419065E9C00A44CC9 /* testharness.cc */; };
+		7FC0E8A719065E9E00A44CC9 /* testutil.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76519065E9C00A44CC9 /* testutil.cc */; };
+		7FC0E8A819065E9E00A44CC9 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76619065E9C00A44CC9 /* thread.cpp */; };
+		7FC0E8A919065E9E00A44CC9 /* time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76719065E9C00A44CC9 /* time.cpp */; };
+		7FC0E8AA19065E9E00A44CC9 /* timestamp_history.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76819065E9C00A44CC9 /* timestamp_history.cpp */; };
+		7FC0E8AB19065E9E00A44CC9 /* torrent_handle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76919065E9C00A44CC9 /* torrent_handle.cpp */; };
+		7FC0E8AC19065E9E00A44CC9 /* torrent_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76A19065E9C00A44CC9 /* torrent_info.cpp */; };
+		7FC0E8AD19065E9E00A44CC9 /* torrent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76B19065E9C00A44CC9 /* torrent.cpp */; };
+		7FC0E8AE19065E9E00A44CC9 /* tracker_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76C19065E9C00A44CC9 /* tracker_manager.cpp */; };
+		7FC0E8AF19065E9E00A44CC9 /* transaction_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76D19065E9C00A44CC9 /* transaction_tests.cpp */; };
+		7FC0E8B019065E9E00A44CC9 /* transactiondesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76E19065E9C00A44CC9 /* transactiondesc.cpp */; };
+		7FC0E8B119065E9E00A44CC9 /* transactiondescdialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E76F19065E9C00A44CC9 /* transactiondescdialog.cpp */; };
+		7FC0E8B219065E9E00A44CC9 /* transactionfilterproxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77019065E9C00A44CC9 /* transactionfilterproxy.cpp */; };
+		7FC0E8B319065E9E00A44CC9 /* transactionrecord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77119065E9C00A44CC9 /* transactionrecord.cpp */; };
+		7FC0E8B419065E9E00A44CC9 /* transactiontablemodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77219065E9C00A44CC9 /* transactiontablemodel.cpp */; };
+		7FC0E8B519065E9E00A44CC9 /* transactionview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77319065E9C00A44CC9 /* transactionview.cpp */; };
+		7FC0E8B619065E9E00A44CC9 /* traversal_algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77419065E9C00A44CC9 /* traversal_algorithm.cpp */; };
+		7FC0E8B719065E9E00A44CC9 /* twister_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77519065E9C00A44CC9 /* twister_utils.cpp */; };
+		7FC0E8B819065E9E00A44CC9 /* twister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77619065E9D00A44CC9 /* twister.cpp */; };
+		7FC0E8B919065E9E00A44CC9 /* two_level_iterator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77719065E9D00A44CC9 /* two_level_iterator.cc */; };
+		7FC0E8BA19065E9E00A44CC9 /* txdb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77819065E9D00A44CC9 /* txdb.cpp */; };
+		7FC0E8BB19065E9E00A44CC9 /* udp_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77919065E9D00A44CC9 /* udp_socket.cpp */; };
+		7FC0E8BC19065E9E00A44CC9 /* udp_tracker_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77A19065E9D00A44CC9 /* udp_tracker_connection.cpp */; };
+		7FC0E8BD19065E9E00A44CC9 /* uint160_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77B19065E9D00A44CC9 /* uint160_tests.cpp */; };
+		7FC0E8BE19065E9E00A44CC9 /* uint256_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77C19065E9D00A44CC9 /* uint256_tests.cpp */; };
+		7FC0E8BF19065E9E00A44CC9 /* upnp_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77D19065E9D00A44CC9 /* upnp_test.cpp */; };
+		7FC0E8C019065E9E00A44CC9 /* upnp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77E19065E9D00A44CC9 /* upnp.cpp */; };
+		7FC0E8C119065E9E00A44CC9 /* uritests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E77F19065E9D00A44CC9 /* uritests.cpp */; };
+		7FC0E8C219065E9E00A44CC9 /* ut_metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78019065E9D00A44CC9 /* ut_metadata.cpp */; };
+		7FC0E8C319065E9E00A44CC9 /* ut_pex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78119065E9D00A44CC9 /* ut_pex.cpp */; };
+		7FC0E8C419065E9E00A44CC9 /* utf8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78219065E9D00A44CC9 /* utf8.cpp */; };
+		7FC0E8C519065E9E00A44CC9 /* util_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78319065E9D00A44CC9 /* util_tests.cpp */; };
+		7FC0E8C619065E9E00A44CC9 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78419065E9D00A44CC9 /* util.cpp */; };
+		7FC0E8C719065E9E00A44CC9 /* utp_socket_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78519065E9D00A44CC9 /* utp_socket_manager.cpp */; };
+		7FC0E8C819065E9E00A44CC9 /* utp_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78619065E9D00A44CC9 /* utp_stream.cpp */; };
+		7FC0E8C919065E9E00A44CC9 /* utp_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78719065E9D00A44CC9 /* utp_test.cpp */; };
+		7FC0E8CA19065E9E00A44CC9 /* version_edit_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78819065E9D00A44CC9 /* version_edit_test.cc */; };
+		7FC0E8CB19065E9E00A44CC9 /* version_edit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78919065E9D00A44CC9 /* version_edit.cc */; };
+		7FC0E8CC19065E9E00A44CC9 /* version_set_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78A19065E9D00A44CC9 /* version_set_test.cc */; };
+		7FC0E8CD19065E9E00A44CC9 /* version_set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78B19065E9D00A44CC9 /* version_set.cc */; };
+		7FC0E8CE19065E9E00A44CC9 /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78C19065E9D00A44CC9 /* version.cpp */; };
+		7FC0E8CF19065E9E00A44CC9 /* wallet_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78D19065E9D00A44CC9 /* wallet_tests.cpp */; };
+		7FC0E8D019065E9E00A44CC9 /* wallet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78E19065E9D00A44CC9 /* wallet.cpp */; };
+		7FC0E8D119065E9E00A44CC9 /* walletdb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E78F19065E9D00A44CC9 /* walletdb.cpp */; };
+		7FC0E8D219065E9E00A44CC9 /* walletframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79019065E9D00A44CC9 /* walletframe.cpp */; };
+		7FC0E8D319065E9E00A44CC9 /* walletmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79119065E9D00A44CC9 /* walletmodel.cpp */; };
+		7FC0E8D419065E9E00A44CC9 /* walletstack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79219065E9D00A44CC9 /* walletstack.cpp */; };
+		7FC0E8D519065E9E00A44CC9 /* walletview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79319065E9D00A44CC9 /* walletview.cpp */; };
+		7FC0E8D619065E9E00A44CC9 /* web_connection_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79419065E9D00A44CC9 /* web_connection_base.cpp */; };
+		7FC0E8D719065E9E00A44CC9 /* web_peer_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79519065E9D00A44CC9 /* web_peer_connection.cpp */; };
+		7FC0E8D819065E9E00A44CC9 /* write_batch_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79619065E9D00A44CC9 /* write_batch_test.cc */; };
+		7FC0E8D919065E9E00A44CC9 /* write_batch.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E79719065E9D00A44CC9 /* write_batch.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7FC0E5FA19064F8100A44CC9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		7FC0E5FC19064F8100A44CC9 /* accumunet-doc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "accumunet-doc"; path = "/Users/gurghet/Documents/Tesi/prototipo/accumunet/build/Debug/accumunet-doc"; sourceTree = "<absolute>"; };
+		7FC0E65619065E9700A44CC9 /* accumunet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accumunet.cpp; path = src/accumunet.cpp; sourceTree = "<group>"; };
+		7FC0E65719065E9700A44CC9 /* bitcoind.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoind.cpp; path = src/bitcoind.cpp; sourceTree = "<group>"; };
+		7FC0E65819065E9700A44CC9 /* chainparams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = chainparams.cpp; path = src/chainparams.cpp; sourceTree = "<group>"; };
+		7FC0E65919065E9700A44CC9 /* rpcrawtransaction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcrawtransaction.cpp; path = src/rpcrawtransaction.cpp; sourceTree = "<group>"; };
+		7FC0E65A19065E9700A44CC9 /* aboutdialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = aboutdialog.cpp; path = src/qt/aboutdialog.cpp; sourceTree = "<group>"; };
+		7FC0E65B19065E9700A44CC9 /* accounting_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accounting_tests.cpp; path = src/test/accounting_tests.cpp; sourceTree = "<group>"; };
+		7FC0E65C19065E9700A44CC9 /* addressbookpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = addressbookpage.cpp; path = src/qt/addressbookpage.cpp; sourceTree = "<group>"; };
+		7FC0E65D19065E9700A44CC9 /* addresstablemodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = addresstablemodel.cpp; path = src/qt/addresstablemodel.cpp; sourceTree = "<group>"; };
+		7FC0E65E19065E9700A44CC9 /* addrman.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = addrman.cpp; path = src/addrman.cpp; sourceTree = "<group>"; };
+		7FC0E65F19065E9700A44CC9 /* alert_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = alert_manager.cpp; path = libtorrent/src/alert_manager.cpp; sourceTree = "<group>"; };
+		7FC0E66019065E9700A44CC9 /* alert_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = alert_tests.cpp; path = src/test/alert_tests.cpp; sourceTree = "<group>"; };
+		7FC0E66119065E9700A44CC9 /* alert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = alert.cpp; path = libtorrent/src/alert.cpp; sourceTree = "<group>"; };
+		7FC0E66219065E9700A44CC9 /* alert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = alert.cpp; path = src/alert.cpp; sourceTree = "<group>"; };
+		7FC0E66319065E9700A44CC9 /* allocator_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = allocator_tests.cpp; path = src/test/allocator_tests.cpp; sourceTree = "<group>"; };
+		7FC0E66419065E9700A44CC9 /* allocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = allocator.cpp; path = libtorrent/src/allocator.cpp; sourceTree = "<group>"; };
+		7FC0E66519065E9700A44CC9 /* arena_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = arena_test.cc; path = src/leveldb/util/arena_test.cc; sourceTree = "<group>"; };
+		7FC0E66619065E9700A44CC9 /* arena.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = arena.cc; path = src/leveldb/util/arena.cc; sourceTree = "<group>"; };
+		7FC0E66719065E9700A44CC9 /* asio_ssl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asio_ssl.cpp; path = libtorrent/src/asio_ssl.cpp; sourceTree = "<group>"; };
+		7FC0E66819065E9700A44CC9 /* asio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asio.cpp; path = libtorrent/src/asio.cpp; sourceTree = "<group>"; };
+		7FC0E66919065E9700A44CC9 /* askpassphrasedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = askpassphrasedialog.cpp; path = src/qt/askpassphrasedialog.cpp; sourceTree = "<group>"; };
+		7FC0E66A19065E9700A44CC9 /* assert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = assert.cpp; path = libtorrent/src/assert.cpp; sourceTree = "<group>"; };
+		7FC0E66B19065E9700A44CC9 /* bandwidth_limit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bandwidth_limit.cpp; path = libtorrent/src/bandwidth_limit.cpp; sourceTree = "<group>"; };
+		7FC0E66C19065E9700A44CC9 /* bandwidth_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bandwidth_manager.cpp; path = libtorrent/src/bandwidth_manager.cpp; sourceTree = "<group>"; };
+		7FC0E66D19065E9700A44CC9 /* bandwidth_queue_entry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bandwidth_queue_entry.cpp; path = libtorrent/src/bandwidth_queue_entry.cpp; sourceTree = "<group>"; };
+		7FC0E66E19065E9700A44CC9 /* base32_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = base32_tests.cpp; path = src/test/base32_tests.cpp; sourceTree = "<group>"; };
+		7FC0E66F19065E9700A44CC9 /* base58_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = base58_tests.cpp; path = src/test/base58_tests.cpp; sourceTree = "<group>"; };
+		7FC0E67019065E9700A44CC9 /* base64_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = base64_tests.cpp; path = src/test/base64_tests.cpp; sourceTree = "<group>"; };
+		7FC0E67119065E9700A44CC9 /* bignum_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bignum_tests.cpp; path = src/test/bignum_tests.cpp; sourceTree = "<group>"; };
+		7FC0E67219065E9700A44CC9 /* bitcoin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoin.cpp; path = src/qt/bitcoin.cpp; sourceTree = "<group>"; };
+		7FC0E67319065E9700A44CC9 /* bitcoinaddressvalidator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoinaddressvalidator.cpp; path = src/qt/bitcoinaddressvalidator.cpp; sourceTree = "<group>"; };
+		7FC0E67419065E9700A44CC9 /* bitcoinamountfield.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoinamountfield.cpp; path = src/qt/bitcoinamountfield.cpp; sourceTree = "<group>"; };
+		7FC0E67519065E9700A44CC9 /* bitcoingui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoingui.cpp; path = src/qt/bitcoingui.cpp; sourceTree = "<group>"; };
+		7FC0E67619065E9700A44CC9 /* bitcoinrpc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoinrpc.cpp; path = src/bitcoinrpc.cpp; sourceTree = "<group>"; };
+		7FC0E67719065E9700A44CC9 /* bitcoinstrings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoinstrings.cpp; path = src/qt/bitcoinstrings.cpp; sourceTree = "<group>"; };
+		7FC0E67819065E9700A44CC9 /* bitcoinunits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoinunits.cpp; path = src/qt/bitcoinunits.cpp; sourceTree = "<group>"; };
+		7FC0E67919065E9700A44CC9 /* block_builder.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = block_builder.cc; path = src/leveldb/table/block_builder.cc; sourceTree = "<group>"; };
+		7FC0E67A19065E9700A44CC9 /* block.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = block.cc; path = src/leveldb/table/block.cc; sourceTree = "<group>"; };
+		7FC0E67B19065E9700A44CC9 /* bloom_filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bloom_filter.cpp; path = libtorrent/src/bloom_filter.cpp; sourceTree = "<group>"; };
+		7FC0E67C19065E9700A44CC9 /* bloom_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bloom_test.cc; path = src/leveldb/util/bloom_test.cc; sourceTree = "<group>"; };
+		7FC0E67D19065E9700A44CC9 /* bloom_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bloom_tests.cpp; path = src/test/bloom_tests.cpp; sourceTree = "<group>"; };
+		7FC0E67E19065E9700A44CC9 /* bloom.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bloom.cc; path = src/leveldb/util/bloom.cc; sourceTree = "<group>"; };
+		7FC0E67F19065E9700A44CC9 /* bloom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bloom.cpp; path = src/bloom.cpp; sourceTree = "<group>"; };
+		7FC0E68019065E9700A44CC9 /* broadcast_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = broadcast_socket.cpp; path = libtorrent/src/broadcast_socket.cpp; sourceTree = "<group>"; };
+		7FC0E68119065E9700A44CC9 /* bt_peer_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bt_peer_connection.cpp; path = libtorrent/src/bt_peer_connection.cpp; sourceTree = "<group>"; };
+		7FC0E68219065E9700A44CC9 /* builder.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = builder.cc; path = src/leveldb/db/builder.cc; sourceTree = "<group>"; };
+		7FC0E68319065E9700A44CC9 /* c.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = c.cc; path = src/leveldb/db/c.cc; sourceTree = "<group>"; };
+		7FC0E68419065E9700A44CC9 /* cache_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cache_test.cc; path = src/leveldb/util/cache_test.cc; sourceTree = "<group>"; };
+		7FC0E68519065E9700A44CC9 /* cache.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cc; path = src/leveldb/util/cache.cc; sourceTree = "<group>"; };
+		7FC0E68619065E9700A44CC9 /* canonical_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = canonical_tests.cpp; path = src/test/canonical_tests.cpp; sourceTree = "<group>"; };
+		7FC0E68719065E9700A44CC9 /* chained_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = chained_buffer.cpp; path = libtorrent/src/chained_buffer.cpp; sourceTree = "<group>"; };
+		7FC0E68819065E9800A44CC9 /* checkblock_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = checkblock_tests.cpp; path = src/test/checkblock_tests.cpp; sourceTree = "<group>"; };
+		7FC0E68919065E9800A44CC9 /* Checkpoints_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Checkpoints_tests.cpp; path = src/test/Checkpoints_tests.cpp; sourceTree = "<group>"; };
+		7FC0E68A19065E9800A44CC9 /* checkpoints.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = checkpoints.cpp; path = src/checkpoints.cpp; sourceTree = "<group>"; };
+		7FC0E68B19065E9800A44CC9 /* client_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = client_test.cpp; path = libtorrent/examples/client_test.cpp; sourceTree = "<group>"; };
+		7FC0E68C19065E9800A44CC9 /* clientmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clientmodel.cpp; path = src/qt/clientmodel.cpp; sourceTree = "<group>"; };
+		7FC0E68D19065E9800A44CC9 /* coding_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = coding_test.cc; path = src/leveldb/util/coding_test.cc; sourceTree = "<group>"; };
+		7FC0E68E19065E9800A44CC9 /* coding.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = coding.cc; path = src/leveldb/util/coding.cc; sourceTree = "<group>"; };
+		7FC0E68F19065E9800A44CC9 /* comparator.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = comparator.cc; path = src/leveldb/util/comparator.cc; sourceTree = "<group>"; };
+		7FC0E69019065E9800A44CC9 /* compress_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = compress_tests.cpp; path = src/test/compress_tests.cpp; sourceTree = "<group>"; };
+		7FC0E69119065E9800A44CC9 /* connection_queue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = connection_queue.cpp; path = libtorrent/src/connection_queue.cpp; sourceTree = "<group>"; };
+		7FC0E69219065E9800A44CC9 /* connection_tester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = connection_tester.cpp; path = libtorrent/examples/connection_tester.cpp; sourceTree = "<group>"; };
+		7FC0E69319065E9800A44CC9 /* ConvertUTF.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertUTF.cpp; path = libtorrent/src/ConvertUTF.cpp; sourceTree = "<group>"; };
+		7FC0E69419065E9800A44CC9 /* core.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = core.cpp; path = src/core.cpp; sourceTree = "<group>"; };
+		7FC0E69519065E9800A44CC9 /* corruption_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = corruption_test.cc; path = src/leveldb/db/corruption_test.cc; sourceTree = "<group>"; };
+		7FC0E69619065E9800A44CC9 /* crc32c_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = crc32c_test.cc; path = src/leveldb/util/crc32c_test.cc; sourceTree = "<group>"; };
+		7FC0E69719065E9800A44CC9 /* crc32c.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = crc32c.cc; path = src/leveldb/util/crc32c.cc; sourceTree = "<group>"; };
+		7FC0E69819065E9800A44CC9 /* create_torrent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = create_torrent.cpp; path = libtorrent/src/create_torrent.cpp; sourceTree = "<group>"; };
+		7FC0E69919065E9800A44CC9 /* crypter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = crypter.cpp; path = src/crypter.cpp; sourceTree = "<group>"; };
+		7FC0E69A19065E9800A44CC9 /* csvmodelwriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = csvmodelwriter.cpp; path = src/qt/csvmodelwriter.cpp; sourceTree = "<group>"; };
+		7FC0E69B19065E9800A44CC9 /* db_bench_sqlite3.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db_bench_sqlite3.cc; path = src/leveldb/doc/bench/db_bench_sqlite3.cc; sourceTree = "<group>"; };
+		7FC0E69C19065E9800A44CC9 /* db_bench_tree_db.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db_bench_tree_db.cc; path = src/leveldb/doc/bench/db_bench_tree_db.cc; sourceTree = "<group>"; };
+		7FC0E69D19065E9800A44CC9 /* db_bench.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db_bench.cc; path = src/leveldb/db/db_bench.cc; sourceTree = "<group>"; };
+		7FC0E69E19065E9800A44CC9 /* db_impl.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db_impl.cc; path = src/leveldb/db/db_impl.cc; sourceTree = "<group>"; };
+		7FC0E69F19065E9800A44CC9 /* db_iter.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db_iter.cc; path = src/leveldb/db/db_iter.cc; sourceTree = "<group>"; };
+		7FC0E6A019065E9800A44CC9 /* db_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db_test.cc; path = src/leveldb/db/db_test.cc; sourceTree = "<group>"; };
+		7FC0E6A119065E9800A44CC9 /* db.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = db.cpp; path = src/db.cpp; sourceTree = "<group>"; };
+		7FC0E6A219065E9800A44CC9 /* dbformat_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbformat_test.cc; path = src/leveldb/db/dbformat_test.cc; sourceTree = "<group>"; };
+		7FC0E6A319065E9800A44CC9 /* dbformat.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbformat.cc; path = src/leveldb/db/dbformat.cc; sourceTree = "<group>"; };
+		7FC0E6A419065E9800A44CC9 /* dht_get.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dht_get.cpp; path = libtorrent/src/kademlia/dht_get.cpp; sourceTree = "<group>"; };
+		7FC0E6A519065E9800A44CC9 /* dht_server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dht_server.cpp; path = libtorrent/test/dht_server.cpp; sourceTree = "<group>"; };
+		7FC0E6A619065E9800A44CC9 /* dht_tracker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dht_tracker.cpp; path = libtorrent/src/kademlia/dht_tracker.cpp; sourceTree = "<group>"; };
+		7FC0E6A719065E9800A44CC9 /* disk_buffer_holder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = disk_buffer_holder.cpp; path = libtorrent/src/disk_buffer_holder.cpp; sourceTree = "<group>"; };
+		7FC0E6A819065E9800A44CC9 /* disk_buffer_pool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = disk_buffer_pool.cpp; path = libtorrent/src/disk_buffer_pool.cpp; sourceTree = "<group>"; };
+		7FC0E6A919065E9800A44CC9 /* disk_io_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = disk_io_thread.cpp; path = libtorrent/src/disk_io_thread.cpp; sourceTree = "<group>"; };
+		7FC0E6AA19065E9800A44CC9 /* DoS_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DoS_tests.cpp; path = src/test/DoS_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6AB19065E9800A44CC9 /* dump_torrent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dump_torrent.cpp; path = libtorrent/examples/dump_torrent.cpp; sourceTree = "<group>"; };
+		7FC0E6AC19065E9800A44CC9 /* editaddressdialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editaddressdialog.cpp; path = src/qt/editaddressdialog.cpp; sourceTree = "<group>"; };
+		7FC0E6AD19065E9800A44CC9 /* entry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = entry.cpp; path = libtorrent/src/entry.cpp; sourceTree = "<group>"; };
+		7FC0E6AE19065E9800A44CC9 /* enum_if.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = enum_if.cpp; path = libtorrent/test/enum_if.cpp; sourceTree = "<group>"; };
+		7FC0E6AF19065E9800A44CC9 /* enum_net.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = enum_net.cpp; path = libtorrent/src/enum_net.cpp; sourceTree = "<group>"; };
+		7FC0E6B019065E9800A44CC9 /* env_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = env_posix.cc; path = src/leveldb/util/env_posix.cc; sourceTree = "<group>"; };
+		7FC0E6B119065E9800A44CC9 /* env_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = env_test.cc; path = src/leveldb/util/env_test.cc; sourceTree = "<group>"; };
+		7FC0E6B219065E9800A44CC9 /* env_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = env_win.cc; path = src/leveldb/util/env_win.cc; sourceTree = "<group>"; };
+		7FC0E6B319065E9800A44CC9 /* env.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = env.cc; path = src/leveldb/util/env.cc; sourceTree = "<group>"; };
+		7FC0E6B419065E9800A44CC9 /* error_code.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = error_code.cpp; path = libtorrent/src/error_code.cpp; sourceTree = "<group>"; };
+		7FC0E6B519065E9800A44CC9 /* escape_string.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = escape_string.cpp; path = libtorrent/src/escape_string.cpp; sourceTree = "<group>"; };
+		7FC0E6B619065E9800A44CC9 /* file_pool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = file_pool.cpp; path = libtorrent/src/file_pool.cpp; sourceTree = "<group>"; };
+		7FC0E6B719065E9800A44CC9 /* file_storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = file_storage.cpp; path = libtorrent/src/file_storage.cpp; sourceTree = "<group>"; };
+		7FC0E6B819065E9800A44CC9 /* file.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = file.cpp; path = libtorrent/src/file.cpp; sourceTree = "<group>"; };
+		7FC0E6B919065E9800A44CC9 /* filename_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filename_test.cc; path = src/leveldb/db/filename_test.cc; sourceTree = "<group>"; };
+		7FC0E6BA19065E9800A44CC9 /* filename.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filename.cc; path = src/leveldb/db/filename.cc; sourceTree = "<group>"; };
+		7FC0E6BB19065E9900A44CC9 /* filter_block_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filter_block_test.cc; path = src/leveldb/table/filter_block_test.cc; sourceTree = "<group>"; };
+		7FC0E6BC19065E9900A44CC9 /* filter_block.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filter_block.cc; path = src/leveldb/table/filter_block.cc; sourceTree = "<group>"; };
+		7FC0E6BD19065E9900A44CC9 /* filter_policy.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filter_policy.cc; path = src/leveldb/util/filter_policy.cc; sourceTree = "<group>"; };
+		7FC0E6BE19065E9900A44CC9 /* find_data.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = find_data.cpp; path = libtorrent/src/kademlia/find_data.cpp; sourceTree = "<group>"; };
+		7FC0E6BF19065E9900A44CC9 /* format.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = format.cc; path = src/leveldb/table/format.cc; sourceTree = "<group>"; };
+		7FC0E6C019065E9900A44CC9 /* fragmentation_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fragmentation_test.cpp; path = libtorrent/examples/fragmentation_test.cpp; sourceTree = "<group>"; };
+		7FC0E6C119065E9900A44CC9 /* getarg_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = getarg_tests.cpp; path = src/test/getarg_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6C219065E9900A44CC9 /* guiutil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = guiutil.cpp; path = src/qt/guiutil.cpp; sourceTree = "<group>"; };
+		7FC0E6C319065E9900A44CC9 /* gzip.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gzip.cpp; path = libtorrent/src/gzip.cpp; sourceTree = "<group>"; };
+		7FC0E6C419065E9900A44CC9 /* hash.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cc; path = src/leveldb/util/hash.cc; sourceTree = "<group>"; };
+		7FC0E6C519065E9900A44CC9 /* hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cpp; path = src/hash.cpp; sourceTree = "<group>"; };
+		7FC0E6C619065E9900A44CC9 /* hasher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hasher.cpp; path = libtorrent/src/hasher.cpp; sourceTree = "<group>"; };
+		7FC0E6C719065E9900A44CC9 /* histogram.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = histogram.cc; path = src/leveldb/util/histogram.cc; sourceTree = "<group>"; };
+		7FC0E6C819065E9900A44CC9 /* http_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = http_connection.cpp; path = libtorrent/src/http_connection.cpp; sourceTree = "<group>"; };
+		7FC0E6C919065E9900A44CC9 /* http_parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = http_parser.cpp; path = libtorrent/src/http_parser.cpp; sourceTree = "<group>"; };
+		7FC0E6CA19065E9900A44CC9 /* http_seed_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = http_seed_connection.cpp; path = libtorrent/src/http_seed_connection.cpp; sourceTree = "<group>"; };
+		7FC0E6CB19065E9900A44CC9 /* http_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = http_stream.cpp; path = libtorrent/src/http_stream.cpp; sourceTree = "<group>"; };
+		7FC0E6CC19065E9900A44CC9 /* http_tracker_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = http_tracker_connection.cpp; path = libtorrent/src/http_tracker_connection.cpp; sourceTree = "<group>"; };
+		7FC0E6CD19065E9900A44CC9 /* i2p_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = i2p_stream.cpp; path = libtorrent/src/i2p_stream.cpp; sourceTree = "<group>"; };
+		7FC0E6CE19065E9900A44CC9 /* identify_client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = identify_client.cpp; path = libtorrent/src/identify_client.cpp; sourceTree = "<group>"; };
+		7FC0E6CF19065E9900A44CC9 /* init.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cpp; path = src/init.cpp; sourceTree = "<group>"; };
+		7FC0E6D019065E9900A44CC9 /* instantiate_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = instantiate_connection.cpp; path = libtorrent/src/instantiate_connection.cpp; sourceTree = "<group>"; };
+		7FC0E6D119065E9900A44CC9 /* ip_filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ip_filter.cpp; path = libtorrent/src/ip_filter.cpp; sourceTree = "<group>"; };
+		7FC0E6D219065E9900A44CC9 /* ip_voter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ip_voter.cpp; path = libtorrent/src/ip_voter.cpp; sourceTree = "<group>"; };
+		7FC0E6D319065E9900A44CC9 /* iterator.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iterator.cc; path = src/leveldb/table/iterator.cc; sourceTree = "<group>"; };
+		7FC0E6D419065E9900A44CC9 /* json_spirit_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = json_spirit_reader.cpp; path = src/json/json_spirit_reader.cpp; sourceTree = "<group>"; };
+		7FC0E6D519065E9900A44CC9 /* json_spirit_value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = json_spirit_value.cpp; path = src/json/json_spirit_value.cpp; sourceTree = "<group>"; };
+		7FC0E6D619065E9900A44CC9 /* json_spirit_writer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = json_spirit_writer.cpp; path = src/json/json_spirit_writer.cpp; sourceTree = "<group>"; };
+		7FC0E6D719065E9900A44CC9 /* key_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = key_tests.cpp; path = src/test/key_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6D819065E9900A44CC9 /* key.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = key.cpp; path = src/key.cpp; sourceTree = "<group>"; };
+		7FC0E6D919065E9900A44CC9 /* keystore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = keystore.cpp; path = src/keystore.cpp; sourceTree = "<group>"; };
+		7FC0E6DA19065E9900A44CC9 /* lazy_bdecode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lazy_bdecode.cpp; path = libtorrent/src/lazy_bdecode.cpp; sourceTree = "<group>"; };
+		7FC0E6DB19065E9900A44CC9 /* leveldb_main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = leveldb_main.cc; path = src/leveldb/db/leveldb_main.cc; sourceTree = "<group>"; };
+		7FC0E6DC19065E9900A44CC9 /* leveldb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = leveldb.cpp; path = src/leveldb.cpp; sourceTree = "<group>"; };
+		7FC0E6DD19065E9900A44CC9 /* log_reader.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = log_reader.cc; path = src/leveldb/db/log_reader.cc; sourceTree = "<group>"; };
+		7FC0E6DE19065E9900A44CC9 /* log_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = log_test.cc; path = src/leveldb/db/log_test.cc; sourceTree = "<group>"; };
+		7FC0E6DF19065E9900A44CC9 /* log_writer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = log_writer.cc; path = src/leveldb/db/log_writer.cc; sourceTree = "<group>"; };
+		7FC0E6E019065E9900A44CC9 /* logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = logger.cpp; path = libtorrent/src/logger.cpp; sourceTree = "<group>"; };
+		7FC0E6E119065E9900A44CC9 /* logging.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = logging.cc; path = src/leveldb/util/logging.cc; sourceTree = "<group>"; };
+		7FC0E6E219065E9900A44CC9 /* logging.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = logging.cpp; path = libtorrent/src/kademlia/logging.cpp; sourceTree = "<group>"; };
+		7FC0E6E319065E9900A44CC9 /* lsd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lsd.cpp; path = libtorrent/src/lsd.cpp; sourceTree = "<group>"; };
+		7FC0E6E419065E9900A44CC9 /* lt_trackers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lt_trackers.cpp; path = libtorrent/src/lt_trackers.cpp; sourceTree = "<group>"; };
+		7FC0E6E519065E9900A44CC9 /* magnet_uri.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = magnet_uri.cpp; path = libtorrent/src/magnet_uri.cpp; sourceTree = "<group>"; };
+		7FC0E6E619065E9900A44CC9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = libtorrent/test/main.cpp; sourceTree = "<group>"; };
+		7FC0E6E719065E9900A44CC9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
+		7FC0E6E819065E9900A44CC9 /* make_torrent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = make_torrent.cpp; path = libtorrent/examples/make_torrent.cpp; sourceTree = "<group>"; };
+		7FC0E6E919065E9900A44CC9 /* memenv_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = memenv_test.cc; path = src/leveldb/helpers/memenv/memenv_test.cc; sourceTree = "<group>"; };
+		7FC0E6EA19065E9900A44CC9 /* memenv.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = memenv.cc; path = src/leveldb/helpers/memenv/memenv.cc; sourceTree = "<group>"; };
+		7FC0E6EB19065E9900A44CC9 /* memtable.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = memtable.cc; path = src/leveldb/db/memtable.cc; sourceTree = "<group>"; };
+		7FC0E6EC19065E9A00A44CC9 /* merger.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = merger.cc; path = src/leveldb/table/merger.cc; sourceTree = "<group>"; };
+		7FC0E6ED19065E9A00A44CC9 /* metadata_transfer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = metadata_transfer.cpp; path = libtorrent/src/metadata_transfer.cpp; sourceTree = "<group>"; };
+		7FC0E6EE19065E9A00A44CC9 /* miner_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = miner_tests.cpp; path = src/test/miner_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6EF19065E9A00A44CC9 /* monitoreddatamapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = monitoreddatamapper.cpp; path = src/qt/monitoreddatamapper.cpp; sourceTree = "<group>"; };
+		7FC0E6F019065E9A00A44CC9 /* mruset_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mruset_tests.cpp; path = src/test/mruset_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6F119065E9A00A44CC9 /* multisig_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = multisig_tests.cpp; path = src/test/multisig_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6F219065E9A00A44CC9 /* natpmp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = natpmp.cpp; path = libtorrent/src/natpmp.cpp; sourceTree = "<group>"; };
+		7FC0E6F319065E9A00A44CC9 /* net.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = net.cpp; path = src/net.cpp; sourceTree = "<group>"; };
+		7FC0E6F419065E9A00A44CC9 /* netbase_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = netbase_tests.cpp; path = src/test/netbase_tests.cpp; sourceTree = "<group>"; };
+		7FC0E6F519065E9A00A44CC9 /* netbase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = netbase.cpp; path = src/netbase.cpp; sourceTree = "<group>"; };
+		7FC0E6F619065E9A00A44CC9 /* node_id.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = node_id.cpp; path = libtorrent/src/kademlia/node_id.cpp; sourceTree = "<group>"; };
+		7FC0E6F719065E9A00A44CC9 /* node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = node.cpp; path = libtorrent/src/kademlia/node.cpp; sourceTree = "<group>"; };
+		7FC0E6F819065E9A00A44CC9 /* notificator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = notificator.cpp; path = src/qt/notificator.cpp; sourceTree = "<group>"; };
+		7FC0E6F919065E9A00A44CC9 /* noui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = noui.cpp; path = src/noui.cpp; sourceTree = "<group>"; };
+		7FC0E6FA19065E9A00A44CC9 /* options.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = options.cc; path = src/leveldb/util/options.cc; sourceTree = "<group>"; };
+		7FC0E6FB19065E9A00A44CC9 /* optionsdialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = optionsdialog.cpp; path = src/qt/optionsdialog.cpp; sourceTree = "<group>"; };
+		7FC0E6FC19065E9A00A44CC9 /* optionsmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = optionsmodel.cpp; path = src/qt/optionsmodel.cpp; sourceTree = "<group>"; };
+		7FC0E6FD19065E9A00A44CC9 /* overviewpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overviewpage.cpp; path = src/qt/overviewpage.cpp; sourceTree = "<group>"; };
+		7FC0E6FE19065E9A00A44CC9 /* packet_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = packet_buffer.cpp; path = libtorrent/src/packet_buffer.cpp; sourceTree = "<group>"; };
+		7FC0E6FF19065E9A00A44CC9 /* parse_hash_fails.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parse_hash_fails.cpp; path = libtorrent/tools/parse_hash_fails.cpp; sourceTree = "<group>"; };
+		7FC0E70019065E9A00A44CC9 /* parse_request_log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parse_request_log.cpp; path = libtorrent/tools/parse_request_log.cpp; sourceTree = "<group>"; };
+		7FC0E70119065E9A00A44CC9 /* parse_url.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parse_url.cpp; path = libtorrent/src/parse_url.cpp; sourceTree = "<group>"; };
+		7FC0E70219065E9A00A44CC9 /* paymentserver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = paymentserver.cpp; path = src/qt/paymentserver.cpp; sourceTree = "<group>"; };
+		7FC0E70319065E9A00A44CC9 /* pe_crypto.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pe_crypto.cpp; path = libtorrent/src/pe_crypto.cpp; sourceTree = "<group>"; };
+		7FC0E70419065E9A00A44CC9 /* peer_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = peer_connection.cpp; path = libtorrent/src/peer_connection.cpp; sourceTree = "<group>"; };
+		7FC0E70519065E9A00A44CC9 /* peer_server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = peer_server.cpp; path = libtorrent/test/peer_server.cpp; sourceTree = "<group>"; };
+		7FC0E70619065E9A00A44CC9 /* piece_picker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = piece_picker.cpp; path = libtorrent/src/piece_picker.cpp; sourceTree = "<group>"; };
+		7FC0E70719065E9A00A44CC9 /* pmt_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pmt_tests.cpp; path = src/test/pmt_tests.cpp; sourceTree = "<group>"; };
+		7FC0E70819065E9A00A44CC9 /* policy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = policy.cpp; path = libtorrent/src/policy.cpp; sourceTree = "<group>"; };
+		7FC0E70919065E9A00A44CC9 /* port_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = port_posix.cc; path = src/leveldb/port/port_posix.cc; sourceTree = "<group>"; };
+		7FC0E70A19065E9A00A44CC9 /* port_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = port_win.cc; path = src/leveldb/port/port_win.cc; sourceTree = "<group>"; };
+		7FC0E70B19065E9A00A44CC9 /* protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = protocol.cpp; path = src/protocol.cpp; sourceTree = "<group>"; };
+		7FC0E70C19065E9A00A44CC9 /* puff.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = puff.cpp; path = libtorrent/src/puff.cpp; sourceTree = "<group>"; };
+		7FC0E70D19065E9A00A44CC9 /* qrcodedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrcodedialog.cpp; path = src/qt/qrcodedialog.cpp; sourceTree = "<group>"; };
+		7FC0E70E19065E9A00A44CC9 /* qvalidatedlineedit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qvalidatedlineedit.cpp; path = src/qt/qvalidatedlineedit.cpp; sourceTree = "<group>"; };
+		7FC0E70F19065E9A00A44CC9 /* qvaluecombobox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qvaluecombobox.cpp; path = src/qt/qvaluecombobox.cpp; sourceTree = "<group>"; };
+		7FC0E71019065E9A00A44CC9 /* random.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = random.cpp; path = libtorrent/src/random.cpp; sourceTree = "<group>"; };
+		7FC0E71119065E9A00A44CC9 /* refresh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = refresh.cpp; path = libtorrent/src/kademlia/refresh.cpp; sourceTree = "<group>"; };
+		7FC0E71219065E9A00A44CC9 /* repair.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = repair.cc; path = src/leveldb/db/repair.cc; sourceTree = "<group>"; };
+		7FC0E71319065E9A00A44CC9 /* routing_table.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = routing_table.cpp; path = libtorrent/src/kademlia/routing_table.cpp; sourceTree = "<group>"; };
+		7FC0E71419065E9A00A44CC9 /* rpc_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpc_manager.cpp; path = libtorrent/src/kademlia/rpc_manager.cpp; sourceTree = "<group>"; };
+		7FC0E71519065E9A00A44CC9 /* rpc_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpc_tests.cpp; path = src/test/rpc_tests.cpp; sourceTree = "<group>"; };
+		7FC0E71619065E9A00A44CC9 /* rpcblockchain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcblockchain.cpp; path = src/rpcblockchain.cpp; sourceTree = "<group>"; };
+		7FC0E71719065E9A00A44CC9 /* rpcconsole.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcconsole.cpp; path = src/qt/rpcconsole.cpp; sourceTree = "<group>"; };
+		7FC0E71819065E9A00A44CC9 /* rpcdump.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcdump.cpp; path = src/rpcdump.cpp; sourceTree = "<group>"; };
+		7FC0E71919065E9A00A44CC9 /* rpcmining.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcmining.cpp; path = src/rpcmining.cpp; sourceTree = "<group>"; };
+		7FC0E71A19065E9A00A44CC9 /* rpcnet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcnet.cpp; path = src/rpcnet.cpp; sourceTree = "<group>"; };
+		7FC0E71B19065E9B00A44CC9 /* rpcwallet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rpcwallet.cpp; path = src/rpcwallet.cpp; sourceTree = "<group>"; };
+		7FC0E71C19065E9B00A44CC9 /* rsa.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rsa.cpp; path = libtorrent/src/rsa.cpp; sourceTree = "<group>"; };
+		7FC0E71D19065E9B00A44CC9 /* rss_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rss_reader.cpp; path = libtorrent/examples/rss_reader.cpp; sourceTree = "<group>"; };
+		7FC0E71E19065E9B00A44CC9 /* rss.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rss.cpp; path = libtorrent/src/rss.cpp; sourceTree = "<group>"; };
+		7FC0E71F19065E9B00A44CC9 /* script_P2SH_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = script_P2SH_tests.cpp; path = src/test/script_P2SH_tests.cpp; sourceTree = "<group>"; };
+		7FC0E72019065E9B00A44CC9 /* script_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = script_tests.cpp; path = src/test/script_tests.cpp; sourceTree = "<group>"; };
+		7FC0E72119065E9B00A44CC9 /* script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = script.cpp; path = src/script.cpp; sourceTree = "<group>"; };
+		7FC0E72219065E9B00A44CC9 /* scrypt-sse2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "scrypt-sse2.cpp"; path = "src/scrypt-sse2.cpp"; sourceTree = "<group>"; };
+		7FC0E72319065E9B00A44CC9 /* scrypt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrypt.cpp; path = src/scrypt.cpp; sourceTree = "<group>"; };
+		7FC0E72419065E9B00A44CC9 /* sendcoinsdialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sendcoinsdialog.cpp; path = src/qt/sendcoinsdialog.cpp; sourceTree = "<group>"; };
+		7FC0E72519065E9B00A44CC9 /* sendcoinsentry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sendcoinsentry.cpp; path = src/qt/sendcoinsentry.cpp; sourceTree = "<group>"; };
+		7FC0E72619065E9B00A44CC9 /* serialize_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = serialize_tests.cpp; path = src/test/serialize_tests.cpp; sourceTree = "<group>"; };
+		7FC0E72719065E9B00A44CC9 /* session_impl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = session_impl.cpp; path = libtorrent/src/session_impl.cpp; sourceTree = "<group>"; };
+		7FC0E72819065E9B00A44CC9 /* session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = session.cpp; path = libtorrent/src/session.cpp; sourceTree = "<group>"; };
+		7FC0E72919065E9B00A44CC9 /* settings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = settings.cpp; path = libtorrent/src/settings.cpp; sourceTree = "<group>"; };
+		7FC0E72A19065E9B00A44CC9 /* setup_transfer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = setup_transfer.cpp; path = libtorrent/test/setup_transfer.cpp; sourceTree = "<group>"; };
+		7FC0E72B19065E9B00A44CC9 /* sha1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sha1.cpp; path = libtorrent/src/sha1.cpp; sourceTree = "<group>"; };
+		7FC0E72C19065E9B00A44CC9 /* signverifymessagedialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = signverifymessagedialog.cpp; path = src/qt/signverifymessagedialog.cpp; sourceTree = "<group>"; };
+		7FC0E72D19065E9B00A44CC9 /* sigopcount_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sigopcount_tests.cpp; path = src/test/sigopcount_tests.cpp; sourceTree = "<group>"; };
+		7FC0E72E19065E9B00A44CC9 /* simple_client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = simple_client.cpp; path = libtorrent/examples/simple_client.cpp; sourceTree = "<group>"; };
+		7FC0E72F19065E9B00A44CC9 /* skiplist_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = skiplist_test.cc; path = src/leveldb/db/skiplist_test.cc; sourceTree = "<group>"; };
+		7FC0E73019065E9B00A44CC9 /* smart_ban.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = smart_ban.cpp; path = libtorrent/src/smart_ban.cpp; sourceTree = "<group>"; };
+		7FC0E73119065E9B00A44CC9 /* socket_io.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = socket_io.cpp; path = libtorrent/src/socket_io.cpp; sourceTree = "<group>"; };
+		7FC0E73219065E9B00A44CC9 /* socket_type.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = socket_type.cpp; path = libtorrent/src/socket_type.cpp; sourceTree = "<group>"; };
+		7FC0E73319065E9B00A44CC9 /* socks5_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = socks5_stream.cpp; path = libtorrent/src/socks5_stream.cpp; sourceTree = "<group>"; };
+		7FC0E73419065E9B00A44CC9 /* softcheckpoint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = softcheckpoint.cpp; path = src/softcheckpoint.cpp; sourceTree = "<group>"; };
+		7FC0E73519065E9B00A44CC9 /* splashscreen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = splashscreen.cpp; path = src/qt/splashscreen.cpp; sourceTree = "<group>"; };
+		7FC0E73619065E9B00A44CC9 /* stat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stat.cpp; path = libtorrent/src/stat.cpp; sourceTree = "<group>"; };
+		7FC0E73719065E9B00A44CC9 /* status.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = status.cc; path = src/leveldb/util/status.cc; sourceTree = "<group>"; };
+		7FC0E73819065E9B00A44CC9 /* storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = storage.cpp; path = libtorrent/src/storage.cpp; sourceTree = "<group>"; };
+		7FC0E73919065E9B00A44CC9 /* string_util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = string_util.cpp; path = libtorrent/src/string_util.cpp; sourceTree = "<group>"; };
+		7FC0E73A19065E9B00A44CC9 /* sync.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sync.cpp; path = src/sync.cpp; sourceTree = "<group>"; };
+		7FC0E73B19065E9B00A44CC9 /* table_builder.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = table_builder.cc; path = src/leveldb/table/table_builder.cc; sourceTree = "<group>"; };
+		7FC0E73C19065E9B00A44CC9 /* table_cache.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = table_cache.cc; path = src/leveldb/db/table_cache.cc; sourceTree = "<group>"; };
+		7FC0E73D19065E9B00A44CC9 /* table_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = table_test.cc; path = src/leveldb/table/table_test.cc; sourceTree = "<group>"; };
+		7FC0E73E19065E9B00A44CC9 /* table.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = table.cc; path = src/leveldb/table/table.cc; sourceTree = "<group>"; };
+		7FC0E73F19065E9B00A44CC9 /* test_auto_unchoke.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_auto_unchoke.cpp; path = libtorrent/test/test_auto_unchoke.cpp; sourceTree = "<group>"; };
+		7FC0E74019065E9B00A44CC9 /* test_bandwidth_limiter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_bandwidth_limiter.cpp; path = libtorrent/test/test_bandwidth_limiter.cpp; sourceTree = "<group>"; };
+		7FC0E74119065E9B00A44CC9 /* test_bdecode_performance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_bdecode_performance.cpp; path = libtorrent/test/test_bdecode_performance.cpp; sourceTree = "<group>"; };
+		7FC0E74219065E9B00A44CC9 /* test_bencoding.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_bencoding.cpp; path = libtorrent/test/test_bencoding.cpp; sourceTree = "<group>"; };
+		7FC0E74319065E9B00A44CC9 /* test_bitcoin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_bitcoin.cpp; path = src/test/test_bitcoin.cpp; sourceTree = "<group>"; };
+		7FC0E74419065E9B00A44CC9 /* test_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_buffer.cpp; path = libtorrent/test/test_buffer.cpp; sourceTree = "<group>"; };
+		7FC0E74519065E9B00A44CC9 /* test_checking.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_checking.cpp; path = libtorrent/test/test_checking.cpp; sourceTree = "<group>"; };
+		7FC0E74619065E9B00A44CC9 /* test_dht.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_dht.cpp; path = libtorrent/test/test_dht.cpp; sourceTree = "<group>"; };
+		7FC0E74719065E9B00A44CC9 /* test_fast_extension.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_fast_extension.cpp; path = libtorrent/test/test_fast_extension.cpp; sourceTree = "<group>"; };
+		7FC0E74819065E9B00A44CC9 /* test_file_storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_file_storage.cpp; path = libtorrent/test/test_file_storage.cpp; sourceTree = "<group>"; };
+		7FC0E74919065E9C00A44CC9 /* test_file.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_file.cpp; path = libtorrent/test/test_file.cpp; sourceTree = "<group>"; };
+		7FC0E74A19065E9C00A44CC9 /* test_hasher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_hasher.cpp; path = libtorrent/test/test_hasher.cpp; sourceTree = "<group>"; };
+		7FC0E74B19065E9C00A44CC9 /* test_http_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_http_connection.cpp; path = libtorrent/test/test_http_connection.cpp; sourceTree = "<group>"; };
+		7FC0E74C19065E9C00A44CC9 /* test_ip_filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_ip_filter.cpp; path = libtorrent/test/test_ip_filter.cpp; sourceTree = "<group>"; };
+		7FC0E74D19065E9C00A44CC9 /* test_lsd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_lsd.cpp; path = libtorrent/test/test_lsd.cpp; sourceTree = "<group>"; };
+		7FC0E74E19065E9C00A44CC9 /* test_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_main.cpp; path = src/qt/test/test_main.cpp; sourceTree = "<group>"; };
+		7FC0E74F19065E9C00A44CC9 /* test_metadata_extension.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_metadata_extension.cpp; path = libtorrent/test/test_metadata_extension.cpp; sourceTree = "<group>"; };
+		7FC0E75019065E9C00A44CC9 /* test_natpmp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_natpmp.cpp; path = libtorrent/test/test_natpmp.cpp; sourceTree = "<group>"; };
+		7FC0E75119065E9C00A44CC9 /* test_pe_crypto.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_pe_crypto.cpp; path = libtorrent/test/test_pe_crypto.cpp; sourceTree = "<group>"; };
+		7FC0E75219065E9C00A44CC9 /* test_peer_priority.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_peer_priority.cpp; path = libtorrent/test/test_peer_priority.cpp; sourceTree = "<group>"; };
+		7FC0E75319065E9C00A44CC9 /* test_pex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_pex.cpp; path = libtorrent/test/test_pex.cpp; sourceTree = "<group>"; };
+		7FC0E75419065E9C00A44CC9 /* test_piece_picker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_piece_picker.cpp; path = libtorrent/test/test_piece_picker.cpp; sourceTree = "<group>"; };
+		7FC0E75519065E9C00A44CC9 /* test_primitives.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_primitives.cpp; path = libtorrent/test/test_primitives.cpp; sourceTree = "<group>"; };
+		7FC0E75619065E9C00A44CC9 /* test_privacy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_privacy.cpp; path = libtorrent/test/test_privacy.cpp; sourceTree = "<group>"; };
+		7FC0E75719065E9C00A44CC9 /* test_rss.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_rss.cpp; path = libtorrent/test/test_rss.cpp; sourceTree = "<group>"; };
+		7FC0E75819065E9C00A44CC9 /* test_session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_session.cpp; path = libtorrent/test/test_session.cpp; sourceTree = "<group>"; };
+		7FC0E75919065E9C00A44CC9 /* test_storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_storage.cpp; path = libtorrent/test/test_storage.cpp; sourceTree = "<group>"; };
+		7FC0E75A19065E9C00A44CC9 /* test_swarm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_swarm.cpp; path = libtorrent/test/test_swarm.cpp; sourceTree = "<group>"; };
+		7FC0E75B19065E9C00A44CC9 /* test_threads.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_threads.cpp; path = libtorrent/test/test_threads.cpp; sourceTree = "<group>"; };
+		7FC0E75C19065E9C00A44CC9 /* test_torrent_parse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_torrent_parse.cpp; path = libtorrent/test/test_torrent_parse.cpp; sourceTree = "<group>"; };
+		7FC0E75D19065E9C00A44CC9 /* test_torrent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_torrent.cpp; path = libtorrent/test/test_torrent.cpp; sourceTree = "<group>"; };
+		7FC0E75E19065E9C00A44CC9 /* test_tracker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_tracker.cpp; path = libtorrent/test/test_tracker.cpp; sourceTree = "<group>"; };
+		7FC0E75F19065E9C00A44CC9 /* test_trackers_extension.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_trackers_extension.cpp; path = libtorrent/test/test_trackers_extension.cpp; sourceTree = "<group>"; };
+		7FC0E76019065E9C00A44CC9 /* test_transfer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_transfer.cpp; path = libtorrent/test/test_transfer.cpp; sourceTree = "<group>"; };
+		7FC0E76119065E9C00A44CC9 /* test_upnp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_upnp.cpp; path = libtorrent/test/test_upnp.cpp; sourceTree = "<group>"; };
+		7FC0E76219065E9C00A44CC9 /* test_utp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_utp.cpp; path = libtorrent/test/test_utp.cpp; sourceTree = "<group>"; };
+		7FC0E76319065E9C00A44CC9 /* test_web_seed.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test_web_seed.cpp; path = libtorrent/test/test_web_seed.cpp; sourceTree = "<group>"; };
+		7FC0E76419065E9C00A44CC9 /* testharness.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = testharness.cc; path = src/leveldb/util/testharness.cc; sourceTree = "<group>"; };
+		7FC0E76519065E9C00A44CC9 /* testutil.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = testutil.cc; path = src/leveldb/util/testutil.cc; sourceTree = "<group>"; };
+		7FC0E76619065E9C00A44CC9 /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = libtorrent/src/thread.cpp; sourceTree = "<group>"; };
+		7FC0E76719065E9C00A44CC9 /* time.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = time.cpp; path = libtorrent/src/time.cpp; sourceTree = "<group>"; };
+		7FC0E76819065E9C00A44CC9 /* timestamp_history.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = timestamp_history.cpp; path = libtorrent/src/timestamp_history.cpp; sourceTree = "<group>"; };
+		7FC0E76919065E9C00A44CC9 /* torrent_handle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = torrent_handle.cpp; path = libtorrent/src/torrent_handle.cpp; sourceTree = "<group>"; };
+		7FC0E76A19065E9C00A44CC9 /* torrent_info.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = torrent_info.cpp; path = libtorrent/src/torrent_info.cpp; sourceTree = "<group>"; };
+		7FC0E76B19065E9C00A44CC9 /* torrent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = torrent.cpp; path = libtorrent/src/torrent.cpp; sourceTree = "<group>"; };
+		7FC0E76C19065E9C00A44CC9 /* tracker_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tracker_manager.cpp; path = libtorrent/src/tracker_manager.cpp; sourceTree = "<group>"; };
+		7FC0E76D19065E9C00A44CC9 /* transaction_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transaction_tests.cpp; path = src/test/transaction_tests.cpp; sourceTree = "<group>"; };
+		7FC0E76E19065E9C00A44CC9 /* transactiondesc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transactiondesc.cpp; path = src/qt/transactiondesc.cpp; sourceTree = "<group>"; };
+		7FC0E76F19065E9C00A44CC9 /* transactiondescdialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transactiondescdialog.cpp; path = src/qt/transactiondescdialog.cpp; sourceTree = "<group>"; };
+		7FC0E77019065E9C00A44CC9 /* transactionfilterproxy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transactionfilterproxy.cpp; path = src/qt/transactionfilterproxy.cpp; sourceTree = "<group>"; };
+		7FC0E77119065E9C00A44CC9 /* transactionrecord.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transactionrecord.cpp; path = src/qt/transactionrecord.cpp; sourceTree = "<group>"; };
+		7FC0E77219065E9C00A44CC9 /* transactiontablemodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transactiontablemodel.cpp; path = src/qt/transactiontablemodel.cpp; sourceTree = "<group>"; };
+		7FC0E77319065E9C00A44CC9 /* transactionview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transactionview.cpp; path = src/qt/transactionview.cpp; sourceTree = "<group>"; };
+		7FC0E77419065E9C00A44CC9 /* traversal_algorithm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = traversal_algorithm.cpp; path = libtorrent/src/kademlia/traversal_algorithm.cpp; sourceTree = "<group>"; };
+		7FC0E77519065E9C00A44CC9 /* twister_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = twister_utils.cpp; path = src/twister_utils.cpp; sourceTree = "<group>"; };
+		7FC0E77619065E9D00A44CC9 /* twister.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = twister.cpp; path = src/twister.cpp; sourceTree = "<group>"; };
+		7FC0E77719065E9D00A44CC9 /* two_level_iterator.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = two_level_iterator.cc; path = src/leveldb/table/two_level_iterator.cc; sourceTree = "<group>"; };
+		7FC0E77819065E9D00A44CC9 /* txdb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = txdb.cpp; path = src/txdb.cpp; sourceTree = "<group>"; };
+		7FC0E77919065E9D00A44CC9 /* udp_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = udp_socket.cpp; path = libtorrent/src/udp_socket.cpp; sourceTree = "<group>"; };
+		7FC0E77A19065E9D00A44CC9 /* udp_tracker_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = udp_tracker_connection.cpp; path = libtorrent/src/udp_tracker_connection.cpp; sourceTree = "<group>"; };
+		7FC0E77B19065E9D00A44CC9 /* uint160_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uint160_tests.cpp; path = src/test/uint160_tests.cpp; sourceTree = "<group>"; };
+		7FC0E77C19065E9D00A44CC9 /* uint256_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uint256_tests.cpp; path = src/test/uint256_tests.cpp; sourceTree = "<group>"; };
+		7FC0E77D19065E9D00A44CC9 /* upnp_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = upnp_test.cpp; path = libtorrent/examples/upnp_test.cpp; sourceTree = "<group>"; };
+		7FC0E77E19065E9D00A44CC9 /* upnp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = upnp.cpp; path = libtorrent/src/upnp.cpp; sourceTree = "<group>"; };
+		7FC0E77F19065E9D00A44CC9 /* uritests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uritests.cpp; path = src/qt/test/uritests.cpp; sourceTree = "<group>"; };
+		7FC0E78019065E9D00A44CC9 /* ut_metadata.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ut_metadata.cpp; path = libtorrent/src/ut_metadata.cpp; sourceTree = "<group>"; };
+		7FC0E78119065E9D00A44CC9 /* ut_pex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ut_pex.cpp; path = libtorrent/src/ut_pex.cpp; sourceTree = "<group>"; };
+		7FC0E78219065E9D00A44CC9 /* utf8.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utf8.cpp; path = libtorrent/src/utf8.cpp; sourceTree = "<group>"; };
+		7FC0E78319065E9D00A44CC9 /* util_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = util_tests.cpp; path = src/test/util_tests.cpp; sourceTree = "<group>"; };
+		7FC0E78419065E9D00A44CC9 /* util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = src/util.cpp; sourceTree = "<group>"; };
+		7FC0E78519065E9D00A44CC9 /* utp_socket_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utp_socket_manager.cpp; path = libtorrent/src/utp_socket_manager.cpp; sourceTree = "<group>"; };
+		7FC0E78619065E9D00A44CC9 /* utp_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utp_stream.cpp; path = libtorrent/src/utp_stream.cpp; sourceTree = "<group>"; };
+		7FC0E78719065E9D00A44CC9 /* utp_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utp_test.cpp; path = libtorrent/examples/utp_test.cpp; sourceTree = "<group>"; };
+		7FC0E78819065E9D00A44CC9 /* version_edit_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = version_edit_test.cc; path = src/leveldb/db/version_edit_test.cc; sourceTree = "<group>"; };
+		7FC0E78919065E9D00A44CC9 /* version_edit.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = version_edit.cc; path = src/leveldb/db/version_edit.cc; sourceTree = "<group>"; };
+		7FC0E78A19065E9D00A44CC9 /* version_set_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = version_set_test.cc; path = src/leveldb/db/version_set_test.cc; sourceTree = "<group>"; };
+		7FC0E78B19065E9D00A44CC9 /* version_set.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = version_set.cc; path = src/leveldb/db/version_set.cc; sourceTree = "<group>"; };
+		7FC0E78C19065E9D00A44CC9 /* version.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = version.cpp; path = src/version.cpp; sourceTree = "<group>"; };
+		7FC0E78D19065E9D00A44CC9 /* wallet_tests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wallet_tests.cpp; path = src/test/wallet_tests.cpp; sourceTree = "<group>"; };
+		7FC0E78E19065E9D00A44CC9 /* wallet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wallet.cpp; path = src/wallet.cpp; sourceTree = "<group>"; };
+		7FC0E78F19065E9D00A44CC9 /* walletdb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = walletdb.cpp; path = src/walletdb.cpp; sourceTree = "<group>"; };
+		7FC0E79019065E9D00A44CC9 /* walletframe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = walletframe.cpp; path = src/qt/walletframe.cpp; sourceTree = "<group>"; };
+		7FC0E79119065E9D00A44CC9 /* walletmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = walletmodel.cpp; path = src/qt/walletmodel.cpp; sourceTree = "<group>"; };
+		7FC0E79219065E9D00A44CC9 /* walletstack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = walletstack.cpp; path = src/qt/walletstack.cpp; sourceTree = "<group>"; };
+		7FC0E79319065E9D00A44CC9 /* walletview.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = walletview.cpp; path = src/qt/walletview.cpp; sourceTree = "<group>"; };
+		7FC0E79419065E9D00A44CC9 /* web_connection_base.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = web_connection_base.cpp; path = libtorrent/src/web_connection_base.cpp; sourceTree = "<group>"; };
+		7FC0E79519065E9D00A44CC9 /* web_peer_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = web_peer_connection.cpp; path = libtorrent/src/web_peer_connection.cpp; sourceTree = "<group>"; };
+		7FC0E79619065E9D00A44CC9 /* write_batch_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = write_batch_test.cc; path = src/leveldb/db/write_batch_test.cc; sourceTree = "<group>"; };
+		7FC0E79719065E9D00A44CC9 /* write_batch.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = write_batch.cc; path = src/leveldb/db/write_batch.cc; sourceTree = "<group>"; };
 		7FEA9C1B18EEA597002F3385 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7FEA9C1C18EEA597002F3385 /* autotool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autotool.sh; sourceTree = "<group>"; };
 		7FEA9C1D18EEA597002F3385 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
@@ -26,10 +686,342 @@
 		7FEA9C2B18EEA597002F3385 /* twister-test.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "twister-test.py"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		7FC0E5F919064F8100A44CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
 		7FDA426418EEA55200BE8B4F = {
 			isa = PBXGroup;
 			children = (
+				7FC0E65619065E9700A44CC9 /* accumunet.cpp */,
+				7FC0E65719065E9700A44CC9 /* bitcoind.cpp */,
+				7FC0E65819065E9700A44CC9 /* chainparams.cpp */,
+				7FC0E65919065E9700A44CC9 /* rpcrawtransaction.cpp */,
+				7FC0E65A19065E9700A44CC9 /* aboutdialog.cpp */,
+				7FC0E65B19065E9700A44CC9 /* accounting_tests.cpp */,
+				7FC0E65C19065E9700A44CC9 /* addressbookpage.cpp */,
+				7FC0E65D19065E9700A44CC9 /* addresstablemodel.cpp */,
+				7FC0E65E19065E9700A44CC9 /* addrman.cpp */,
+				7FC0E65F19065E9700A44CC9 /* alert_manager.cpp */,
+				7FC0E66019065E9700A44CC9 /* alert_tests.cpp */,
+				7FC0E66119065E9700A44CC9 /* alert.cpp */,
+				7FC0E66219065E9700A44CC9 /* alert.cpp */,
+				7FC0E66319065E9700A44CC9 /* allocator_tests.cpp */,
+				7FC0E66419065E9700A44CC9 /* allocator.cpp */,
+				7FC0E66519065E9700A44CC9 /* arena_test.cc */,
+				7FC0E66619065E9700A44CC9 /* arena.cc */,
+				7FC0E66719065E9700A44CC9 /* asio_ssl.cpp */,
+				7FC0E66819065E9700A44CC9 /* asio.cpp */,
+				7FC0E66919065E9700A44CC9 /* askpassphrasedialog.cpp */,
+				7FC0E66A19065E9700A44CC9 /* assert.cpp */,
+				7FC0E66B19065E9700A44CC9 /* bandwidth_limit.cpp */,
+				7FC0E66C19065E9700A44CC9 /* bandwidth_manager.cpp */,
+				7FC0E66D19065E9700A44CC9 /* bandwidth_queue_entry.cpp */,
+				7FC0E66E19065E9700A44CC9 /* base32_tests.cpp */,
+				7FC0E66F19065E9700A44CC9 /* base58_tests.cpp */,
+				7FC0E67019065E9700A44CC9 /* base64_tests.cpp */,
+				7FC0E67119065E9700A44CC9 /* bignum_tests.cpp */,
+				7FC0E67219065E9700A44CC9 /* bitcoin.cpp */,
+				7FC0E67319065E9700A44CC9 /* bitcoinaddressvalidator.cpp */,
+				7FC0E67419065E9700A44CC9 /* bitcoinamountfield.cpp */,
+				7FC0E67519065E9700A44CC9 /* bitcoingui.cpp */,
+				7FC0E67619065E9700A44CC9 /* bitcoinrpc.cpp */,
+				7FC0E67719065E9700A44CC9 /* bitcoinstrings.cpp */,
+				7FC0E67819065E9700A44CC9 /* bitcoinunits.cpp */,
+				7FC0E67919065E9700A44CC9 /* block_builder.cc */,
+				7FC0E67A19065E9700A44CC9 /* block.cc */,
+				7FC0E67B19065E9700A44CC9 /* bloom_filter.cpp */,
+				7FC0E67C19065E9700A44CC9 /* bloom_test.cc */,
+				7FC0E67D19065E9700A44CC9 /* bloom_tests.cpp */,
+				7FC0E67E19065E9700A44CC9 /* bloom.cc */,
+				7FC0E67F19065E9700A44CC9 /* bloom.cpp */,
+				7FC0E68019065E9700A44CC9 /* broadcast_socket.cpp */,
+				7FC0E68119065E9700A44CC9 /* bt_peer_connection.cpp */,
+				7FC0E68219065E9700A44CC9 /* builder.cc */,
+				7FC0E68319065E9700A44CC9 /* c.cc */,
+				7FC0E68419065E9700A44CC9 /* cache_test.cc */,
+				7FC0E68519065E9700A44CC9 /* cache.cc */,
+				7FC0E68619065E9700A44CC9 /* canonical_tests.cpp */,
+				7FC0E68719065E9700A44CC9 /* chained_buffer.cpp */,
+				7FC0E68819065E9800A44CC9 /* checkblock_tests.cpp */,
+				7FC0E68919065E9800A44CC9 /* Checkpoints_tests.cpp */,
+				7FC0E68A19065E9800A44CC9 /* checkpoints.cpp */,
+				7FC0E68B19065E9800A44CC9 /* client_test.cpp */,
+				7FC0E68C19065E9800A44CC9 /* clientmodel.cpp */,
+				7FC0E68D19065E9800A44CC9 /* coding_test.cc */,
+				7FC0E68E19065E9800A44CC9 /* coding.cc */,
+				7FC0E68F19065E9800A44CC9 /* comparator.cc */,
+				7FC0E69019065E9800A44CC9 /* compress_tests.cpp */,
+				7FC0E69119065E9800A44CC9 /* connection_queue.cpp */,
+				7FC0E69219065E9800A44CC9 /* connection_tester.cpp */,
+				7FC0E69319065E9800A44CC9 /* ConvertUTF.cpp */,
+				7FC0E69419065E9800A44CC9 /* core.cpp */,
+				7FC0E69519065E9800A44CC9 /* corruption_test.cc */,
+				7FC0E69619065E9800A44CC9 /* crc32c_test.cc */,
+				7FC0E69719065E9800A44CC9 /* crc32c.cc */,
+				7FC0E69819065E9800A44CC9 /* create_torrent.cpp */,
+				7FC0E69919065E9800A44CC9 /* crypter.cpp */,
+				7FC0E69A19065E9800A44CC9 /* csvmodelwriter.cpp */,
+				7FC0E69B19065E9800A44CC9 /* db_bench_sqlite3.cc */,
+				7FC0E69C19065E9800A44CC9 /* db_bench_tree_db.cc */,
+				7FC0E69D19065E9800A44CC9 /* db_bench.cc */,
+				7FC0E69E19065E9800A44CC9 /* db_impl.cc */,
+				7FC0E69F19065E9800A44CC9 /* db_iter.cc */,
+				7FC0E6A019065E9800A44CC9 /* db_test.cc */,
+				7FC0E6A119065E9800A44CC9 /* db.cpp */,
+				7FC0E6A219065E9800A44CC9 /* dbformat_test.cc */,
+				7FC0E6A319065E9800A44CC9 /* dbformat.cc */,
+				7FC0E6A419065E9800A44CC9 /* dht_get.cpp */,
+				7FC0E6A519065E9800A44CC9 /* dht_server.cpp */,
+				7FC0E6A619065E9800A44CC9 /* dht_tracker.cpp */,
+				7FC0E6A719065E9800A44CC9 /* disk_buffer_holder.cpp */,
+				7FC0E6A819065E9800A44CC9 /* disk_buffer_pool.cpp */,
+				7FC0E6A919065E9800A44CC9 /* disk_io_thread.cpp */,
+				7FC0E6AA19065E9800A44CC9 /* DoS_tests.cpp */,
+				7FC0E6AB19065E9800A44CC9 /* dump_torrent.cpp */,
+				7FC0E6AC19065E9800A44CC9 /* editaddressdialog.cpp */,
+				7FC0E6AD19065E9800A44CC9 /* entry.cpp */,
+				7FC0E6AE19065E9800A44CC9 /* enum_if.cpp */,
+				7FC0E6AF19065E9800A44CC9 /* enum_net.cpp */,
+				7FC0E6B019065E9800A44CC9 /* env_posix.cc */,
+				7FC0E6B119065E9800A44CC9 /* env_test.cc */,
+				7FC0E6B219065E9800A44CC9 /* env_win.cc */,
+				7FC0E6B319065E9800A44CC9 /* env.cc */,
+				7FC0E6B419065E9800A44CC9 /* error_code.cpp */,
+				7FC0E6B519065E9800A44CC9 /* escape_string.cpp */,
+				7FC0E6B619065E9800A44CC9 /* file_pool.cpp */,
+				7FC0E6B719065E9800A44CC9 /* file_storage.cpp */,
+				7FC0E6B819065E9800A44CC9 /* file.cpp */,
+				7FC0E6B919065E9800A44CC9 /* filename_test.cc */,
+				7FC0E6BA19065E9800A44CC9 /* filename.cc */,
+				7FC0E6BB19065E9900A44CC9 /* filter_block_test.cc */,
+				7FC0E6BC19065E9900A44CC9 /* filter_block.cc */,
+				7FC0E6BD19065E9900A44CC9 /* filter_policy.cc */,
+				7FC0E6BE19065E9900A44CC9 /* find_data.cpp */,
+				7FC0E6BF19065E9900A44CC9 /* format.cc */,
+				7FC0E6C019065E9900A44CC9 /* fragmentation_test.cpp */,
+				7FC0E6C119065E9900A44CC9 /* getarg_tests.cpp */,
+				7FC0E6C219065E9900A44CC9 /* guiutil.cpp */,
+				7FC0E6C319065E9900A44CC9 /* gzip.cpp */,
+				7FC0E6C419065E9900A44CC9 /* hash.cc */,
+				7FC0E6C519065E9900A44CC9 /* hash.cpp */,
+				7FC0E6C619065E9900A44CC9 /* hasher.cpp */,
+				7FC0E6C719065E9900A44CC9 /* histogram.cc */,
+				7FC0E6C819065E9900A44CC9 /* http_connection.cpp */,
+				7FC0E6C919065E9900A44CC9 /* http_parser.cpp */,
+				7FC0E6CA19065E9900A44CC9 /* http_seed_connection.cpp */,
+				7FC0E6CB19065E9900A44CC9 /* http_stream.cpp */,
+				7FC0E6CC19065E9900A44CC9 /* http_tracker_connection.cpp */,
+				7FC0E6CD19065E9900A44CC9 /* i2p_stream.cpp */,
+				7FC0E6CE19065E9900A44CC9 /* identify_client.cpp */,
+				7FC0E6CF19065E9900A44CC9 /* init.cpp */,
+				7FC0E6D019065E9900A44CC9 /* instantiate_connection.cpp */,
+				7FC0E6D119065E9900A44CC9 /* ip_filter.cpp */,
+				7FC0E6D219065E9900A44CC9 /* ip_voter.cpp */,
+				7FC0E6D319065E9900A44CC9 /* iterator.cc */,
+				7FC0E6D419065E9900A44CC9 /* json_spirit_reader.cpp */,
+				7FC0E6D519065E9900A44CC9 /* json_spirit_value.cpp */,
+				7FC0E6D619065E9900A44CC9 /* json_spirit_writer.cpp */,
+				7FC0E6D719065E9900A44CC9 /* key_tests.cpp */,
+				7FC0E6D819065E9900A44CC9 /* key.cpp */,
+				7FC0E6D919065E9900A44CC9 /* keystore.cpp */,
+				7FC0E6DA19065E9900A44CC9 /* lazy_bdecode.cpp */,
+				7FC0E6DB19065E9900A44CC9 /* leveldb_main.cc */,
+				7FC0E6DC19065E9900A44CC9 /* leveldb.cpp */,
+				7FC0E6DD19065E9900A44CC9 /* log_reader.cc */,
+				7FC0E6DE19065E9900A44CC9 /* log_test.cc */,
+				7FC0E6DF19065E9900A44CC9 /* log_writer.cc */,
+				7FC0E6E019065E9900A44CC9 /* logger.cpp */,
+				7FC0E6E119065E9900A44CC9 /* logging.cc */,
+				7FC0E6E219065E9900A44CC9 /* logging.cpp */,
+				7FC0E6E319065E9900A44CC9 /* lsd.cpp */,
+				7FC0E6E419065E9900A44CC9 /* lt_trackers.cpp */,
+				7FC0E6E519065E9900A44CC9 /* magnet_uri.cpp */,
+				7FC0E6E619065E9900A44CC9 /* main.cpp */,
+				7FC0E6E719065E9900A44CC9 /* main.cpp */,
+				7FC0E6E819065E9900A44CC9 /* make_torrent.cpp */,
+				7FC0E6E919065E9900A44CC9 /* memenv_test.cc */,
+				7FC0E6EA19065E9900A44CC9 /* memenv.cc */,
+				7FC0E6EB19065E9900A44CC9 /* memtable.cc */,
+				7FC0E6EC19065E9A00A44CC9 /* merger.cc */,
+				7FC0E6ED19065E9A00A44CC9 /* metadata_transfer.cpp */,
+				7FC0E6EE19065E9A00A44CC9 /* miner_tests.cpp */,
+				7FC0E6EF19065E9A00A44CC9 /* monitoreddatamapper.cpp */,
+				7FC0E6F019065E9A00A44CC9 /* mruset_tests.cpp */,
+				7FC0E6F119065E9A00A44CC9 /* multisig_tests.cpp */,
+				7FC0E6F219065E9A00A44CC9 /* natpmp.cpp */,
+				7FC0E6F319065E9A00A44CC9 /* net.cpp */,
+				7FC0E6F419065E9A00A44CC9 /* netbase_tests.cpp */,
+				7FC0E6F519065E9A00A44CC9 /* netbase.cpp */,
+				7FC0E6F619065E9A00A44CC9 /* node_id.cpp */,
+				7FC0E6F719065E9A00A44CC9 /* node.cpp */,
+				7FC0E6F819065E9A00A44CC9 /* notificator.cpp */,
+				7FC0E6F919065E9A00A44CC9 /* noui.cpp */,
+				7FC0E6FA19065E9A00A44CC9 /* options.cc */,
+				7FC0E6FB19065E9A00A44CC9 /* optionsdialog.cpp */,
+				7FC0E6FC19065E9A00A44CC9 /* optionsmodel.cpp */,
+				7FC0E6FD19065E9A00A44CC9 /* overviewpage.cpp */,
+				7FC0E6FE19065E9A00A44CC9 /* packet_buffer.cpp */,
+				7FC0E6FF19065E9A00A44CC9 /* parse_hash_fails.cpp */,
+				7FC0E70019065E9A00A44CC9 /* parse_request_log.cpp */,
+				7FC0E70119065E9A00A44CC9 /* parse_url.cpp */,
+				7FC0E70219065E9A00A44CC9 /* paymentserver.cpp */,
+				7FC0E70319065E9A00A44CC9 /* pe_crypto.cpp */,
+				7FC0E70419065E9A00A44CC9 /* peer_connection.cpp */,
+				7FC0E70519065E9A00A44CC9 /* peer_server.cpp */,
+				7FC0E70619065E9A00A44CC9 /* piece_picker.cpp */,
+				7FC0E70719065E9A00A44CC9 /* pmt_tests.cpp */,
+				7FC0E70819065E9A00A44CC9 /* policy.cpp */,
+				7FC0E70919065E9A00A44CC9 /* port_posix.cc */,
+				7FC0E70A19065E9A00A44CC9 /* port_win.cc */,
+				7FC0E70B19065E9A00A44CC9 /* protocol.cpp */,
+				7FC0E70C19065E9A00A44CC9 /* puff.cpp */,
+				7FC0E70D19065E9A00A44CC9 /* qrcodedialog.cpp */,
+				7FC0E70E19065E9A00A44CC9 /* qvalidatedlineedit.cpp */,
+				7FC0E70F19065E9A00A44CC9 /* qvaluecombobox.cpp */,
+				7FC0E71019065E9A00A44CC9 /* random.cpp */,
+				7FC0E71119065E9A00A44CC9 /* refresh.cpp */,
+				7FC0E71219065E9A00A44CC9 /* repair.cc */,
+				7FC0E71319065E9A00A44CC9 /* routing_table.cpp */,
+				7FC0E71419065E9A00A44CC9 /* rpc_manager.cpp */,
+				7FC0E71519065E9A00A44CC9 /* rpc_tests.cpp */,
+				7FC0E71619065E9A00A44CC9 /* rpcblockchain.cpp */,
+				7FC0E71719065E9A00A44CC9 /* rpcconsole.cpp */,
+				7FC0E71819065E9A00A44CC9 /* rpcdump.cpp */,
+				7FC0E71919065E9A00A44CC9 /* rpcmining.cpp */,
+				7FC0E71A19065E9A00A44CC9 /* rpcnet.cpp */,
+				7FC0E71B19065E9B00A44CC9 /* rpcwallet.cpp */,
+				7FC0E71C19065E9B00A44CC9 /* rsa.cpp */,
+				7FC0E71D19065E9B00A44CC9 /* rss_reader.cpp */,
+				7FC0E71E19065E9B00A44CC9 /* rss.cpp */,
+				7FC0E71F19065E9B00A44CC9 /* script_P2SH_tests.cpp */,
+				7FC0E72019065E9B00A44CC9 /* script_tests.cpp */,
+				7FC0E72119065E9B00A44CC9 /* script.cpp */,
+				7FC0E72219065E9B00A44CC9 /* scrypt-sse2.cpp */,
+				7FC0E72319065E9B00A44CC9 /* scrypt.cpp */,
+				7FC0E72419065E9B00A44CC9 /* sendcoinsdialog.cpp */,
+				7FC0E72519065E9B00A44CC9 /* sendcoinsentry.cpp */,
+				7FC0E72619065E9B00A44CC9 /* serialize_tests.cpp */,
+				7FC0E72719065E9B00A44CC9 /* session_impl.cpp */,
+				7FC0E72819065E9B00A44CC9 /* session.cpp */,
+				7FC0E72919065E9B00A44CC9 /* settings.cpp */,
+				7FC0E72A19065E9B00A44CC9 /* setup_transfer.cpp */,
+				7FC0E72B19065E9B00A44CC9 /* sha1.cpp */,
+				7FC0E72C19065E9B00A44CC9 /* signverifymessagedialog.cpp */,
+				7FC0E72D19065E9B00A44CC9 /* sigopcount_tests.cpp */,
+				7FC0E72E19065E9B00A44CC9 /* simple_client.cpp */,
+				7FC0E72F19065E9B00A44CC9 /* skiplist_test.cc */,
+				7FC0E73019065E9B00A44CC9 /* smart_ban.cpp */,
+				7FC0E73119065E9B00A44CC9 /* socket_io.cpp */,
+				7FC0E73219065E9B00A44CC9 /* socket_type.cpp */,
+				7FC0E73319065E9B00A44CC9 /* socks5_stream.cpp */,
+				7FC0E73419065E9B00A44CC9 /* softcheckpoint.cpp */,
+				7FC0E73519065E9B00A44CC9 /* splashscreen.cpp */,
+				7FC0E73619065E9B00A44CC9 /* stat.cpp */,
+				7FC0E73719065E9B00A44CC9 /* status.cc */,
+				7FC0E73819065E9B00A44CC9 /* storage.cpp */,
+				7FC0E73919065E9B00A44CC9 /* string_util.cpp */,
+				7FC0E73A19065E9B00A44CC9 /* sync.cpp */,
+				7FC0E73B19065E9B00A44CC9 /* table_builder.cc */,
+				7FC0E73C19065E9B00A44CC9 /* table_cache.cc */,
+				7FC0E73D19065E9B00A44CC9 /* table_test.cc */,
+				7FC0E73E19065E9B00A44CC9 /* table.cc */,
+				7FC0E73F19065E9B00A44CC9 /* test_auto_unchoke.cpp */,
+				7FC0E74019065E9B00A44CC9 /* test_bandwidth_limiter.cpp */,
+				7FC0E74119065E9B00A44CC9 /* test_bdecode_performance.cpp */,
+				7FC0E74219065E9B00A44CC9 /* test_bencoding.cpp */,
+				7FC0E74319065E9B00A44CC9 /* test_bitcoin.cpp */,
+				7FC0E74419065E9B00A44CC9 /* test_buffer.cpp */,
+				7FC0E74519065E9B00A44CC9 /* test_checking.cpp */,
+				7FC0E74619065E9B00A44CC9 /* test_dht.cpp */,
+				7FC0E74719065E9B00A44CC9 /* test_fast_extension.cpp */,
+				7FC0E74819065E9B00A44CC9 /* test_file_storage.cpp */,
+				7FC0E74919065E9C00A44CC9 /* test_file.cpp */,
+				7FC0E74A19065E9C00A44CC9 /* test_hasher.cpp */,
+				7FC0E74B19065E9C00A44CC9 /* test_http_connection.cpp */,
+				7FC0E74C19065E9C00A44CC9 /* test_ip_filter.cpp */,
+				7FC0E74D19065E9C00A44CC9 /* test_lsd.cpp */,
+				7FC0E74E19065E9C00A44CC9 /* test_main.cpp */,
+				7FC0E74F19065E9C00A44CC9 /* test_metadata_extension.cpp */,
+				7FC0E75019065E9C00A44CC9 /* test_natpmp.cpp */,
+				7FC0E75119065E9C00A44CC9 /* test_pe_crypto.cpp */,
+				7FC0E75219065E9C00A44CC9 /* test_peer_priority.cpp */,
+				7FC0E75319065E9C00A44CC9 /* test_pex.cpp */,
+				7FC0E75419065E9C00A44CC9 /* test_piece_picker.cpp */,
+				7FC0E75519065E9C00A44CC9 /* test_primitives.cpp */,
+				7FC0E75619065E9C00A44CC9 /* test_privacy.cpp */,
+				7FC0E75719065E9C00A44CC9 /* test_rss.cpp */,
+				7FC0E75819065E9C00A44CC9 /* test_session.cpp */,
+				7FC0E75919065E9C00A44CC9 /* test_storage.cpp */,
+				7FC0E75A19065E9C00A44CC9 /* test_swarm.cpp */,
+				7FC0E75B19065E9C00A44CC9 /* test_threads.cpp */,
+				7FC0E75C19065E9C00A44CC9 /* test_torrent_parse.cpp */,
+				7FC0E75D19065E9C00A44CC9 /* test_torrent.cpp */,
+				7FC0E75E19065E9C00A44CC9 /* test_tracker.cpp */,
+				7FC0E75F19065E9C00A44CC9 /* test_trackers_extension.cpp */,
+				7FC0E76019065E9C00A44CC9 /* test_transfer.cpp */,
+				7FC0E76119065E9C00A44CC9 /* test_upnp.cpp */,
+				7FC0E76219065E9C00A44CC9 /* test_utp.cpp */,
+				7FC0E76319065E9C00A44CC9 /* test_web_seed.cpp */,
+				7FC0E76419065E9C00A44CC9 /* testharness.cc */,
+				7FC0E76519065E9C00A44CC9 /* testutil.cc */,
+				7FC0E76619065E9C00A44CC9 /* thread.cpp */,
+				7FC0E76719065E9C00A44CC9 /* time.cpp */,
+				7FC0E76819065E9C00A44CC9 /* timestamp_history.cpp */,
+				7FC0E76919065E9C00A44CC9 /* torrent_handle.cpp */,
+				7FC0E76A19065E9C00A44CC9 /* torrent_info.cpp */,
+				7FC0E76B19065E9C00A44CC9 /* torrent.cpp */,
+				7FC0E76C19065E9C00A44CC9 /* tracker_manager.cpp */,
+				7FC0E76D19065E9C00A44CC9 /* transaction_tests.cpp */,
+				7FC0E76E19065E9C00A44CC9 /* transactiondesc.cpp */,
+				7FC0E76F19065E9C00A44CC9 /* transactiondescdialog.cpp */,
+				7FC0E77019065E9C00A44CC9 /* transactionfilterproxy.cpp */,
+				7FC0E77119065E9C00A44CC9 /* transactionrecord.cpp */,
+				7FC0E77219065E9C00A44CC9 /* transactiontablemodel.cpp */,
+				7FC0E77319065E9C00A44CC9 /* transactionview.cpp */,
+				7FC0E77419065E9C00A44CC9 /* traversal_algorithm.cpp */,
+				7FC0E77519065E9C00A44CC9 /* twister_utils.cpp */,
+				7FC0E77619065E9D00A44CC9 /* twister.cpp */,
+				7FC0E77719065E9D00A44CC9 /* two_level_iterator.cc */,
+				7FC0E77819065E9D00A44CC9 /* txdb.cpp */,
+				7FC0E77919065E9D00A44CC9 /* udp_socket.cpp */,
+				7FC0E77A19065E9D00A44CC9 /* udp_tracker_connection.cpp */,
+				7FC0E77B19065E9D00A44CC9 /* uint160_tests.cpp */,
+				7FC0E77C19065E9D00A44CC9 /* uint256_tests.cpp */,
+				7FC0E77D19065E9D00A44CC9 /* upnp_test.cpp */,
+				7FC0E77E19065E9D00A44CC9 /* upnp.cpp */,
+				7FC0E77F19065E9D00A44CC9 /* uritests.cpp */,
+				7FC0E78019065E9D00A44CC9 /* ut_metadata.cpp */,
+				7FC0E78119065E9D00A44CC9 /* ut_pex.cpp */,
+				7FC0E78219065E9D00A44CC9 /* utf8.cpp */,
+				7FC0E78319065E9D00A44CC9 /* util_tests.cpp */,
+				7FC0E78419065E9D00A44CC9 /* util.cpp */,
+				7FC0E78519065E9D00A44CC9 /* utp_socket_manager.cpp */,
+				7FC0E78619065E9D00A44CC9 /* utp_stream.cpp */,
+				7FC0E78719065E9D00A44CC9 /* utp_test.cpp */,
+				7FC0E78819065E9D00A44CC9 /* version_edit_test.cc */,
+				7FC0E78919065E9D00A44CC9 /* version_edit.cc */,
+				7FC0E78A19065E9D00A44CC9 /* version_set_test.cc */,
+				7FC0E78B19065E9D00A44CC9 /* version_set.cc */,
+				7FC0E78C19065E9D00A44CC9 /* version.cpp */,
+				7FC0E78D19065E9D00A44CC9 /* wallet_tests.cpp */,
+				7FC0E78E19065E9D00A44CC9 /* wallet.cpp */,
+				7FC0E78F19065E9D00A44CC9 /* walletdb.cpp */,
+				7FC0E79019065E9D00A44CC9 /* walletframe.cpp */,
+				7FC0E79119065E9D00A44CC9 /* walletmodel.cpp */,
+				7FC0E79219065E9D00A44CC9 /* walletstack.cpp */,
+				7FC0E79319065E9D00A44CC9 /* walletview.cpp */,
+				7FC0E79419065E9D00A44CC9 /* web_connection_base.cpp */,
+				7FC0E79519065E9D00A44CC9 /* web_peer_connection.cpp */,
+				7FC0E79619065E9D00A44CC9 /* write_batch_test.cc */,
+				7FC0E79719065E9D00A44CC9 /* write_batch.cc */,
 				7FEA9C1B18EEA597002F3385 /* .gitignore */,
 				7FEA9C1C18EEA597002F3385 /* autotool.sh */,
 				7FEA9C1D18EEA597002F3385 /* bootstrap.sh */,
@@ -69,6 +1061,26 @@
 		};
 /* End PBXLegacyTarget section */
 
+/* Begin PBXNativeTarget section */
+		7FC0E5FB19064F8100A44CC9 /* accumunet-doc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FC0E60419064F8100A44CC9 /* Build configuration list for PBXNativeTarget "accumunet-doc" */;
+			buildPhases = (
+				7FC0E5F819064F8100A44CC9 /* Sources */,
+				7FC0E5F919064F8100A44CC9 /* Frameworks */,
+				7FC0E5FA19064F8100A44CC9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "accumunet-doc";
+			productName = "accumunet-doc";
+			productReference = 7FC0E5FC19064F8100A44CC9 /* accumunet-doc */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
 /* Begin PBXProject section */
 		7FDA426518EEA55200BE8B4F /* Project object */ = {
 			isa = PBXProject;
@@ -90,11 +1102,362 @@
 			projectRoot = "";
 			targets = (
 				7FDA426918EEA55200BE8B4F /* accomunet */,
+				7FC0E5FB19064F8100A44CC9 /* accumunet-doc */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXSourcesBuildPhase section */
+		7FC0E5F819064F8100A44CC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FC0E79819065E9D00A44CC9 /* accumunet.cpp in Sources */,
+				7FC0E79919065E9D00A44CC9 /* bitcoind.cpp in Sources */,
+				7FC0E79A19065E9D00A44CC9 /* chainparams.cpp in Sources */,
+				7FC0E79B19065E9D00A44CC9 /* rpcrawtransaction.cpp in Sources */,
+				7FC0E79C19065E9D00A44CC9 /* aboutdialog.cpp in Sources */,
+				7FC0E79D19065E9D00A44CC9 /* accounting_tests.cpp in Sources */,
+				7FC0E79E19065E9D00A44CC9 /* addressbookpage.cpp in Sources */,
+				7FC0E79F19065E9D00A44CC9 /* addresstablemodel.cpp in Sources */,
+				7FC0E7A019065E9D00A44CC9 /* addrman.cpp in Sources */,
+				7FC0E7A119065E9D00A44CC9 /* alert_manager.cpp in Sources */,
+				7FC0E7A219065E9D00A44CC9 /* alert_tests.cpp in Sources */,
+				7FC0E7A319065E9D00A44CC9 /* alert.cpp in Sources */,
+				7FC0E7A419065E9D00A44CC9 /* alert.cpp in Sources */,
+				7FC0E7A519065E9D00A44CC9 /* allocator_tests.cpp in Sources */,
+				7FC0E7A619065E9D00A44CC9 /* allocator.cpp in Sources */,
+				7FC0E7A719065E9D00A44CC9 /* arena_test.cc in Sources */,
+				7FC0E7A819065E9D00A44CC9 /* arena.cc in Sources */,
+				7FC0E7A919065E9D00A44CC9 /* asio_ssl.cpp in Sources */,
+				7FC0E7AA19065E9D00A44CC9 /* asio.cpp in Sources */,
+				7FC0E7AB19065E9D00A44CC9 /* askpassphrasedialog.cpp in Sources */,
+				7FC0E7AC19065E9D00A44CC9 /* assert.cpp in Sources */,
+				7FC0E7AD19065E9D00A44CC9 /* bandwidth_limit.cpp in Sources */,
+				7FC0E7AE19065E9D00A44CC9 /* bandwidth_manager.cpp in Sources */,
+				7FC0E7AF19065E9D00A44CC9 /* bandwidth_queue_entry.cpp in Sources */,
+				7FC0E7B019065E9D00A44CC9 /* base32_tests.cpp in Sources */,
+				7FC0E7B119065E9D00A44CC9 /* base58_tests.cpp in Sources */,
+				7FC0E7B219065E9D00A44CC9 /* base64_tests.cpp in Sources */,
+				7FC0E7B319065E9D00A44CC9 /* bignum_tests.cpp in Sources */,
+				7FC0E7B419065E9D00A44CC9 /* bitcoin.cpp in Sources */,
+				7FC0E7B519065E9D00A44CC9 /* bitcoinaddressvalidator.cpp in Sources */,
+				7FC0E7B619065E9D00A44CC9 /* bitcoinamountfield.cpp in Sources */,
+				7FC0E7B719065E9D00A44CC9 /* bitcoingui.cpp in Sources */,
+				7FC0E7B819065E9D00A44CC9 /* bitcoinrpc.cpp in Sources */,
+				7FC0E7B919065E9D00A44CC9 /* bitcoinstrings.cpp in Sources */,
+				7FC0E7BA19065E9D00A44CC9 /* bitcoinunits.cpp in Sources */,
+				7FC0E7BB19065E9D00A44CC9 /* block_builder.cc in Sources */,
+				7FC0E7BC19065E9D00A44CC9 /* block.cc in Sources */,
+				7FC0E7BD19065E9D00A44CC9 /* bloom_filter.cpp in Sources */,
+				7FC0E7BE19065E9D00A44CC9 /* bloom_test.cc in Sources */,
+				7FC0E7BF19065E9D00A44CC9 /* bloom_tests.cpp in Sources */,
+				7FC0E7C019065E9D00A44CC9 /* bloom.cc in Sources */,
+				7FC0E7C119065E9D00A44CC9 /* bloom.cpp in Sources */,
+				7FC0E7C219065E9D00A44CC9 /* broadcast_socket.cpp in Sources */,
+				7FC0E7C319065E9D00A44CC9 /* bt_peer_connection.cpp in Sources */,
+				7FC0E7C419065E9D00A44CC9 /* builder.cc in Sources */,
+				7FC0E7C519065E9D00A44CC9 /* c.cc in Sources */,
+				7FC0E7C619065E9D00A44CC9 /* cache_test.cc in Sources */,
+				7FC0E7C719065E9D00A44CC9 /* cache.cc in Sources */,
+				7FC0E7C819065E9D00A44CC9 /* canonical_tests.cpp in Sources */,
+				7FC0E7C919065E9D00A44CC9 /* chained_buffer.cpp in Sources */,
+				7FC0E7CA19065E9D00A44CC9 /* checkblock_tests.cpp in Sources */,
+				7FC0E7CB19065E9D00A44CC9 /* Checkpoints_tests.cpp in Sources */,
+				7FC0E7CC19065E9D00A44CC9 /* checkpoints.cpp in Sources */,
+				7FC0E7CD19065E9D00A44CC9 /* client_test.cpp in Sources */,
+				7FC0E7CE19065E9D00A44CC9 /* clientmodel.cpp in Sources */,
+				7FC0E7CF19065E9D00A44CC9 /* coding_test.cc in Sources */,
+				7FC0E7D019065E9D00A44CC9 /* coding.cc in Sources */,
+				7FC0E7D119065E9D00A44CC9 /* comparator.cc in Sources */,
+				7FC0E7D219065E9D00A44CC9 /* compress_tests.cpp in Sources */,
+				7FC0E7D319065E9D00A44CC9 /* connection_queue.cpp in Sources */,
+				7FC0E7D419065E9D00A44CC9 /* connection_tester.cpp in Sources */,
+				7FC0E7D519065E9D00A44CC9 /* ConvertUTF.cpp in Sources */,
+				7FC0E7D619065E9D00A44CC9 /* core.cpp in Sources */,
+				7FC0E7D719065E9D00A44CC9 /* corruption_test.cc in Sources */,
+				7FC0E7D819065E9D00A44CC9 /* crc32c_test.cc in Sources */,
+				7FC0E7D919065E9D00A44CC9 /* crc32c.cc in Sources */,
+				7FC0E7DA19065E9D00A44CC9 /* create_torrent.cpp in Sources */,
+				7FC0E7DB19065E9D00A44CC9 /* crypter.cpp in Sources */,
+				7FC0E7DC19065E9D00A44CC9 /* csvmodelwriter.cpp in Sources */,
+				7FC0E7DD19065E9D00A44CC9 /* db_bench_sqlite3.cc in Sources */,
+				7FC0E7DE19065E9D00A44CC9 /* db_bench_tree_db.cc in Sources */,
+				7FC0E7DF19065E9D00A44CC9 /* db_bench.cc in Sources */,
+				7FC0E7E019065E9D00A44CC9 /* db_impl.cc in Sources */,
+				7FC0E7E119065E9D00A44CC9 /* db_iter.cc in Sources */,
+				7FC0E7E219065E9D00A44CC9 /* db_test.cc in Sources */,
+				7FC0E7E319065E9D00A44CC9 /* db.cpp in Sources */,
+				7FC0E7E419065E9D00A44CC9 /* dbformat_test.cc in Sources */,
+				7FC0E7E519065E9D00A44CC9 /* dbformat.cc in Sources */,
+				7FC0E7E619065E9D00A44CC9 /* dht_get.cpp in Sources */,
+				7FC0E7E719065E9D00A44CC9 /* dht_server.cpp in Sources */,
+				7FC0E7E819065E9D00A44CC9 /* dht_tracker.cpp in Sources */,
+				7FC0E7E919065E9D00A44CC9 /* disk_buffer_holder.cpp in Sources */,
+				7FC0E7EA19065E9D00A44CC9 /* disk_buffer_pool.cpp in Sources */,
+				7FC0E7EB19065E9D00A44CC9 /* disk_io_thread.cpp in Sources */,
+				7FC0E7EC19065E9D00A44CC9 /* DoS_tests.cpp in Sources */,
+				7FC0E7ED19065E9D00A44CC9 /* dump_torrent.cpp in Sources */,
+				7FC0E7EE19065E9D00A44CC9 /* editaddressdialog.cpp in Sources */,
+				7FC0E7EF19065E9D00A44CC9 /* entry.cpp in Sources */,
+				7FC0E7F019065E9D00A44CC9 /* enum_if.cpp in Sources */,
+				7FC0E7F119065E9D00A44CC9 /* enum_net.cpp in Sources */,
+				7FC0E7F219065E9D00A44CC9 /* env_posix.cc in Sources */,
+				7FC0E7F319065E9D00A44CC9 /* env_test.cc in Sources */,
+				7FC0E7F419065E9D00A44CC9 /* env_win.cc in Sources */,
+				7FC0E7F519065E9D00A44CC9 /* env.cc in Sources */,
+				7FC0E7F619065E9D00A44CC9 /* error_code.cpp in Sources */,
+				7FC0E7F719065E9D00A44CC9 /* escape_string.cpp in Sources */,
+				7FC0E7F819065E9D00A44CC9 /* file_pool.cpp in Sources */,
+				7FC0E7F919065E9D00A44CC9 /* file_storage.cpp in Sources */,
+				7FC0E7FA19065E9D00A44CC9 /* file.cpp in Sources */,
+				7FC0E7FB19065E9D00A44CC9 /* filename_test.cc in Sources */,
+				7FC0E7FC19065E9D00A44CC9 /* filename.cc in Sources */,
+				7FC0E7FD19065E9D00A44CC9 /* filter_block_test.cc in Sources */,
+				7FC0E7FE19065E9E00A44CC9 /* filter_block.cc in Sources */,
+				7FC0E7FF19065E9E00A44CC9 /* filter_policy.cc in Sources */,
+				7FC0E80019065E9E00A44CC9 /* find_data.cpp in Sources */,
+				7FC0E80119065E9E00A44CC9 /* format.cc in Sources */,
+				7FC0E80219065E9E00A44CC9 /* fragmentation_test.cpp in Sources */,
+				7FC0E80319065E9E00A44CC9 /* getarg_tests.cpp in Sources */,
+				7FC0E80419065E9E00A44CC9 /* guiutil.cpp in Sources */,
+				7FC0E80519065E9E00A44CC9 /* gzip.cpp in Sources */,
+				7FC0E80619065E9E00A44CC9 /* hash.cc in Sources */,
+				7FC0E80719065E9E00A44CC9 /* hash.cpp in Sources */,
+				7FC0E80819065E9E00A44CC9 /* hasher.cpp in Sources */,
+				7FC0E80919065E9E00A44CC9 /* histogram.cc in Sources */,
+				7FC0E80A19065E9E00A44CC9 /* http_connection.cpp in Sources */,
+				7FC0E80B19065E9E00A44CC9 /* http_parser.cpp in Sources */,
+				7FC0E80C19065E9E00A44CC9 /* http_seed_connection.cpp in Sources */,
+				7FC0E80D19065E9E00A44CC9 /* http_stream.cpp in Sources */,
+				7FC0E80E19065E9E00A44CC9 /* http_tracker_connection.cpp in Sources */,
+				7FC0E80F19065E9E00A44CC9 /* i2p_stream.cpp in Sources */,
+				7FC0E81019065E9E00A44CC9 /* identify_client.cpp in Sources */,
+				7FC0E81119065E9E00A44CC9 /* init.cpp in Sources */,
+				7FC0E81219065E9E00A44CC9 /* instantiate_connection.cpp in Sources */,
+				7FC0E81319065E9E00A44CC9 /* ip_filter.cpp in Sources */,
+				7FC0E81419065E9E00A44CC9 /* ip_voter.cpp in Sources */,
+				7FC0E81519065E9E00A44CC9 /* iterator.cc in Sources */,
+				7FC0E81619065E9E00A44CC9 /* json_spirit_reader.cpp in Sources */,
+				7FC0E81719065E9E00A44CC9 /* json_spirit_value.cpp in Sources */,
+				7FC0E81819065E9E00A44CC9 /* json_spirit_writer.cpp in Sources */,
+				7FC0E81919065E9E00A44CC9 /* key_tests.cpp in Sources */,
+				7FC0E81A19065E9E00A44CC9 /* key.cpp in Sources */,
+				7FC0E81B19065E9E00A44CC9 /* keystore.cpp in Sources */,
+				7FC0E81C19065E9E00A44CC9 /* lazy_bdecode.cpp in Sources */,
+				7FC0E81D19065E9E00A44CC9 /* leveldb_main.cc in Sources */,
+				7FC0E81E19065E9E00A44CC9 /* leveldb.cpp in Sources */,
+				7FC0E81F19065E9E00A44CC9 /* log_reader.cc in Sources */,
+				7FC0E82019065E9E00A44CC9 /* log_test.cc in Sources */,
+				7FC0E82119065E9E00A44CC9 /* log_writer.cc in Sources */,
+				7FC0E82219065E9E00A44CC9 /* logger.cpp in Sources */,
+				7FC0E82319065E9E00A44CC9 /* logging.cc in Sources */,
+				7FC0E82419065E9E00A44CC9 /* logging.cpp in Sources */,
+				7FC0E82519065E9E00A44CC9 /* lsd.cpp in Sources */,
+				7FC0E82619065E9E00A44CC9 /* lt_trackers.cpp in Sources */,
+				7FC0E82719065E9E00A44CC9 /* magnet_uri.cpp in Sources */,
+				7FC0E82819065E9E00A44CC9 /* main.cpp in Sources */,
+				7FC0E82919065E9E00A44CC9 /* main.cpp in Sources */,
+				7FC0E82A19065E9E00A44CC9 /* make_torrent.cpp in Sources */,
+				7FC0E82B19065E9E00A44CC9 /* memenv_test.cc in Sources */,
+				7FC0E82C19065E9E00A44CC9 /* memenv.cc in Sources */,
+				7FC0E82D19065E9E00A44CC9 /* memtable.cc in Sources */,
+				7FC0E82E19065E9E00A44CC9 /* merger.cc in Sources */,
+				7FC0E82F19065E9E00A44CC9 /* metadata_transfer.cpp in Sources */,
+				7FC0E83019065E9E00A44CC9 /* miner_tests.cpp in Sources */,
+				7FC0E83119065E9E00A44CC9 /* monitoreddatamapper.cpp in Sources */,
+				7FC0E83219065E9E00A44CC9 /* mruset_tests.cpp in Sources */,
+				7FC0E83319065E9E00A44CC9 /* multisig_tests.cpp in Sources */,
+				7FC0E83419065E9E00A44CC9 /* natpmp.cpp in Sources */,
+				7FC0E83519065E9E00A44CC9 /* net.cpp in Sources */,
+				7FC0E83619065E9E00A44CC9 /* netbase_tests.cpp in Sources */,
+				7FC0E83719065E9E00A44CC9 /* netbase.cpp in Sources */,
+				7FC0E83819065E9E00A44CC9 /* node_id.cpp in Sources */,
+				7FC0E83919065E9E00A44CC9 /* node.cpp in Sources */,
+				7FC0E83A19065E9E00A44CC9 /* notificator.cpp in Sources */,
+				7FC0E83B19065E9E00A44CC9 /* noui.cpp in Sources */,
+				7FC0E83C19065E9E00A44CC9 /* options.cc in Sources */,
+				7FC0E83D19065E9E00A44CC9 /* optionsdialog.cpp in Sources */,
+				7FC0E83E19065E9E00A44CC9 /* optionsmodel.cpp in Sources */,
+				7FC0E83F19065E9E00A44CC9 /* overviewpage.cpp in Sources */,
+				7FC0E84019065E9E00A44CC9 /* packet_buffer.cpp in Sources */,
+				7FC0E84119065E9E00A44CC9 /* parse_hash_fails.cpp in Sources */,
+				7FC0E84219065E9E00A44CC9 /* parse_request_log.cpp in Sources */,
+				7FC0E84319065E9E00A44CC9 /* parse_url.cpp in Sources */,
+				7FC0E84419065E9E00A44CC9 /* paymentserver.cpp in Sources */,
+				7FC0E84519065E9E00A44CC9 /* pe_crypto.cpp in Sources */,
+				7FC0E84619065E9E00A44CC9 /* peer_connection.cpp in Sources */,
+				7FC0E84719065E9E00A44CC9 /* peer_server.cpp in Sources */,
+				7FC0E84819065E9E00A44CC9 /* piece_picker.cpp in Sources */,
+				7FC0E84919065E9E00A44CC9 /* pmt_tests.cpp in Sources */,
+				7FC0E84A19065E9E00A44CC9 /* policy.cpp in Sources */,
+				7FC0E84B19065E9E00A44CC9 /* port_posix.cc in Sources */,
+				7FC0E84C19065E9E00A44CC9 /* port_win.cc in Sources */,
+				7FC0E84D19065E9E00A44CC9 /* protocol.cpp in Sources */,
+				7FC0E84E19065E9E00A44CC9 /* puff.cpp in Sources */,
+				7FC0E84F19065E9E00A44CC9 /* qrcodedialog.cpp in Sources */,
+				7FC0E85019065E9E00A44CC9 /* qvalidatedlineedit.cpp in Sources */,
+				7FC0E85119065E9E00A44CC9 /* qvaluecombobox.cpp in Sources */,
+				7FC0E85219065E9E00A44CC9 /* random.cpp in Sources */,
+				7FC0E85319065E9E00A44CC9 /* refresh.cpp in Sources */,
+				7FC0E85419065E9E00A44CC9 /* repair.cc in Sources */,
+				7FC0E85519065E9E00A44CC9 /* routing_table.cpp in Sources */,
+				7FC0E85619065E9E00A44CC9 /* rpc_manager.cpp in Sources */,
+				7FC0E85719065E9E00A44CC9 /* rpc_tests.cpp in Sources */,
+				7FC0E85819065E9E00A44CC9 /* rpcblockchain.cpp in Sources */,
+				7FC0E85919065E9E00A44CC9 /* rpcconsole.cpp in Sources */,
+				7FC0E85A19065E9E00A44CC9 /* rpcdump.cpp in Sources */,
+				7FC0E85B19065E9E00A44CC9 /* rpcmining.cpp in Sources */,
+				7FC0E85C19065E9E00A44CC9 /* rpcnet.cpp in Sources */,
+				7FC0E85D19065E9E00A44CC9 /* rpcwallet.cpp in Sources */,
+				7FC0E85E19065E9E00A44CC9 /* rsa.cpp in Sources */,
+				7FC0E85F19065E9E00A44CC9 /* rss_reader.cpp in Sources */,
+				7FC0E86019065E9E00A44CC9 /* rss.cpp in Sources */,
+				7FC0E86119065E9E00A44CC9 /* script_P2SH_tests.cpp in Sources */,
+				7FC0E86219065E9E00A44CC9 /* script_tests.cpp in Sources */,
+				7FC0E86319065E9E00A44CC9 /* script.cpp in Sources */,
+				7FC0E86419065E9E00A44CC9 /* scrypt-sse2.cpp in Sources */,
+				7FC0E86519065E9E00A44CC9 /* scrypt.cpp in Sources */,
+				7FC0E86619065E9E00A44CC9 /* sendcoinsdialog.cpp in Sources */,
+				7FC0E86719065E9E00A44CC9 /* sendcoinsentry.cpp in Sources */,
+				7FC0E86819065E9E00A44CC9 /* serialize_tests.cpp in Sources */,
+				7FC0E86919065E9E00A44CC9 /* session_impl.cpp in Sources */,
+				7FC0E86A19065E9E00A44CC9 /* session.cpp in Sources */,
+				7FC0E86B19065E9E00A44CC9 /* settings.cpp in Sources */,
+				7FC0E86C19065E9E00A44CC9 /* setup_transfer.cpp in Sources */,
+				7FC0E86D19065E9E00A44CC9 /* sha1.cpp in Sources */,
+				7FC0E86E19065E9E00A44CC9 /* signverifymessagedialog.cpp in Sources */,
+				7FC0E86F19065E9E00A44CC9 /* sigopcount_tests.cpp in Sources */,
+				7FC0E87019065E9E00A44CC9 /* simple_client.cpp in Sources */,
+				7FC0E87119065E9E00A44CC9 /* skiplist_test.cc in Sources */,
+				7FC0E87219065E9E00A44CC9 /* smart_ban.cpp in Sources */,
+				7FC0E87319065E9E00A44CC9 /* socket_io.cpp in Sources */,
+				7FC0E87419065E9E00A44CC9 /* socket_type.cpp in Sources */,
+				7FC0E87519065E9E00A44CC9 /* socks5_stream.cpp in Sources */,
+				7FC0E87619065E9E00A44CC9 /* softcheckpoint.cpp in Sources */,
+				7FC0E87719065E9E00A44CC9 /* splashscreen.cpp in Sources */,
+				7FC0E87819065E9E00A44CC9 /* stat.cpp in Sources */,
+				7FC0E87919065E9E00A44CC9 /* status.cc in Sources */,
+				7FC0E87A19065E9E00A44CC9 /* storage.cpp in Sources */,
+				7FC0E87B19065E9E00A44CC9 /* string_util.cpp in Sources */,
+				7FC0E87C19065E9E00A44CC9 /* sync.cpp in Sources */,
+				7FC0E87D19065E9E00A44CC9 /* table_builder.cc in Sources */,
+				7FC0E87E19065E9E00A44CC9 /* table_cache.cc in Sources */,
+				7FC0E87F19065E9E00A44CC9 /* table_test.cc in Sources */,
+				7FC0E88019065E9E00A44CC9 /* table.cc in Sources */,
+				7FC0E88119065E9E00A44CC9 /* test_auto_unchoke.cpp in Sources */,
+				7FC0E88219065E9E00A44CC9 /* test_bandwidth_limiter.cpp in Sources */,
+				7FC0E88319065E9E00A44CC9 /* test_bdecode_performance.cpp in Sources */,
+				7FC0E88419065E9E00A44CC9 /* test_bencoding.cpp in Sources */,
+				7FC0E88519065E9E00A44CC9 /* test_bitcoin.cpp in Sources */,
+				7FC0E88619065E9E00A44CC9 /* test_buffer.cpp in Sources */,
+				7FC0E88719065E9E00A44CC9 /* test_checking.cpp in Sources */,
+				7FC0E88819065E9E00A44CC9 /* test_dht.cpp in Sources */,
+				7FC0E88919065E9E00A44CC9 /* test_fast_extension.cpp in Sources */,
+				7FC0E88A19065E9E00A44CC9 /* test_file_storage.cpp in Sources */,
+				7FC0E88B19065E9E00A44CC9 /* test_file.cpp in Sources */,
+				7FC0E88C19065E9E00A44CC9 /* test_hasher.cpp in Sources */,
+				7FC0E88D19065E9E00A44CC9 /* test_http_connection.cpp in Sources */,
+				7FC0E88E19065E9E00A44CC9 /* test_ip_filter.cpp in Sources */,
+				7FC0E88F19065E9E00A44CC9 /* test_lsd.cpp in Sources */,
+				7FC0E89019065E9E00A44CC9 /* test_main.cpp in Sources */,
+				7FC0E89119065E9E00A44CC9 /* test_metadata_extension.cpp in Sources */,
+				7FC0E89219065E9E00A44CC9 /* test_natpmp.cpp in Sources */,
+				7FC0E89319065E9E00A44CC9 /* test_pe_crypto.cpp in Sources */,
+				7FC0E89419065E9E00A44CC9 /* test_peer_priority.cpp in Sources */,
+				7FC0E89519065E9E00A44CC9 /* test_pex.cpp in Sources */,
+				7FC0E89619065E9E00A44CC9 /* test_piece_picker.cpp in Sources */,
+				7FC0E89719065E9E00A44CC9 /* test_primitives.cpp in Sources */,
+				7FC0E89819065E9E00A44CC9 /* test_privacy.cpp in Sources */,
+				7FC0E89919065E9E00A44CC9 /* test_rss.cpp in Sources */,
+				7FC0E89A19065E9E00A44CC9 /* test_session.cpp in Sources */,
+				7FC0E89B19065E9E00A44CC9 /* test_storage.cpp in Sources */,
+				7FC0E89C19065E9E00A44CC9 /* test_swarm.cpp in Sources */,
+				7FC0E89D19065E9E00A44CC9 /* test_threads.cpp in Sources */,
+				7FC0E89E19065E9E00A44CC9 /* test_torrent_parse.cpp in Sources */,
+				7FC0E89F19065E9E00A44CC9 /* test_torrent.cpp in Sources */,
+				7FC0E8A019065E9E00A44CC9 /* test_tracker.cpp in Sources */,
+				7FC0E8A119065E9E00A44CC9 /* test_trackers_extension.cpp in Sources */,
+				7FC0E8A219065E9E00A44CC9 /* test_transfer.cpp in Sources */,
+				7FC0E8A319065E9E00A44CC9 /* test_upnp.cpp in Sources */,
+				7FC0E8A419065E9E00A44CC9 /* test_utp.cpp in Sources */,
+				7FC0E8A519065E9E00A44CC9 /* test_web_seed.cpp in Sources */,
+				7FC0E8A619065E9E00A44CC9 /* testharness.cc in Sources */,
+				7FC0E8A719065E9E00A44CC9 /* testutil.cc in Sources */,
+				7FC0E8A819065E9E00A44CC9 /* thread.cpp in Sources */,
+				7FC0E8A919065E9E00A44CC9 /* time.cpp in Sources */,
+				7FC0E8AA19065E9E00A44CC9 /* timestamp_history.cpp in Sources */,
+				7FC0E8AB19065E9E00A44CC9 /* torrent_handle.cpp in Sources */,
+				7FC0E8AC19065E9E00A44CC9 /* torrent_info.cpp in Sources */,
+				7FC0E8AD19065E9E00A44CC9 /* torrent.cpp in Sources */,
+				7FC0E8AE19065E9E00A44CC9 /* tracker_manager.cpp in Sources */,
+				7FC0E8AF19065E9E00A44CC9 /* transaction_tests.cpp in Sources */,
+				7FC0E8B019065E9E00A44CC9 /* transactiondesc.cpp in Sources */,
+				7FC0E8B119065E9E00A44CC9 /* transactiondescdialog.cpp in Sources */,
+				7FC0E8B219065E9E00A44CC9 /* transactionfilterproxy.cpp in Sources */,
+				7FC0E8B319065E9E00A44CC9 /* transactionrecord.cpp in Sources */,
+				7FC0E8B419065E9E00A44CC9 /* transactiontablemodel.cpp in Sources */,
+				7FC0E8B519065E9E00A44CC9 /* transactionview.cpp in Sources */,
+				7FC0E8B619065E9E00A44CC9 /* traversal_algorithm.cpp in Sources */,
+				7FC0E8B719065E9E00A44CC9 /* twister_utils.cpp in Sources */,
+				7FC0E8B819065E9E00A44CC9 /* twister.cpp in Sources */,
+				7FC0E8B919065E9E00A44CC9 /* two_level_iterator.cc in Sources */,
+				7FC0E8BA19065E9E00A44CC9 /* txdb.cpp in Sources */,
+				7FC0E8BB19065E9E00A44CC9 /* udp_socket.cpp in Sources */,
+				7FC0E8BC19065E9E00A44CC9 /* udp_tracker_connection.cpp in Sources */,
+				7FC0E8BD19065E9E00A44CC9 /* uint160_tests.cpp in Sources */,
+				7FC0E8BE19065E9E00A44CC9 /* uint256_tests.cpp in Sources */,
+				7FC0E8BF19065E9E00A44CC9 /* upnp_test.cpp in Sources */,
+				7FC0E8C019065E9E00A44CC9 /* upnp.cpp in Sources */,
+				7FC0E8C119065E9E00A44CC9 /* uritests.cpp in Sources */,
+				7FC0E8C219065E9E00A44CC9 /* ut_metadata.cpp in Sources */,
+				7FC0E8C319065E9E00A44CC9 /* ut_pex.cpp in Sources */,
+				7FC0E8C419065E9E00A44CC9 /* utf8.cpp in Sources */,
+				7FC0E8C519065E9E00A44CC9 /* util_tests.cpp in Sources */,
+				7FC0E8C619065E9E00A44CC9 /* util.cpp in Sources */,
+				7FC0E8C719065E9E00A44CC9 /* utp_socket_manager.cpp in Sources */,
+				7FC0E8C819065E9E00A44CC9 /* utp_stream.cpp in Sources */,
+				7FC0E8C919065E9E00A44CC9 /* utp_test.cpp in Sources */,
+				7FC0E8CA19065E9E00A44CC9 /* version_edit_test.cc in Sources */,
+				7FC0E8CB19065E9E00A44CC9 /* version_edit.cc in Sources */,
+				7FC0E8CC19065E9E00A44CC9 /* version_set_test.cc in Sources */,
+				7FC0E8CD19065E9E00A44CC9 /* version_set.cc in Sources */,
+				7FC0E8CE19065E9E00A44CC9 /* version.cpp in Sources */,
+				7FC0E8CF19065E9E00A44CC9 /* wallet_tests.cpp in Sources */,
+				7FC0E8D019065E9E00A44CC9 /* wallet.cpp in Sources */,
+				7FC0E8D119065E9E00A44CC9 /* walletdb.cpp in Sources */,
+				7FC0E8D219065E9E00A44CC9 /* walletframe.cpp in Sources */,
+				7FC0E8D319065E9E00A44CC9 /* walletmodel.cpp in Sources */,
+				7FC0E8D419065E9E00A44CC9 /* walletstack.cpp in Sources */,
+				7FC0E8D519065E9E00A44CC9 /* walletview.cpp in Sources */,
+				7FC0E8D619065E9E00A44CC9 /* web_connection_base.cpp in Sources */,
+				7FC0E8D719065E9E00A44CC9 /* web_peer_connection.cpp in Sources */,
+				7FC0E8D819065E9E00A44CC9 /* write_batch_test.cc in Sources */,
+				7FC0E8D919065E9E00A44CC9 /* write_batch.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
 /* Begin XCBuildConfiguration section */
+		7FC0E60219064F8100A44CC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7FC0E60319064F8100A44CC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		7FDA426A18EEA55200BE8B4F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -189,6 +1552,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7FC0E60419064F8100A44CC9 /* Build configuration list for PBXNativeTarget "accumunet-doc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FC0E60219064F8100A44CC9 /* Debug */,
+				7FC0E60319064F8100A44CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		7FDA426818EEA55200BE8B4F /* Build configuration list for PBXProject "accomunet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

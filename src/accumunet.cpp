@@ -12,6 +12,7 @@
 
 #include <cstdlib>
 #include <openssl/sha.h>
+#include <random>
 #include "../libtorrent/include/libtorrent/peer_id.hpp"
 #include "../libtorrent/include/libtorrent/hasher.hpp"
 #include "../libtorrent/include/libtorrent/tommath.h"
@@ -23,8 +24,19 @@ uint256 u = uint256(string("32bd4e6bcb51878e3cd48e3984f73406eeaaed4278dfde9153b2
 uint256 A = uint256(string("10000000000000000000000000"));
 uint256 B = uint256(string("ffffffffffffffffffffffffffffffffffffffffffffffffff"));
 
-bool isAdmin(const char* username, const char* witness) {
-	std::string const username_str = username;
+bool isAdmin(const char* username) {
+	// TODO: should take the witness from the wallet
+	// for now is not implemented
+	if (!strncmp(username, "utente2", 7)) {
+		isAdmin(username, "2654a238e9702ad69986fea552a0cd9fe9d0684a32e7454ce8337ca624");
+	} else {
+		cout << "not implemented";
+		exit(1);
+	}
+}
+
+bool isAdmin(const char* username, const char* witness) { // should take the witness from the wallet actually
+	std::string username_str(username);
 	CTransaction txOut;
 	uint256 hashBlock;
 	
@@ -48,52 +60,73 @@ bool isAdmin(const char* username, const char* witness) {
 	// admins, I have to actually check if the user is in
 	// the accumulator
 	
-	uint256 prime_image;
-	int err = mapToPrime(&prime_image, username_str);
-	mp_int prime_user = uint256tomp_int(&prime_image);
-	mp_int modulo = uint256tomp_int(&n);
-	mp_int accum = uint256tomp_int(&lastAccumulator);
+	mp_int prime_image;
+	mp_init(&prime_image);
+	mapToPrime(&prime_image, username_str);
+	
+	mp_int modulo;
+	mp_init(&modulo);
+	uint256tomp_int(&modulo, &n);
+	
+	mp_int accum;
+	mp_init(&accum);
+	uint256tomp_int(&accum, &lastAccumulator);
+	
+	mp_int witness_int;
+	mp_init(&witness_int);
+	mp_read_radix(&witness_int, witness, 16);
+	
 	mp_int result;
 	mp_init(&result);
-	mp_exptmod_fast(&accum, &prime_user, &modulo, &result, 0);
+	mp_exptmod_fast(&witness_int, &prime_image, &modulo, &result, 0);
+	
 	// qui controlla se result è uguale all'accumulatore
-	return false;
+	
+	int cmp_result = mp_cmp(&result, &accum);
+	return (cmp_result == MP_EQ) ? true : false;
 }
 
 int cb(unsigned char *dst, int len, void* dat) {
-	dst = (unsigned char*) dat;
+	std::minstd_rand0* point = (std::minstd_rand0*)dat;
+	int i;
+	for (i = 0; i < len; i++) {
+		dst[i]=static_cast<unsigned char>(point->operator()());
+	}
+	return i;
+}
+
+/**
+ prime_image must be initialized
+ */
+int mapToPrime(mp_int* prime_image, const std::string username) {
+	// 1) hashing
+    uint256 hash = SerializeHash(username);
+	
+	// 2) seeding
+	unsigned seed = static_cast<unsigned>(h.Get64());
+	std::minstd_rand0 generator (seed);
+	
+	// 3) prime generation
+	const int dim_bit = 256; // dimensione numero primo in bit
+	const int safetyp = 8; // parametro per il miller-rabin (?)
+	mp_prime_random_ex(prime_image, safetyp, dim_bit, LTM_PRIME_SAFE, cb, &generator);
 	return 0;
 }
 
-int mapToPrime(uint256* prime_image, const std::string username) {
-    libtorrent::sha1_hash h = libtorrent::hasher(username.c_str(),username.length()).final();
-	mp_int mapped_prime;
-	mp_init(&mapped_prime);
-	const int dim_byte = 32; // dimensione numero primo in byte
-	mp_prime_random(&mapped_prime, 5, dim_byte, 0, cb, &h[0]);
-	char bin_mapped_prime[32];
-	mp_tohex(&mapped_prime, bin_mapped_prime);
-	prime_image->SetHex(bin_mapped_prime);
-	return 0;
+/**
+ dest must be initialized
+ */
+bool uint256tomp_int(mp_int* dest, uint256* src){
+	mp_read_unsigned_bin(dest, src->begin(), src->size());
+	return true;
 }
 
-mp_int uint256tomp_int(uint256* src){
-	mp_int ret;
-	mp_init(&ret);
-	std::string hex_str = src->GetHex();
-	mp_read_radix(&ret, hex_str.c_str(), 16);
-	return ret;
-}
-
-uint256 mp_intTouint256(mp_int* src){
-	char hex_str[32];
-	mp_tohex(src, hex_str);
-	uint256 ret;
-	ret.SetHex(hex_str);
-	return ret;
+bool mp_intTouint256(uint256* dest, mp_int* src){
+	mp_to_unsigned_bin_n(src, dest->begin(), dest->size());
+	return true;
 }
 
 void test1() {
-	std::cout << "hello world";
+	isAdmin("utente2", "2654a238e9702ad69986fea552a0cd9fe9d0684a32e7454ce8337ca624");
 	exit(0);
 }

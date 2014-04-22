@@ -126,20 +126,18 @@ bool AppInit(int argc, char* argv[])
 
 extern void GenesisMiner();
 extern void noui_connect();
-extern void test1();
 int main(int argc, char* argv[])
 {
     bool fRet = false;
     fHaveGUI = false;
 
-    //GenesisMiner();
-	test1();
+    GenesisMiner();
 
     // Connect twisterd signal handlers
     noui_connect();
 
     fRet = AppInit(argc, argv);
-
+	
     if (fRet && fDaemon)
         return 0;
 

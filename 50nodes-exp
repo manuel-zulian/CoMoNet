@@ -118,8 +118,10 @@ elif [ "$1" = "stop" ]; then
     if [ "$2" != "pause" ]; then
 	for i in $(seq -f %02g 1 $NUM_NODI)
 	do
+	    set -e #exit on error or it will delete everything
 	    cd /tmp/nodo$i
 	    ls | grep -v debug.log | xargs rm -rf
+	    set +e
 	done
 	echo "file cancellati"
     fi

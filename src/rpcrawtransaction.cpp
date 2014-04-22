@@ -100,6 +100,14 @@ void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry)
         }
         entry.push_back(Pair("pubKey", o));
     }
+	std::vector< std::vector<unsigned char> > vAccData;
+    if( tx.accumulator.ExtractPushData(vAccData) ) {
+        Array o;
+        BOOST_FOREACH(std::vector<unsigned char> vch, vAccData) {
+			o.push_back(HexStr(vch));
+        }
+        entry.push_back(Pair("accumulator", o));
+    }
     entry.push_back(Pair("nonce", (int) tx.nNonce));
 
     if (hashBlock != 0)
