@@ -103,7 +103,7 @@ int mapToPrime(mp_int* prime_image, const std::string username) {
     uint256 hash = SerializeHash(username);
 	
 	// 2) seeding
-	unsigned seed = static_cast<unsigned>(h.Get64());
+	unsigned seed = static_cast<unsigned>(hash.Get64());
 	std::minstd_rand0 generator (seed);
 	
 	// 3) prime generation
@@ -122,7 +122,7 @@ bool uint256tomp_int(mp_int* dest, uint256* src){
 }
 
 bool mp_intTouint256(uint256* dest, mp_int* src){
-	mp_to_unsigned_bin_n(src, dest->begin(), dest->size());
+	mp_to_unsigned_bin(src, dest->begin());
 	return true;
 }
 

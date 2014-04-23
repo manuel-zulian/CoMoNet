@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     bool fRet = false;
     fHaveGUI = false;
 
-    GenesisMiner();
+    //GenesisMiner();
 
     // Connect twisterd signal handlers
     noui_connect();

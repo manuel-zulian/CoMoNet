@@ -218,9 +218,9 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
 	
 	/// v0.1 per adesso tutto questo codice per la pubKey non serve a niente
     vector<unsigned char> vch(ParseHexV(params[1], "pubkey"));
-	CPubKey pubkey(vch);
-    if( !pubkey.IsValid() )
-		throw JSONRPCError(RPC_INTERNAL_ERROR, "pubkey is not valid");
+	//CPubKey pubkey(vch);
+    //if( !pubkey.IsValid() )
+	//	throw JSONRPCError(RPC_INTERNAL_ERROR, "pubkey is not valid");
 	
     rawTx.pubKey << vch;
     //if( params.size() > 2) {

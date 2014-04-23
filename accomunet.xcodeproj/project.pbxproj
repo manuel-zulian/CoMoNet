@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7FA666D01907FB1D00277935 /* c_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA666CD1907FB1D00277935 /* c_test.c */; };
+		7FA666D11907FB1D00277935 /* GeoIP.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA666CE1907FB1D00277935 /* GeoIP.c */; };
+		7FA666D21907FB1D00277935 /* mpi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA666CF1907FB1D00277935 /* mpi.c */; };
 		7FC0E79819065E9D00A44CC9 /* accumunet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65619065E9700A44CC9 /* accumunet.cpp */; };
 		7FC0E79919065E9D00A44CC9 /* bitcoind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65719065E9700A44CC9 /* bitcoind.cpp */; };
 		7FC0E79A19065E9D00A44CC9 /* chainparams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0E65819065E9700A44CC9 /* chainparams.cpp */; };
@@ -344,7 +347,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7FC0E5FC19064F8100A44CC9 /* accumunet-doc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "accumunet-doc"; path = "/Users/gurghet/Documents/Tesi/prototipo/accumunet/build/Debug/accumunet-doc"; sourceTree = "<absolute>"; };
+		7FA666CC1907B89900277935 /* accumunet-doc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "accumunet-doc"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA666CD1907FB1D00277935 /* c_test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = c_test.c; path = src/leveldb/db/c_test.c; sourceTree = "<group>"; };
+		7FA666CE1907FB1D00277935 /* GeoIP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = GeoIP.c; path = libtorrent/src/GeoIP.c; sourceTree = "<group>"; };
+		7FA666CF1907FB1D00277935 /* mpi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = mpi.c; path = libtorrent/src/mpi.c; sourceTree = "<group>"; };
 		7FC0E65619065E9700A44CC9 /* accumunet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accumunet.cpp; path = src/accumunet.cpp; sourceTree = "<group>"; };
 		7FC0E65719065E9700A44CC9 /* bitcoind.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitcoind.cpp; path = src/bitcoind.cpp; sourceTree = "<group>"; };
 		7FC0E65819065E9700A44CC9 /* chainparams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = chainparams.cpp; path = src/chainparams.cpp; sourceTree = "<group>"; };
@@ -700,6 +706,9 @@
 		7FDA426418EEA55200BE8B4F = {
 			isa = PBXGroup;
 			children = (
+				7FA666CD1907FB1D00277935 /* c_test.c */,
+				7FA666CE1907FB1D00277935 /* GeoIP.c */,
+				7FA666CF1907FB1D00277935 /* mpi.c */,
 				7FC0E65619065E9700A44CC9 /* accumunet.cpp */,
 				7FC0E65719065E9700A44CC9 /* bitcoind.cpp */,
 				7FC0E65819065E9700A44CC9 /* chainparams.cpp */,
@@ -1039,6 +1048,7 @@
 				7FEA9C2918EEA597002F3385 /* TODO.md */,
 				7FEA9C2A18EEA597002F3385 /* twister-qt.pro */,
 				7FEA9C2B18EEA597002F3385 /* twister-test.py */,
+				7FA666CC1907B89900277935 /* accumunet-doc */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1076,7 +1086,7 @@
 			);
 			name = "accumunet-doc";
 			productName = "accumunet-doc";
-			productReference = 7FC0E5FC19064F8100A44CC9 /* accumunet-doc */;
+			productReference = 7FA666CC1907B89900277935 /* accumunet-doc */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -1112,6 +1122,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FA666D01907FB1D00277935 /* c_test.c in Sources */,
+				7FA666D11907FB1D00277935 /* GeoIP.c in Sources */,
+				7FA666D21907FB1D00277935 /* mpi.c in Sources */,
 				7FC0E79819065E9D00A44CC9 /* accumunet.cpp in Sources */,
 				7FC0E79919065E9D00A44CC9 /* bitcoind.cpp in Sources */,
 				7FC0E79A19065E9D00A44CC9 /* chainparams.cpp in Sources */,
@@ -1559,6 +1572,7 @@
 				7FC0E60319064F8100A44CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7FDA426818EEA55200BE8B4F /* Build configuration list for PBXProject "accomunet" */ = {
 			isa = XCConfigurationList;

@@ -51,13 +51,15 @@ public:
         txNew.nNonce  = 0; // spamMessage is not required to show POW to ease "extranonce" support
         genesis.vtx.push_back(txNew);
 		
+		
 		CTransaction txAcc;
 		txAcc.userName = CScript() << string("_admin_");
-		txAcc.pubKey << ParseHex(""); // TODO: mettere la pubkey
+		txAcc.pubKey << ParseHex("ffffff"); // TODO: mettere la pubkey
 		txAcc.accumulator << ParseHex("49fe4c3ed6c8037d33eba81de1ce483f244cd7810bffc784d3e2dc2d79");
-		txAcc.nNonce = 0; // TODO: mettere la nonce
+		txAcc.nNonce = 20145; // TODO: mettere la nonce
 		genesis.vtx.push_back(txAcc);
 		
+		 
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
@@ -65,7 +67,7 @@ public:
         genesis.nTime    = 1384394255;
         //genesis.nBits    = 0x1d00ffff;
         genesis.nBits    = 0x1f02ffff;
-        genesis.nNonce   = 133578;
+        genesis.nNonce   = 4598;
 
         hashGenesisBlock = genesis.GetHash();
         //assert(hashGenesisBlock == uint256("ba2fb68be57e80fd988405d4c5fbf5f338568fab69394143c74b24d3d1744766"));
