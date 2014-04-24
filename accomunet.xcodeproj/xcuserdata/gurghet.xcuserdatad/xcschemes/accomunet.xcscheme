@@ -40,11 +40,11 @@
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <PathRunnable
-         FilePath = "/Users/gurghet/Documents/Tesi/xcode/accumunet/twisterd">
+         FilePath = "/Users/gurghet/Documents/Tesi/prototipo/accumunet/twisterd">
       </PathRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-datadir=/tmp/nodo07"
+            argument = "-datadir=/tmp/nodo02"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -60,11 +60,11 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-port=26607"
+            argument = "-port=26602"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-rpcport=27607"
+            argument = "-rpcport=27602"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

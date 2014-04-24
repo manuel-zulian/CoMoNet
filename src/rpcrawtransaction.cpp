@@ -199,45 +199,6 @@ Value createrawtransaction(const Array& params, bool fHelp)
     return HexStr(ss.begin(), ss.end());
 }
 
-Value createrawaccumulatortransaction(const Array& params, bool fHelp)
-{
-	if (fHelp || params.size() != 3)
-        throw runtime_error(
-							"createrawaccumulatortransaction <username> <pubKey> <accumulator>\n"
-							"Create a transaction registering a new group username\n"
-							"pubKey and accumulator must be in hex format\n"
-							"Returns hex-encoded raw transaction.\n"
-							"it is not stored in the wallet or transmitted to the network.");
-	
-    CTransaction rawTx; // transazione da compilare
-	
-    if (params[0].type() != str_type)
-		throw JSONRPCError(RPC_INVALID_PARAMETER, "username must be string");
-    string username = params[0].get_str();
-    rawTx.userName = CScript() << vector<unsigned char>((const unsigned char*)username.data(), (const unsigned char*)username.data() + username.size());
-	
-	/// v0.1 per adesso tutto questo codice per la pubKey non serve a niente
-    vector<unsigned char> vch(ParseHexV(params[1], "pubkey"));
-	//CPubKey pubkey(vch);
-    //if( !pubkey.IsValid() )
-	//	throw JSONRPCError(RPC_INTERNAL_ERROR, "pubkey is not valid");
-	
-    rawTx.pubKey << vch;
-    //if( params.size() > 2) {
-    //    vector<unsigned char> vchSign(ParseHexV(params[2], "signedByOldKey"));
-    //    rawTx.pubKey << vchSign;
-    //}
-	
-	vector<unsigned char> ach(ParseHexV(params[2], "accumulator"));
-	rawTx.accumulator = CScript() << ach;
-	
-    DoTxProofOfWork(rawTx);
-	
-    CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
-    ss << rawTx;
-    return HexStr(ss.begin(), ss.end());
-}
-
 Value decoderawtransaction(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
@@ -288,7 +249,8 @@ Value sendrawtransaction(const Array& params, bool fHelp)
     fHave = GetTransaction(tx.GetUsername(), tx2, hashBlock);
 
     // treat replacement as !fHave
-    if( fHave && verifyDuplicateOrReplacementTx(tx, false, true) ) {
+    if( fHave && verifyDuplicateOrReplacementTx(tx, false, true) ) { ///<- v0.1 non posso aggiornare
+																	 ///<  l'accumulatore
         printf("sendrawtransaction: is ReplacementTx true\n");
         fHave = false;
     }
@@ -311,65 +273,6 @@ Value sendrawtransaction(const Array& params, bool fHelp)
     }
     RelayTransaction(tx, hashTx);
 
-    return hashTx.GetHex();
-}
-
-Value sendrawaccumulator(const Array& params, bool fHelp)
-{
-	if (fHelp || params.size() != 1)
-		throw runtime_error(
-							"sendrawaccumulator <hex string>\n"
-							"Submits raw transaction (serialized, hex-encoded) to local node and network.");
-	
-	// parse hex string from parameter
-    vector<unsigned char> txData(ParseHexV(params[0], "parameter"));
-    CDataStream ssData(txData, SER_NETWORK, PROTOCOL_VERSION);
-    CTransaction tx;
-	
-    // deserialize binary data stream
-    try {
-        ssData >> tx;
-    }
-    catch (std::exception &e) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "TX decode failed");
-    }
-    uint256 hashTx = tx.GetHash();
-	
-    bool fHave = false;
-    uint256 hashBlock;
-    CTransaction tx2;
-    fHave = GetTransaction(tx.GetUsername(), tx2, hashBlock);
-	
-    // treat replacement as !fHave
-    if( fHave && verifyDuplicateOrReplacementTx(tx, false, true) ) {	//<-questo è l'unico pezzo della
-																		//	funzione che non va bene,
-																		//	la chiave pubblica in linea
-																		//	di massima potrebbe rimanere
-																		//	uguale, ma l'accumulatore deve
-																		//	essere cambiato spesso.
-																		//	v0.1 non ce ne occupiamo
-        printf("sendrawtransaction: is ReplacementTx true\n");
-        fHave = false;
-    }
-	
-    if (!fHave) {
-        // push to local node
-        CValidationState state;
-        if (!mempool.accept(state, tx, false, NULL))
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "TX rejected"); // TODO: report validation state
-    }
-    if (fHave) {
-        if (hashBlock != uint256())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "transaction already in block chain");
-        if (tx.GetHash() != tx2.GetHash())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "conflict transaction detected (same user, different tx)");
-        // Not in block, but already in the memory pool; will drop
-        // through to re-relay it.
-    } else {
-        SyncWithWallets(hashTx, tx, NULL, true);
-    }
-    RelayTransaction(tx, hashTx);
-	
     return hashTx.GetHex();
 }
 

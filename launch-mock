@@ -1,0 +1,17 @@
+#!/bin/bash
+
+./50nodes-exp start 2
+sleep 1
+./50nodes-exp connect 1 2
+sleep 1
+./50nodes-exp cmd 2 setgenerate true 1
+sleep 0.5
+./50nodes-exp cmd 1 sendrawtransaction 010000000008075f61646d696e5f0403ffffff1e1d5237fce1af54c2895cddf5b3bff63f9dab0c538b3c432778b48940605a560c0000
+./50nodes-exp cmd 1 createwalletuser utente1
+./50nodes-exp cmd 1 createwalletuser utente2
+./50nodes-exp cmd 1 createwalletuser utente3
+./50nodes-exp cmd 1 sendnewusertransaction utente1
+./50nodes-exp cmd 1 sendnewusertransaction utente2
+./50nodes-exp cmd 1 sendnewusertransaction utente3
+sleep 1
+echo "done!"

@@ -263,7 +263,6 @@ static const CRPCCommand vRPCCommands[] =
     { "gettrendinghashtags",    &gettrendinghashtags,    false,     true,       true },
     { "getspamposts",           &getspamposts,           false,     true,       false },
     { "torrentstatus",          &torrentstatus,          false,     true,       false },
-	{ "sendrawaccumulator",		&sendrawaccumulator,	 false,		false,		false },
 	{ "createrawaccumulatortransaction", &createrawaccumulatortransaction, true, true, true},
 };
 

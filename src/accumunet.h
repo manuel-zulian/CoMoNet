@@ -25,6 +25,4 @@ bool uint256tomp_int(mp_int* dest, uint256* src);
 
 bool mp_intTouint256(uint256* dest, mp_int* src);
 
-void test1();
-
 #endif /* defined(__accomunet__accumunet__) */
