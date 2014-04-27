@@ -1,17 +1,20 @@
 #!/bin/bash
 
-./50nodes-exp start 2
+./50nodes-exp start 1
 sleep 1
 ./50nodes-exp connect 1 2
 sleep 1
-./50nodes-exp cmd 2 setgenerate true 1
+./50nodes-exp cmd 1 setgenerate true 4
 sleep 0.5
-./50nodes-exp cmd 1 sendrawtransaction 010000000008075f61646d696e5f0403ffffff1e1d5237fce1af54c2895cddf5b3bff63f9dab0c538b3c432778b48940605a560c0000
-./50nodes-exp cmd 1 createwalletuser utente1
-./50nodes-exp cmd 1 createwalletuser utente2
-./50nodes-exp cmd 1 createwalletuser utente3
-./50nodes-exp cmd 1 sendnewusertransaction utente1
-./50nodes-exp cmd 1 sendnewusertransaction utente2
-./50nodes-exp cmd 1 sendnewusertransaction utente3
+./50nodes-exp cmd 2 sendrawtransaction 010000000008075f61646d696e5f0403ffffff2120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e76e330000
+./50nodes-exp cmd 2 createwalletuser utente1
+./50nodes-exp cmd 2 createwalletuser utente2
+./50nodes-exp cmd 2 createwalletuser utente3
+./50nodes-exp cmd 2 sendnewusertransaction utente1
+./50nodes-exp cmd 2 sendnewusertransaction utente2
+./50nodes-exp cmd 2 sendnewusertransaction utente3
+./50nodes-exp cmd 2 addwitnesstouser utente1 357d626250e41eb0390d60e4c33859369681fec371ab532e428b63059e97c6a7 
+./50nodes-exp cmd 2 addwitnesstouser utente2 26ff76d0f66b8403bda6534fce3dbcaf47ffd5eb7e06720dd3d58aee587a39a5
+./50nodes-exp cmd 2 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7
 sleep 1
 echo "done!"

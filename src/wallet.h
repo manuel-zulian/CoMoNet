@@ -202,6 +202,8 @@ public:
 
     // get the current wallet format (the oldest client version guaranteed to understand this wallet)
     int GetVersion() { return nWalletVersion; }
+	
+	bool AddWitnessTo(std::string username, std::string witness);
 
     bool MoveKeyForReplacement(std::string username);
     bool GetKeyIdBeingReplaced(std::string username, CKeyID &keyid);

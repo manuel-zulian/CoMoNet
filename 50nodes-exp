@@ -6,7 +6,7 @@ if [ "$1" = "start" ]; then
 	echo -e "usage:\n50nodes-exp start <num_nodes>"
 	exit 0
     fi
-    echo $2 > ./.global_vars
+    echo $(($2+1)) > ./.global_vars
     echo "$0: creo i $NUM_NODI nodi"
     for i in $(seq -f %02g 01 $NUM_NODI)
     do
@@ -101,6 +101,8 @@ elif [ "$1" = "stop" ]; then
     echo "$0: distruggo i $NUM_NODI nodi"
     for i in $(seq -f %02g 01 $NUM_NODI)
     do
+	echo "./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=2\
+76$i stop"
 	./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$i stop
     done
 
@@ -109,7 +111,7 @@ elif [ "$1" = "stop" ]; then
     do
 	echo -n "."
 	sleep 2
-	if [ -z "$(pgrep twisterd)" ]; then
+	if [ -z "$(ps aux | grep twisterd | grep -v "ZN\|grep")" ]; then
 	    echo -e "\nprocessi terminati."
 	    break
 	fi

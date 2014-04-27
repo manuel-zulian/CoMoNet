@@ -1057,7 +1057,7 @@
 /* Begin PBXLegacyTarget section */
 		7FDA426918EEA55200BE8B4F /* accomunet */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION) -j4";
+			buildArgumentsString = "$(ACTION) -j4 CXXFLAGS+=\"-g3 -O0\"";
 			buildConfigurationList = 7FDA426C18EEA55200BE8B4F /* Build configuration list for PBXLegacyTarget "accomunet" */;
 			buildPhases = (
 			);
@@ -1460,6 +1460,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/gurghet/Documents/Tesi/prototipo/accumunet/libtorrent/include,
+					/usr/local/Cellar/boost/1.55.0_1/include,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1467,6 +1473,12 @@
 		7FC0E60319064F8100A44CC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/gurghet/Documents/Tesi/prototipo/accumunet/libtorrent/include,
+					/usr/local/Cellar/boost/1.55.0_1/include,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

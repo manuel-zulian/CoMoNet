@@ -31,6 +31,7 @@ public:
     int nVersion;
     int64 nCreateTime; // 0 means unknown
     std::string username;
+	std::string witness;
 
     CKeyMetadata()
     {
@@ -41,6 +42,7 @@ public:
         nVersion = CKeyMetadata::CURRENT_VERSION;
         nCreateTime = nCreateTime_;
         username = username_;
+		witness = string("");
     }
 
     IMPLEMENT_SERIALIZE
@@ -49,6 +51,7 @@ public:
         nVersion = this->nVersion;
         READWRITE(nCreateTime);
         READWRITE(username);
+		READWRITE(witness);
     )
 
     void SetNull()
@@ -56,6 +59,7 @@ public:
         nVersion = CKeyMetadata::CURRENT_VERSION;
         nCreateTime = 0;
         username.clear();
+		witness.clear();
     }
 };
 

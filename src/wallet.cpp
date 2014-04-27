@@ -121,6 +121,31 @@ bool CWallet::GetUsernameFromKeyId(CKeyID keyid, std::string &username)
   return false;
 }
 
+bool CWallet::AddWitnessTo(std::string username, std::string witness)
+{
+	for (std::map<CKeyID, CKeyMetadata>::iterator it = mapKeyMetadata.begin(); it != mapKeyMetadata.end(); it++) {
+		if (it->second.username == username) {
+			it->second.witness = witness;
+			
+			// [AP] make sure new metadata is updated on disk
+			CPubKey pubkey;
+			CKey secret;
+			GetPubKey(it->first, pubkey);
+			GetKey(it->first, secret);
+			if (!IsCrypted()) {
+				CWalletDB(strWalletFile).WriteKey(pubkey,
+												  secret.GetPrivKey(),
+												  it->second);
+				printf(BLUE "witness: %s added to user: %s\n" RESET, witness.c_str(), username.c_str());
+			} else {
+				printf("WARNING: MoveKeyForReplacement not implemeted for crypted wallet. duplicate metadata may occur![AP](?)\n" );
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
 bool CWallet::MoveKeyForReplacement(std::string username)
 {
   for (std::map<CKeyID, CKeyMetadata>::iterator it = mapKeyMetadata.begin(); it != mapKeyMetadata.end(); it++) {

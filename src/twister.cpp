@@ -85,7 +85,7 @@ sha1_hash dhtTargetHash(std::string const &username, std::string const &resource
 /**
  * Starts the torrent for the specified user.
  * @param username the user for which we start the torrent for
- * @param following whathere we should follow said user or not
+ * @param following weather we should follow said user or not
  * @return	a torrent handle to the user's torrent, a torrent handle
  *			describes a torrent
  */
@@ -689,7 +689,9 @@ void ThreadSessionAlerts()
                     }
                     if( statusCheck.count(ih) ) {
                         if( dd->m_got_data ) {
-                            startTorrentUser(dd->m_username, false);
+							if (isAdmin((dd->m_username).c_str())) {
+								startTorrentUser(dd->m_username, false);
+							}
                         }
                     }
                     continue;
@@ -1457,9 +1459,9 @@ int findLastPublicPostLocalUser( std::string strUsername )
 
 Value newpostmsg(const Array& params, bool fHelp)
 {
-    if (fHelp || (params.size() != 3 && params.size() != 5))
+    if (fHelp || (params.size() != 3))
         throw runtime_error(
-            "newpostmsg <username> <k> <msg> [reply_n] [reply_k]\n"
+            "newpostmsg <username> <k> <msg>\n"
             "Post a new message to swarm");
 
     EnsureWalletIsUnlocked();
@@ -1468,14 +1470,11 @@ Value newpostmsg(const Array& params, bool fHelp)
     int k              = params[1].get_int();
     string strK        = boost::lexical_cast<std::string>(k); // lexical_cast è una semplice conversione
     string strMsg      = params[2].get_str();
-
-    string strReplyN, strReplyK;
-    int replyK = 0;
-    if( params.size() == 5 ) {
-        strReplyN  = params[3].get_str();
-        replyK = params[4].get_int();
-        strReplyK = boost::lexical_cast<std::string>(replyK);
-    }
+	
+	if (!isAdmin(strUsername.c_str())) {
+		// if the user is not an admin he can't post at all
+		throw JSONRPCError(RPC_INTERNAL_ERROR,"the specified user is not an admin and cannot post");
+	}
 
     entry v; // è un variant-type, in questo caso è un dizionario
     // [MF] Warning: findLastPublicPostLocalUser requires that we follow ourselves
@@ -1483,10 +1482,10 @@ Value newpostmsg(const Array& params, bool fHelp)
     int lastk = findLastPublicPostLocalUser(strUsername);
     if( lastk >= 0 )
         v["userpost"]["lastk"] = lastk;
-
+	
     if( !createSignedUserpost(v, strUsername, k, strMsg,
                          NULL, NULL, NULL,	// not an rt, nor a dm
-                         strReplyN, replyK) )
+                         string(""), 0) ) // not a reply
         throw JSONRPCError(RPC_INTERNAL_ERROR,"error signing post with private key of user");
 
     vector<char> buf;
@@ -1496,28 +1495,21 @@ Value newpostmsg(const Array& params, bool fHelp)
     if( !acceptSignedPost(buf.data(),buf.size(),strUsername,k,errmsg,NULL) )
         throw JSONRPCError(RPC_INVALID_PARAMS,errmsg);
 
-	// [AP] enforce accumulator
     torrent_handle h = startTorrentUser(strUsername, true);
     if( h.is_valid() ) {
         // if member of torrent post it directly
         h.add_piece(k,buf.data(),buf.size());
     } else {
         // TODO: swarm resource forwarding not implemented
-        ses->dht_putData(strUsername, "swarm", false,
+        ses->dht_putData(strUsername, "swarm", RES_T_SINGLE,
                          v, strUsername, GetAdjustedTime(), 1);
     }
 
     // post to dht as well
-    ses->dht_putData(strUsername, string("post")+strK, false,
+    ses->dht_putData(strUsername, string("post")+strK, RES_T_SINGLE,
                      v, strUsername, GetAdjustedTime(), 1);
-    ses->dht_putData(strUsername, string("status"), false,
+    ses->dht_putData(strUsername, string("status"), RES_T_SINGLE,
                      v, strUsername, GetAdjustedTime(), k);
-
-    // is this a reply? notify
-    if( strReplyN.length() ) {
-        ses->dht_putData(strReplyN, string("replies")+strReplyK, true,
-                         v, strUsername, GetAdjustedTime(), 0);
-    }
 
     // split and look for mentions and hashtags
     vector<string> tokens;
@@ -1532,10 +1524,10 @@ Value newpostmsg(const Array& params, bool fHelp)
             boost::algorithm::to_lower(word);
 #endif
             if( token.at(0) == '#') {
-                ses->dht_putData(word, "hashtag", true,
+                ses->dht_putData(word, "hashtag", RES_T_MULTI,
                                  v, strUsername, GetAdjustedTime(), 0);
             } else if( token.at(0) == '@') {
-                ses->dht_putData(word, "mention", true,
+                ses->dht_putData(word, "mention", RES_T_MULTI,
                                  v, strUsername, GetAdjustedTime(), 0);
             }
         }
@@ -1545,8 +1537,81 @@ Value newpostmsg(const Array& params, bool fHelp)
     return entryToJson(v);
 }
 
+Value newpostreply(const Array& params, bool fHelp)
+{
+    if (fHelp || (params.size() != 5))
+        throw runtime_error(
+							"newpostmsg <username> <k> <msg> <reply_n> <reply_k>\n"
+							"Post a new reply to dht");
+	
+    EnsureWalletIsUnlocked();
+	
+    string strUsername = params[0].get_str();
+    int k              = params[1].get_int();
+    string strK        = boost::lexical_cast<std::string>(k); // lexical_cast è una semplice conversione
+    string strMsg      = params[2].get_str();
+	string strReplyN   = params[3].get_str();
+	int replyK         = params[4].get_int();
+	string strReplyK   = boost::lexical_cast<std::string>(replyK);
+	
+    entry v; // è un variant-type, in questo caso è un dizionario
+    // [MF] Warning: findLastPublicPostLocalUser requires that we follow ourselves
+    // [AP] I don't think this is enforced anywhere
+	// [AP] Since I think lastk is used only in torrents, let's not use it in replies
+    //int lastk = findLastPublicPostLocalUser(strUsername);
+    //if( lastk >= 0 )
+    //    v["userpost"]["lastk"] = lastk;
+	
+    if( !createSignedUserpost(v, strUsername, k, strMsg,
+							  NULL, NULL, NULL,	// not an rt, nor a dm
+							  strReplyN, replyK) )
+        throw JSONRPCError(RPC_INTERNAL_ERROR,"error signing post with private key of user");
+	
+    vector<char> buf;
+    bencode(std::back_inserter(buf), v);
+	
+    std::string errmsg;
+    if( !acceptSignedPost(buf.data(),buf.size(),strUsername,k,errmsg,NULL) )
+        throw JSONRPCError(RPC_INVALID_PARAMS,errmsg);
+	
+    // notify reply
+    if( strReplyN.length() ) {
+        ses->dht_putData(strReplyN, string("replies")+strReplyK, RES_T_MULTI,
+                         v, strUsername, GetAdjustedTime(), 0);
+    }
+	
+    // split and look for mentions and hashtags
+    vector<string> tokens;
+    boost::algorithm::split(tokens,strMsg,boost::algorithm::is_any_of(" \n\t.,:/?!"),
+                            boost::algorithm::token_compress_on);
+    BOOST_FOREACH(string const& token, tokens) {
+        if( token.length() >= 2 ) {
+            string word = token.substr(1);
+#ifdef HAVE_BOOST_LOCALE
+            word = boost::locale::to_lower(word);
+#else
+            boost::algorithm::to_lower(word);
+#endif
+            if( token.at(0) == '#') {
+                ses->dht_putData(word, "hashtag", RES_T_MULTI,
+                                 v, strUsername, GetAdjustedTime(), 0);
+            } else if( token.at(0) == '@') {
+                ses->dht_putData(word, "mention", RES_T_MULTI,
+                                 v, strUsername, GetAdjustedTime(), 0);
+            }
+        }
+    }
+	
+    hexcapePost(v);
+    return entryToJson(v);
+}
+
 Value newdirectmsg(const Array& params, bool fHelp)
 {
+	throw runtime_error("currently not implemented");
+	// The implementation should not be based on posts, since those are
+	// reserved to admins/producers, DM should be sent to a public address
+	// to be polled by the recipient(?)
     if (fHelp || params.size() != 4)
         throw runtime_error(
             "newdirectmsg <from> <k> <to> <msg>\n"
@@ -1596,6 +1661,11 @@ Value newdirectmsg(const Array& params, bool fHelp)
 
 Value newrtmsg(const Array& params, bool fHelp)
 {
+	throw runtime_error("currently not implemented");
+	// Retweets were done in the user's swarm, but they have been
+	// deleted. They should now just be converted in a sort of reply
+	// wich push up the popularity of the posting user
+	/// nevermind! look at notes... where?? i'll write them soon
     if (fHelp || (params.size() != 3))
         throw runtime_error(
             "newrtmsg <username> <k> <rt_v_object>\n"
@@ -1830,12 +1900,17 @@ Value follow(const Array& params, bool fHelp)
 
     for( unsigned int u = 0; u < users.size(); u++ ) {
         string username = users[u].get_str();
-        torrent_handle h = startTorrentUser(username, true);
+		if (isAdmin(username.c_str())) {
+			// can follow only admins
+			torrent_handle h = startTorrentUser(username, true);
 
-        if( h.is_valid() ) {
-            LOCK(cs_twister);
-            m_users[localUser].m_following.insert(username);
-        }
+			if( h.is_valid() ) {
+				LOCK(cs_twister);
+				m_users[localUser].m_following.insert(username);
+			}
+        } else {
+			// TODO: report non-admin users
+		}
     }
 
     return Value();

@@ -200,6 +200,7 @@ extern json_spirit::Value getlastsoftcheckpoint(const json_spirit::Array& params
 extern json_spirit::Value dhtput(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value dhtget(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value newpostmsg(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value newpostreply(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value newdirectmsg(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value newrtmsg(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getposts(const json_spirit::Array& params, bool fHelp);
@@ -218,6 +219,7 @@ extern json_spirit::Value gettrendinghashtags(const json_spirit::Array& params, 
 extern json_spirit::Value getspamposts(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value torrentstatus(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value createrawaccumulatortransaction(const json_spirit::Array& params, bool fHelp); // in accumunet.cpp
+extern json_spirit::Value addwitnesstouser(const json_spirit::Array& params, bool fHelp);
 
 
 #endif

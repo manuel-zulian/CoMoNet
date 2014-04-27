@@ -1156,7 +1156,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			{"token", lazy_entry::string_t, 0, 0},
 			{"n", lazy_entry::string_t, 0, key_desc_t::optional},
 			{"seed", lazy_entry::int_t, 0, key_desc_t::optional},
-			{"implied_port", lazy_entry::int_t, 0, key_desc_t::optional}, // add witness
+			{"implied_port", lazy_entry::int_t, 0, key_desc_t::optional},
 		};
 
 		lazy_entry const* msg_keys[6];
@@ -1207,8 +1207,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		// the table get a chance to add it.
 		m_table.node_seen(id, m.addr, 0xffff);
 		
-		// TODO: [AP] enforce accumulator here
-		
+		// [AP] qui si potrebbe in via preliminare controllare il nome del torrent per vedere se è nel suo accumulatore firmato, tuttavia bisogna vedere se il nome del torrent deve per forza coincidere con il nome dell'utente
 
 		if (!m_map.empty() && int(m_map.size()) >= m_settings.max_torrents)
 		{
@@ -1243,7 +1242,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			{"p", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			    {"v", lazy_entry::none_t, 0, 0},
 			    {"seq", lazy_entry::int_t, 0, key_desc_t::optional},
-				{"witness", lazy_entry::string_t, 0, key_desc_t::optional}, // add witness to the actual message
 			    {"time", lazy_entry::int_t, 0, 0},
 			    {"height", lazy_entry::int_t, 0, 0},
 			    {"target", lazy_entry::dict_t, 0, key_desc_t::parse_children},
@@ -1252,7 +1250,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 				{"t", lazy_entry::string_t, 0, 0},
 		};
 		enum {mk_token=0, mk_sig_p, mk_sig_user, mk_p, mk_v,
-		      mk_seq, mk_witness, mk_time, mk_height, mk_target, mk_n,
+		      mk_seq, mk_time, mk_height, mk_target, mk_n,
 		      mk_r, mk_t};
 
 		// attempt to parse the message
@@ -1311,22 +1309,27 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			return;
 		}
 		
+		// al posto del seguente blocco dovrei prendere dalla rete dht un witness, magari in modo asincrono, e controllare se questa risorsa ha il permesso di essere memorizzata
+		/*
 		const char* received_username = msg_keys[mk_n]->string_value().c_str();
 		const char* received_rsc_type = msg_keys[mk_r]->string_value().c_str();
 		if (!strcmp(received_rsc_type, "swarm") || // if "swarm" match rcvd type OR
 			strstr(received_rsc_type, "post") != NULL // if post is contained in rcvd type
 			) { // we have to check that username is an admin
+			
 			if (!msg_keys[mk_witness]->string_length()) {
 				// TODO: [AP] not sure this is the right way to check if the witness field is missing, maybe i'm calling string_value() on a null pointer, or lenght() on a null pointer...
 				incoming_error(e, "witness missing, forbidden action");
 				return;
 			}
-			const char* received_witness = msg_keys[mk_witness]->string_value().c_str();
-			if (!isAdmin(received_username, received_witness)) {
-				incoming_error(e, "forbidden action, must be an admin");
-				return;
-			}
-		}
+			
+			// qui dovrebbe recuperare il witness dalla rete dht
+			//const char* received_witness = msg_keys[mk_witness]->string_value().c_str();
+			//if (!isAdmin(received_username, received_witness)) {
+			//	incoming_error(e, "forbidden action, must be an admin");
+			//	return;
+			//}
+		}*/
 
 		if (!multi && msg_keys[mk_sig_user]->string_value() !=
 			      msg_keys[mk_n]->string_value() ) {

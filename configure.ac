@@ -11,7 +11,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Silencing build output (automake-1.11)
-m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+#m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 
 ###############################################################################
@@ -350,7 +350,7 @@ AS_CASE(["$ARG_ENABLE_DEBUG"],
       AC_MSG_RESULT([yes])
       AC_DEFINE([TORRENT_DEBUG],[1],[Define to enable debug code.])
       COMPILETIME_OPTIONS="$COMPILETIME_OPTIONS -DTORRENT_DEBUG "
-      DEBUGFLAGS="-g"
+      DEBUGFLAGS="-g3 -O0"
    ],
   ["no"], [
       AC_MSG_RESULT([no])
@@ -464,7 +464,7 @@ AS_CASE(["$ARG_ENABLE_SSE2"],
   ["yes"|"on"], [
       AC_MSG_RESULT([yes])
       AC_DEFINE([USE_SSE2],[1],[Enable SSE2])
-      CXXFLAGS="$CXXFLAGS -DUSE_SSE2 -msse2 "
+      CXXFLAGS="$CXXFLAGS -g3 -O0 -D'_LIBCPP_EXTERN_TEMPLATE(...)=' -DUSE_SSE2 -msse2 " #brutal! [AP]
     ],
   ["no"|"off"], [
       AC_MSG_RESULT([no])

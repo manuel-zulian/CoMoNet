@@ -9,6 +9,7 @@
 #include "accumunet.h"
 
 #include "main.h"
+#include "init.h"
 #include "base58.h"
 #include "bitcoinrpc.h"
 
@@ -28,19 +29,13 @@ const char* admin_str = "_admin_";	///< special username representing users
 bool isAdmin(const char* username) {
 	// TODO: should take the witness from the wallet
 	// for now is not implemented
-	if (!strncmp(username, "utente1", 7)) {
-		return isAdmin(username, "274468099e0dd55ba713964ef7e3e9615ee105a80c912e5eb9ac1e1713");
-	} else if (!strncmp(username, "utente2", 7)) {
-		return isAdmin(username, "5dc3a454041473865172530bc232161889a06c5dcb460810a53bddc4cd");
-	} else if (!strncmp(username, "utente3", 7)) {
-		return isAdmin(username, "5237fce1af54c2895cddf5b3bff63f9dab0c538b3c432778b48940605a");
-	} else {
-		cout << "not implemented";
-		return false;
-	}
+	CKeyID keyid;
+	pwalletMain->GetKeyIdFromUsername(username, keyid);
+	string witness = pwalletMain->mapKeyMetadata[keyid].witness;
+	return isAdmin(username, witness.c_str());
 }
 
-bool isAdmin(const char* username, const char* witness) { // should take the witness from the wallet actually
+bool isAdmin(const char* username, const char* witness) {
 	std::string username_str(username);
 	CTransaction txOut;
 	uint256 hashBlock;
@@ -83,7 +78,7 @@ bool isAdmin(const char* username, const char* witness) { // should take the wit
 	
 	mp_int modulo;
 	mp_init(&modulo);
-	mp_read_radix(&modulo, "723729e19858d97387306afa280dcdc6274f024078dde94f12ff7842bd", 16);
+	mp_read_radix(&modulo, "625db8b14abe99dd61d65eb05742e10916148354c764b58d6f0e84dda9fa9b77", 16);
 		
 	mp_int witness_int;
 	mp_init(&witness_int);
@@ -193,4 +188,25 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << rawTx;
     return HexStr(ss.begin(), ss.end());
+}
+
+Value addwitnesstouser(const Array& params, bool fHelp)
+{
+	if (fHelp || params.size() != 2) {
+		throw runtime_error(
+							"addwitnesstouser <username> <new-witness>\n"
+							"Update the wallet with the new witness for the user.");
+	}
+	
+	if (params[0].type() != str_type)
+		throw JSONRPCError(RPC_INVALID_PARAMETER, "username must be string");
+    string username = params[0].get_str();
+	if (params[1].type() != str_type)
+		throw JSONRPCError(RPC_INVALID_PARAMETER, "witness must be string");
+    string witness = params[1].get_str();
+	
+	if (!pwalletMain->AddWitnessTo(username, witness))
+		throw runtime_error(
+						   "addwitnesstouser() : could not addWitnessTo\n");
+	return witness;
 }

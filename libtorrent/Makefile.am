@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
-#DISTCHECK_CONFIGURE_FLAGS = --enable-tests
+DISTCHECK_CONFIGURE_FLAGS = --enable-tests
 
 SUBDIRS = include/libtorrent src examples test tools
 #bindings

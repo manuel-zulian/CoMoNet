@@ -13,6 +13,8 @@
 #define BLOCK_AGE_TO_EXPIRE_DHT_ENTRY (2016)   // about 2 weeks
 #define BLOCK_AGE_TO_EXPIRE_DHT_POSTS (4320*2) // about 2 months
 
+#define RES_T_SINGLE false
+#define RES_T_MULTI true
 
 class twister
 {
