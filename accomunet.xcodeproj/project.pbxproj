@@ -1057,7 +1057,7 @@
 /* Begin PBXLegacyTarget section */
 		7FDA426918EEA55200BE8B4F /* accomunet */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION) -j4 CXXFLAGS+=\"-g3 -O0\"";
+			buildArgumentsString = "$(ACTION) -j4";
 			buildConfigurationList = 7FDA426C18EEA55200BE8B4F /* Build configuration list for PBXLegacyTarget "accomunet" */;
 			buildPhases = (
 			);

@@ -1,6 +1,10 @@
 #!/bin/bash
 
-./50nodes-exp start 1
+if [ "$1" != "1" ] && [ "$1" != "2" ]; then
+    echo "usage: launch-mock <1|2>"
+    exit
+fi
+./50nodes-exp start $1
 sleep 1
 ./50nodes-exp connect 1 2
 sleep 1

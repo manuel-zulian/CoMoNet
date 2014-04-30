@@ -1495,7 +1495,7 @@ Value newpostmsg(const Array& params, bool fHelp)
     if( !acceptSignedPost(buf.data(),buf.size(),strUsername,k,errmsg,NULL) )
         throw JSONRPCError(RPC_INVALID_PARAMS,errmsg);
 
-    torrent_handle h = startTorrentUser(strUsername, true);
+    torrent_handle h = startTorrentUser(strUsername, true);///<-true means follow ourselves
     if( h.is_valid() ) {
         // if member of torrent post it directly
         h.add_piece(k,buf.data(),buf.size());

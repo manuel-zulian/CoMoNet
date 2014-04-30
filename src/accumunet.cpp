@@ -23,6 +23,7 @@
 
 const char* admin_str = "_admin_";	///< special username representing users
 									///< with special rights
+mp_int last_accumulator_cache = {};
 //uint256 A = uint256(string("10000000000000000000000000"));
 //uint256 B = uint256(string("ffffffffffffffffffffffffffffffffffffffffffffffffff"));
 
@@ -45,32 +46,17 @@ bool isAdmin(const char* username, const char* witness) {
 		return false;
 	}
 	
-	CTransaction txAccumulator;
-	uint256 acc_hashBlock;
-	
-	if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
-		printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
-		return false;
+	// TODO: decidere quando usare la cache invece di effettuare una nuova query
+	// magari aggiungendo un nuovo argomento: force_update
+	bool force_update = true;
+	if (force_update || mp_iszero(&last_accumulator_cache)) {
+		updateAccumulator();
 	}
-	
-	mp_int accum;
-	mp_init(&accum);
-	
-	std::vector< std::vector<unsigned char> > vAccData;
-    if( txAccumulator.accumulator.ExtractPushData(vAccData) ) {
-		std::vector<unsigned char> vch = vAccData[0];
-		mp_read_unsigned_bin(&accum, vch.data(), vch.end()-vch.begin());
-    } else {
-		// TODO: gestione errori
-	}
-	
-	
+			
 	// now I know that the specified user is registered and
 	// I got his witness, I have the last accumulator for
 	// admins, I have to actually check if the user is in
 	// the accumulator
-	
-	//string u_str("32bd4e6bcb51878e3cd48e3984f73406eeaaed4278dfde9153b2611930");
 	
 	mp_int prime_image;
 	mp_init(&prime_image);
@@ -96,15 +82,45 @@ bool isAdmin(const char* username, const char* witness) {
 	mp_tohex(&prime_image, prime_h);
 	mp_tohex(&modulo, modulo_h);
 	mp_tohex(&result, result_h);
-	mp_tohex(&accum, last_h);
+	mp_tohex(&last_accumulator_cache, last_h);
 	printf( RED "%s to the %s modulo %s = %s" RESET "\n", witness_h, prime_h, modulo_h, result_h);
 	
 	// qui controlla se result è uguale all'accumulatore
 	
-	int cmp_result = mp_cmp(&result, &accum);
+	int cmp_result = mp_cmp(&result, &last_accumulator_cache);
 	bool ret = (cmp_result == MP_EQ) ? true : false;
 	printf( RED "the last accumulator was %s so the result is %d" RESET "\n", last_h, (int)ret);
 	return ret;
+}
+
+int updateAccumulator() {
+	CTransaction txAccumulator;
+	uint256 acc_hashBlock;
+	
+	if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
+		printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
+		return ACC_ERROR;
+	}
+	
+	mp_int new_acc;
+	mp_init(&new_acc);
+	
+	std::vector< std::vector<unsigned char> > vAccData;
+	if( txAccumulator.accumulator.ExtractPushData(vAccData) ) {
+		std::vector<unsigned char> vch = vAccData[0];
+		if (mp_iszero(&last_accumulator_cache))
+			mp_init(&last_accumulator_cache);
+		mp_read_unsigned_bin(&new_acc, vch.data(), vch.end()-vch.begin());
+		if (mp_cmp(&last_accumulator_cache, &new_acc) == MP_EQ) {
+			return ACC_UNCHANGED;
+		} else {
+			mp_copy(&new_acc, &last_accumulator_cache);
+			return ACC_CHANGED;
+		}
+	} else {
+		printf( RED "Can't decode the accumulator, aborting" RESET "\n");
+		return ACC_ERROR;
+	}
 }
 
 int cb(unsigned char *dst, int len, void* dat) {

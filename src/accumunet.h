@@ -13,9 +13,15 @@
 #include "script.h"
 #include "../libtorrent/include/libtorrent/tommath.h"
 
+#define ACC_CHANGED 2
+#define ACC_UNCHANGED 1
+#define ACC_ERROR 0
+
 bool isAdmin(const char* username);
 
 bool isAdmin(const char* username, const char* witness);
+
+int updateAccumulator();
 
 int cb(unsigned char *dst, int len, void* dat);
 

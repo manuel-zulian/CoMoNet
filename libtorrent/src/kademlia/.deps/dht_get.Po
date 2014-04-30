@@ -104,6 +104,7 @@ libtorrent/src/kademlia/dht_get.o: libtorrent/src/kademlia/dht_get.cpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/functional \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_03 \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/list \
+  /usr/local/include/boost/version.hpp \
   /usr/local/include/boost/thread.hpp \
   /usr/local/include/boost/thread/thread.hpp \
   /usr/local/include/boost/thread/thread_only.hpp \
@@ -450,7 +451,6 @@ libtorrent/src/kademlia/dht_get.o: libtorrent/src/kademlia/dht_get.cpp \
   /usr/local/include/boost/thread/pthread/pthread_mutex_scoped_lock.hpp \
   /usr/local/include/boost/chrono/system_clocks.hpp \
   /usr/local/include/boost/chrono/detail/system.hpp \
-  /usr/local/include/boost/version.hpp \
   /usr/local/include/boost/chrono/clock_string.hpp \
   /usr/local/include/boost/chrono/ceil.hpp \
   /usr/local/include/boost/thread/pthread/condition_variable_fwd.hpp \
@@ -1216,6 +1216,8 @@ src/uint256.h:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/list:
 
+/usr/local/include/boost/version.hpp:
+
 /usr/local/include/boost/thread.hpp:
 
 /usr/local/include/boost/thread/thread.hpp:
@@ -1949,8 +1951,6 @@ src/uint256.h:
 /usr/local/include/boost/chrono/system_clocks.hpp:
 
 /usr/local/include/boost/chrono/detail/system.hpp:
-
-/usr/local/include/boost/version.hpp:
 
 /usr/local/include/boost/chrono/clock_string.hpp:
 
