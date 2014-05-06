@@ -43,7 +43,7 @@ twister::twister()
 //#define DEBUG_NEIGHBOR_TORRENT 1
 
 using namespace libtorrent;
-static session *ses = NULL;
+session *ses = NULL;
 static bool m_usingProxy;
 static int num_outstanding_resume_data;
 

@@ -12,23 +12,30 @@
 #include "init.h"
 #include "base58.h"
 #include "bitcoinrpc.h"
+#include "twister.h"
 
 #include <cstdlib>
 #include <openssl/sha.h>
 #include <random>
 #include <algorithm>
-#include "../libtorrent/include/libtorrent/peer_id.hpp"
-#include "../libtorrent/include/libtorrent/hasher.hpp"
-#include "../libtorrent/include/libtorrent/tommath.h"
+#include "libtorrent/include/libtorrent/peer_id.hpp"
+#include "libtorrent/include/libtorrent/hasher.hpp"
+#include "libtorrent/include/libtorrent/tommath.h"
+#include "libtorrent/entry.hpp"
+#include "libtorrent/session.hpp"
 
+extern libtorrent::session *ses;
 const char* admin_str = "_admin_";	///< special username representing users
 									///< with special rights
 mp_int last_accumulator_cache = {};
+// TODO: potrebbe diventare una mappa in cui ad ogni "gruppo"
+// associo una cache del suo accumulatore.
+
 //uint256 A = uint256(string("10000000000000000000000000"));
 //uint256 B = uint256(string("ffffffffffffffffffffffffffffffffffffffffffffffffff"));
 
 bool isAdmin(const char* username) {
-	// TODO: should take the witness from the wallet
+	// TODO: should take the witness from the dht
 	// for now is not implemented
 	CKeyID keyid;
 	pwalletMain->GetKeyIdFromUsername(username, keyid);
@@ -220,6 +227,12 @@ Value addwitnesstouser(const Array& params, bool fHelp)
 	if (params[1].type() != str_type)
 		throw JSONRPCError(RPC_INVALID_PARAMETER, "witness must be string");
     string witness = params[1].get_str();
+	
+	libtorrent::entry v = witness; // TODO: [AP] ovviamente ci andrebbe anche la firma!
+	
+	// publish witness to dht
+	ses->dht_putData(username, string("witness"), RES_T_SINGLE,
+                     v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?
 	
 	if (!pwalletMain->AddWitnessTo(username, witness))
 		throw runtime_error(

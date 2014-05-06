@@ -1629,6 +1629,11 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
     for (unsigned int i = 1; i < block.vtx.size(); i++)
         if (block.vtx[i].IsSpamMessage())
             return state.DoS(100, error("CheckBlock() : more than one coinbase"));
+	
+	// TODO: [AP] check for duplicated accumulator transactions, there must be not
+	// more than one accumulator for every group (this should first be enforced during
+	// the mining phase, it's useless to only check this here if we don't overwrite
+	// duplicates while actually creating the block)
 
     // Check transactions (consistency, not duplicated id)
     BOOST_FOREACH(const CTransaction& tx, block.vtx)
@@ -1848,6 +1853,11 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
         printf("ProcessBlock: msg='%s' user='%s'\n", msg.c_str(), user.c_str());
         receivedSpamMessage(msg, user);
     }
+	
+	// TODO: [AP] if there is an accumulator for a group in this block, check if it's more
+	// recent than the one we have and, if so update the cache. At this point check if we
+	// are in the said group and calculate our new witness, after that, publish the witness
+	// at our address
     return true;
 }
 
@@ -3047,7 +3057,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         vRecv >> block;
 
         printf("received block %s\n", block.GetHash().ToString().c_str());
-        // block.print();
+        block.print();
 
         CInv inv(MSG_BLOCK, block.GetHash());
         pfrom->AddInventoryKnown(inv);
