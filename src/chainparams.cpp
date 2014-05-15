@@ -64,7 +64,7 @@ public:
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
         genesis.nHeight  = 0;
-        genesis.nTime    = 1384394255;
+        genesis.nTime    = 1384394255; // timestamp (per ora ancora al dicembre 2013)
         //genesis.nBits    = 0x1d00ffff;
         genesis.nBits    = 0x1f02ffff;
         genesis.nNonce   = 133578;

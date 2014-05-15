@@ -326,7 +326,7 @@ void ThreadWaitExtIP()
     settings.auto_manage_interval = 30;
     ses->set_settings(settings);
 
-    printf("libtorrent + dht started\n");
+    printf(BLUE "libtorrent + dht started\n" RESET);
 
     // wait up to 10 seconds for dht nodes to be set
     for( int i = 0; i < 10; i++ ) {
@@ -486,12 +486,12 @@ void ThreadMaintainDHTNodes()
 
         if( ses->is_paused() ) {
             if( vNodesSize && isBlockChainUptodate() ) {
-                printf("BlockChain is now up-to-date: unpausing libtorrent session\n");
+                printf(BLUE "BlockChain is now up-to-date: unpausing libtorrent session\n" RESET);
                 ses->resume();
             }
         } else {
             if( !vNodesSize || !isBlockChainUptodate() ) {
-                printf("Outdated BlockChain detected: pausing libtorrent session\n");
+                printf(BLUE "Outdated BlockChain detected: pausing libtorrent session\n" RESET);
                 ses->pause();
             }
         }
@@ -1405,7 +1405,7 @@ Value dhtget(const Array& params, bool fHelp)
                     }
                 }
             }
-            //printf("dhtget: got %zd entries %zd unique\n", dhtLst.size(), uniqueSigPs.size());
+            printf("dhtget: got %zd entries %zd unique\n", dhtLst.size(), uniqueSigPs.size());
         } else {
             // cast failed => dht_reply_data_done_alert => no data
             break;
@@ -1414,7 +1414,7 @@ Value dhtget(const Array& params, bool fHelp)
         if( multi ) {
             if( repliesReceived++ < minMultiReplies && uniqueSigPs.size() ) {
                 timeToWait = timeToWaitMulti;
-                //printf("dhtget: wait again %d\n", repliesReceived);
+                printf("dhtget: wait again %d\n", repliesReceived);
             } else {
                 break;
             }

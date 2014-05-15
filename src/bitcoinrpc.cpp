@@ -978,9 +978,11 @@ static string JSONRPCExecBatch(const Array& vReq)
 
 void ServiceConnection(AcceptedConnection *conn)
 {
+	printf(BOLDCYAN "\nServiceConnection" RESET);
     bool fRun = true;
     while (fRun)
     {
+		printf(BOLDCYAN "\nfRun" RESET);
         int nProto = 0;
         map<string, string> mapHeaders;
         string strRequest, strMethod, strURI;
@@ -1056,6 +1058,7 @@ void ServiceConnection(AcceptedConnection *conn)
         JSONRequest jreq;
         try
         {
+			printf(BOLDCYAN "\ntry Parse json" RESET);
             // Parse request
             Value valRequest;
             if (!read_string(strRequest, valRequest))
@@ -1065,6 +1068,7 @@ void ServiceConnection(AcceptedConnection *conn)
 
             // singleton request
             if (valRequest.type() == obj_type) {
+				printf(BOLDCYAN "\nsingleton request" RESET);
                 jreq.parse(valRequest);
 
                 Value result = tableRPC.execute(jreq.strMethod, jreq.params);
@@ -1073,20 +1077,23 @@ void ServiceConnection(AcceptedConnection *conn)
                 strReply = JSONRPCReply(result, Value::null, jreq.id);
 
             // array of requests
-            } else if (valRequest.type() == array_type)
+            } else if (valRequest.type() == array_type) {
+				printf(BOLDCYAN "\narray of requests" RESET);
                 strReply = JSONRPCExecBatch(valRequest.get_array());
-            else
+            } else
                 throw JSONRPCError(RPC_PARSE_ERROR, "Top-level object parse error");
 
             conn->stream() << HTTPReply(HTTP_OK, strReply, fRun) << std::flush;
         }
         catch (Object& objError)
         {
+			printf(BOLDCYAN "\nERROR: objError" RESET);
             ErrorReply(conn->stream(), objError, jreq.id);
             break;
         }
         catch (std::exception& e)
         {
+			printf(BOLDCYAN "\nERROR JSONRPCError" RESET);
             ErrorReply(conn->stream(), JSONRPCError(RPC_PARSE_ERROR, e.what()), jreq.id);
             break;
         }

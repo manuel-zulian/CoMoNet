@@ -1045,6 +1045,7 @@ void incoming_error(entry& e, char const* msg)
 // build response
 void node_impl::incoming_request(msg const& m, entry& e)
 {
+	printf(BOLDCYAN "\nReceived msg\n" RESET);
 	e = entry(entry::dictionary_t);
 	e["z"] = "r";
 	e["t"] = m.message.dict_find_string_value("t");

@@ -2431,6 +2431,9 @@ retry:
 		}
 
 		m_udp_socket.set_option(type_of_service(m_settings.peer_tos), ec);
+		printf(BOLDYELLOW "\nbound to UDP interface \"%s\": %s" RESET
+			   , print_endpoint(m_listen_interface).c_str(), ec.message().c_str());
+		printf(BOLDYELLOW "\n>>> SET_TOS[ udp_socket tos: %d e: %s ]\n" RESET, m_settings.peer_tos, ec.message().c_str());
 #if defined TORRENT_VERBOSE_LOGGING
 		(*m_logger) << ">>> SET_TOS[ udp_socket tos: " << m_settings.peer_tos << " e: " << ec.message() << " ]\n";
 #endif
