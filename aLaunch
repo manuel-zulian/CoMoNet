@@ -1,0 +1,192 @@
+#!/bin/bash
+
+CUR_DIR=~/Documents/Tesi/inst-t
+BIN=twisterd
+extip=127.0.0.1
+
+if [ "$1" = "start" ]; then
+    if [ -z "$2" ]; then
+	echo -e "usage:\naLaunch start <node> [end-node]"
+	exit 0
+    fi
+    
+    if [ -z "$3" ]; then # start <node>
+	echo "$0: creo il nodo $2"
+	end_node=$2
+    elif [ $(( $2 < $3 )) ]; then # start <node> [end-node]
+	echo "$0: creo i $(( $3-$2+1 )) nodi"
+	end_node=$3
+    else
+	echo -e "end-node must be greater than start node"
+	exit 0
+    fi
+    for i in $(seq -f %02g $2 $end_node)
+    do
+	if [ -f $CUR_DIR/.PID-$i ]; then
+	    if [ ! -z "$( pgrep -F $CUR_DIR/.PID-$i )" ]; then
+	    echo "node $i is already running"
+	    continue
+	    fi
+	fi
+	if [ ! -d $CUR_DIR/acc-$i ]; then
+	    mkdir -p $CUR_DIR/acc-$i
+	fi
+	# scrive su file il suo pid in modo da poter essere killato in automatico
+	./$BIN -datadir=$CUR_DIR/acc-$i -port=266$i -rpcport=276$i -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 &
+	echo "$!" > $CUR_DIR/.PID-$i
+	sleep 0.2 # takes some rest for no apparent reason
+    done
+    echo -n "Starting servers"
+    while true
+    do
+	echo -n "."
+	sleep 5
+	declare -a arrNThreads=($(top -l 1 | grep $BIN | awk '{print $5}'))
+	areTheyAll24=true
+	for nthreads in "${arrNThreads[@]}"
+	do # wait until the processes have a reasonable amount of threads
+	    if [ $nthreads != 23 ] && [ $nthreads != 24 ] && [ $nthreads != 25 ]; then
+		areTheyAll24=false
+		break
+	    fi
+	done
+	if [ $areTheyAll24 = true ]; then
+	    break
+	fi
+    done
+    echo -e "Servers initialized.\n"
+elif [ "$1" = "connect" ]; then
+    if [ "$2" != "" ] && [ "$3" != "" ]; then
+	if ! $0 cmd $2 addnode $extip:266$(printf %02g $3) onetry; then
+	    echo "connection aborted"
+	else
+	    echo "connecting $2 to $3"
+	fi
+    else
+	echo -e "usage:\n\t$0 connect <node1> <node2>"
+    fi
+elif [ "$1" = "cmd" ]; then
+    if (($#<3)); then
+	echo -e "usage:\n\t$0 cmd <node> <command> [params]\ntry command help on any node"
+	exit 1
+    fi
+    node=$(printf %02g $2)
+    if [ ! -f $CUR_DIR/.PID-$node ]; then
+	echo "node $node was never started"
+	exit 1
+    fi
+    c_pid=$( cat $CUR_DIR/.PID-$node )
+    if [ -z "$( pgrep -F $CUR_DIR/.PID-$node )" ]; then
+	echo "node $node does not appear to be running"
+	exit 1
+    fi
+    args=($@)
+    params=${args[2]}
+    for i in $(seq 3 $#)
+    do
+	params=$params" "${args[$i]}
+    done
+    echo "sending command '$params' to port 276$(printf %02g $2)"
+    ./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$(printf %02g $2) $params
+elif [ "$1" = "pause" ]; then
+    if [ -z "$2" ]; then
+	echo -e "usage:\n\t$0 pause <node> [end-node]"
+	exit 0
+    fi
+    if [ -z "$3" ]; then
+	end_node=$2
+    else
+	end_node=$3
+    fi
+    echo "$0: metto in pausa $((end_node-$2+1)) nodo/i"
+    for i in $(seq -f %02g $2 $end_node)
+    do
+	if [ ! -f $CUR_DIR/.PID-$i ]; then
+	    echo "node $i was never started"
+	    continue
+	fi
+	c_pid=$( cat $CUR_DIR/.PID-$i )
+	if [ -z "$( pgrep -F $CUR_DIR/.PID-$i )" ]; then
+	    echo "node $i does not appear to be running"
+	    continue
+	fi
+	echo "./$BIN -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=2\
+76$i stop"
+	./$BIN -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=276$i stop
+    done
+elif [ "$1" = "delete" ]; then
+    if [ -z "$2" ]; then
+	echo -e "usage:\n\t$0 delete <node> [end-node]"
+	exit 0
+    fi
+    if [ -z "$3" ]; then
+	end_node=$2
+    else
+	end_node=$3
+    fi
+    echo "will kill all nodes ranging $2 to $end_node"
+    for i in $(seq -f %02g $2 $end_node)
+    do
+	if [ ! -f $CUR_DIR/.PID-$i ]; then
+	    echo "node $i was never started"
+	    continue
+	fi
+	c_pid=$( cat $CUR_DIR/.PID-$i )
+	if [ -z "$( pgrep -F $CUR_DIR/.PID-$i )" ]; then
+	    echo "node $i (PID $c_pid) does not appear to be running"
+	    continue
+	fi
+	echo "killing node $i (PID: $c_pid)"
+	kill -KILL $c_pid
+    done
+    for i in $(seq -f %02g $2 $end_node)
+    do
+	if [ ! -d "$CUR_DIR/acc-$i" ]; then
+	    echo "node $i does not appear to have a workdir"
+	    continue
+	fi
+	cd $CUR_DIR/acc-$i
+	ls | grep -v debug.log | xargs rm -rf
+	echo "file cancellati per il nodo $i"
+    done
+elif [ "$1" = "rhtml" ]; then
+    if [ "$2" == "" ]; then
+	echo -e "Usage:\n\t$0 rhtml <node> [end-node]"
+	exit 0
+    elif [ "$2" != "" ] && [ "$3" != "" ]; then
+	end_node=$3
+    else
+	end_node=$2
+    fi
+    for i in $(seq -f %02g $2 $end_node)
+    do
+	if [ ! -d ./html ]; then
+	    echo "html directory not found, change directory to the parent of the html directory"
+	    exit 0
+	fi
+	mv $CUR_DIR/acc-$i/html $CUR_DIR/acc-$i/html-backup
+	cp ./html $CUR_DIR/acc-$i/
+	echo "./html copyed to $CUR_DIR/acc-$i/"
+    done
+elif [ "$1" = "lboot" ]; then
+    if [ "$2" == "" ]; then
+	echo -e "Usage:\n\t$0 lboot <node> [end-node]"
+	exit 0
+    fi    
+    if [ "$2" != "" ] && [ "$3" != "" ]; then
+	end_node=$3
+    else
+	end_node=$2
+    fi
+    for i in $(seq -f %02g $2 $end_node)
+    do
+	if [ ! -f ./bootstrap.dat ]; then
+	    echo "bootstrap.dat not found it should be in the current dir"
+	    exit 0
+	fi
+	cp ./bootstrap.dat $CUR_DIR/acc-$i/bootstrap.dat
+	echo "./bootstrap.dat copyed to $CUR_DIR/acc-$i/"
+    done
+else
+    echo -e "usage:\n\t$0 start <node> [end-node]\n\t$0 delete <node> [end-node]\n\t$0 pause <node> [end-node]\n\t$0 connect <node1> <node2>\n\t$0 cmd <node> <command> [params]\n\t$0 rhtml <node> [end-node]\n\t$0 lboot <node> [end-node]"
+fi
