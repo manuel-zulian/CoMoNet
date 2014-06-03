@@ -689,8 +689,15 @@ void ThreadSessionAlerts()
                     }
                     if( statusCheck.count(ih) ) {
                         if( dd->m_got_data ) {
-							if (isAdmin((dd->m_username).c_str())) {
+							char isAdmin_error;
+							if (isAdmin((dd->m_username).c_str(), &isAdmin_error)) {
 								startTorrentUser(dd->m_username, false);
+							} else {
+								if (isAdmin_error == NO_ERROR) {
+								printf(BOLDRED "\n%s is not an admin, cannot start torrent" RESET, dd->m_username.c_str());
+								} else if (isAdmin_error == E_MISSING_WITNESS) {
+								printf(BOLDRED "\nno witness for %s, should look up for it" RESET, dd->m_username.c_str());
+								}
 							}
                         }
                     }
@@ -1378,7 +1385,7 @@ Value dhtget(const Array& params, bool fHelp)
         LOCK(cs_dhtgetMap);
         m_dhtgetMap[ih] = &am;
     }
-
+	printf(BOLDBLUE "\ndhtget(): looking up [%s %s]" RESET, strUsername.c_str(), strResource.c_str());
     ses->dht_getData(strUsername, strResource, multi);
 
     Array ret;
@@ -1471,9 +1478,14 @@ Value newpostmsg(const Array& params, bool fHelp)
     string strK        = boost::lexical_cast<std::string>(k); // lexical_cast è una semplice conversione
     string strMsg      = params[2].get_str();
 	
-	if (!isAdmin(strUsername.c_str())) {
-		// if the user is not an admin he can't post at all
-		throw JSONRPCError(RPC_INTERNAL_ERROR,"the specified user is not an admin and cannot post");
+	char isAdmin_error;
+	if (!isAdmin(strUsername.c_str(), &isAdmin_error)) {
+		if (isAdmin_error == NO_ERROR) {
+			// if the user is not an admin he can't post at all
+			throw JSONRPCError(RPC_INTERNAL_ERROR,"the specified user is not an admin and cannot post");
+		} else if (isAdmin_error == E_MISSING_WITNESS) {
+			throw JSONRPCError(RPC_INTERNAL_ERROR,"the specified user has no witness, look it up in the dht");
+		}
 	}
 
     entry v; // è un variant-type, in questo caso è un dizionario
@@ -1890,17 +1902,21 @@ Value getspammsg(const Array& params, bool fHelp)
 
 Value follow(const Array& params, bool fHelp)
 {
-    if (fHelp || (params.size() != 2))
+    if (fHelp || (params.size() != 3))
         throw runtime_error(
-            "follow <username> [follow_username1,follow_username2,...]\n"
+            "follow <username> [follow_username1,follow_username2,...] [witness1,witness2,...]\n"
             "start following users");
 
     string localUser = params[0].get_str();
     Array users      = params[1].get_array();
+	Array witnesses  = params[2].get_array();
 
     for( unsigned int u = 0; u < users.size(); u++ ) {
         string username = users[u].get_str();
-		if (isAdmin(username.c_str())) {
+		string witness  = witnesses[u].get_str();
+		
+		char isAdmin_error;
+		if (isAdmin(username.c_str(), witness.c_str(), &isAdmin_error)) {
 			// can follow only admins
 			torrent_handle h = startTorrentUser(username, true);
 
@@ -1909,7 +1925,11 @@ Value follow(const Array& params, bool fHelp)
 				m_users[localUser].m_following.insert(username);
 			}
         } else {
-			// TODO: report non-admin users
+			if (isAdmin_error == NO_ERROR) {
+				printf(BOLDRED "\nCan't follow %s, not an admin." RESET, username.c_str());
+			} else if (isAdmin_error == E_EMPTY_WITNESS) {
+				printf(BOLDRED "\nCan't follow %s, witness is empty." RESET, username.c_str());
+			}
 		}
     }
 

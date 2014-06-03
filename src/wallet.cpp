@@ -130,9 +130,12 @@ bool CWallet::AddWitnessTo(std::string username, std::string witness)
 			// [AP] make sure new metadata is updated on disk
 			CPubKey pubkey;
 			CKey secret;
+			printf(BLUE "GetPubKey\n" RESET);
 			GetPubKey(it->first, pubkey);
+			printf(BLUE "GetKey\n" RESET);
 			GetKey(it->first, secret);
 			if (!IsCrypted()) {
+				printf(BLUE "CWalletDB.WriteKey\n" RESET);
 				CWalletDB(strWalletFile).WriteKey(pubkey,
 												  secret.GetPrivKey(),
 												  it->second);

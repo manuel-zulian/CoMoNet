@@ -17,9 +17,13 @@
 #define ACC_UNCHANGED 1
 #define ACC_ERROR 0
 
-bool isAdmin(const char* username);
+#define NO_ERROR 0
+#define E_EMPTY_WITNESS 50
+#define E_MISSING_WITNESS 51
 
-bool isAdmin(const char* username, const char* witness);
+bool isAdmin(const char* username, char* error);
+
+bool isAdmin(const char* username, const char* witness, char* error);
 
 int updateAccumulator();
 

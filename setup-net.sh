@@ -1,17 +1,37 @@
 #!/bin/bash
 
 BIN=./aLaunch
+
+echo "Do you want to restart all? [y/N]"
+read -n1 answer
+if [ "$answer" == "y" ]
+then
+    $BIN delete 1 2
+else
+    if [ "$answer" != "n" ]
+    then
+	echo -e "\nAssuming NO\n\n\n"
+    fi
+fi
+
+$BIN lboot 1
+$BIN rhtml 1 2
 $BIN start 1 2
+sleep 2
 $BIN connect 1 2
-$BIN cmd 2 createwalletuser utente1
-$BIN cmd 2 createwalletuser utente2
-$BIN cmd 2 createwalletuser utente3
-$BIN cmd 2 sendnewusertransaction utente1
-$BIN cmd 2 sendnewusertransaction utente2
-$BIN cmd 2 sendnewusertransaction utente3
-$BIN cmd 2 sendrawtransaction 010000000008075f61646d696e5f0403ffffff2120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e76e330000
-$BIN cmd 2 addwitnesstouser utente1 357d626250e41eb0390d60e4c33859369681fec371ab532e428b63059e97c6a7 
-$BIN cmd 2 addwitnesstouser utente2 26ff76d0f66b8403bda6534fce3dbcaf47ffd5eb7e06720dd3d58aee587a39a5
-$BIN cmd 2 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7
-$BIN cmd 1 setgenerate true -1
+$BIN cmd 1 addwitnesstouser utente1 357d626250e41eb0390d60e4c33859369681fec371ab532e428b63059e97c6a7 
+$BIN cmd 1 addwitnesstouser utente2 26ff76d0f66b8403bda6534fce3dbcaf47ffd5eb7e06720dd3d58aee587a39a5
+$BIN cmd 1 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7
+$BIN cmd 1 setgenerate true 1
+$BIN cmd 1 dhtput utente1 home s [\"utente1\",\"utente2\"] utente1 0
+$BIN cmd 1 dhtput utente1 status s \"Vino_per_te\" utente1 0
+$BIN cmd 1 dhtput utente2 status s \"Testo_utente_due\" utente2 0
+sleep 1
+echo "starting miner..."
+sleep 10
+$BIN cmd 1 newpostmsg utente1 1 \"Primo_post.in.cui-non_si.dice.nulla\"
+$BIN cmd 1 newpostmsg utente1 2 \"Secondo_post.in.cui-non_si.dice.nulla\"
+$BIN cmd 1 newpostmsg utente2 1 \"Ciao\"
+$BIN cmd 1 newpostmsg utente2 2 \"mondo!\"
+#in futuro l'utente che firma può essere diverso dall'utente specificato, tipo _admin_ mette il nome e utente1, che è accumulato può firmare a nome di tutti.
 echo "done!"

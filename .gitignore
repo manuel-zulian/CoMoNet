@@ -82,4 +82,24 @@ build
 #xcode documentation
 Twisterd.xcodeproj
 #xcode debugging
+accomunet.xcodeproj/xcuserdata/gurghet.xcuserdatad/xcdebugger/.lock
+accomunet.xcodeproj/xcuserdata/gurghet.xcuserdatad/xcschemes/accumunet-doc.xcscheme
 accomunet.xcodeproj/xcuserdata/gurghet.xcuserdatad/xcdebugger/
+
+debug.log
+libtorrent/bin/
+libtorrent/build-aux/compile
+libtorrent/build-aux/config.rpath
+libtorrent/build-aux/depcomp
+libtorrent/build-aux/install-sh
+libtorrent/build-aux/ltmain.sh
+libtorrent/build-aux/missing
+libtorrent/build-aux/test-driver
+libtorrent/libtorrent-rasterbar-cmake.pc
+libtorrent/libtorrent-rasterbar.pc
+libtorrent/src/libtorrent-rasterbar.la
+libtorrent/test/libtest.la
+peers.dat
+round_trip_ms.log
+.lock
+

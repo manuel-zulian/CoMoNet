@@ -34,16 +34,30 @@ mp_int last_accumulator_cache = {};
 //uint256 A = uint256(string("10000000000000000000000000"));
 //uint256 B = uint256(string("ffffffffffffffffffffffffffffffffffffffffffffffffff"));
 
-bool isAdmin(const char* username) {
-	// TODO: should take the witness from the dht
-	// for now is not implemented
+bool isAdmin(const char* username, char* error) {
+	*error = NO_ERROR;
 	CKeyID keyid;
-	pwalletMain->GetKeyIdFromUsername(username, keyid);
-	string witness = pwalletMain->mapKeyMetadata[keyid].witness;
-	return isAdmin(username, witness.c_str());
+	string witness;
+	if (pwalletMain->GetKeyIdFromUsername(username, keyid))
+		witness = pwalletMain->mapKeyMetadata[keyid].witness;
+	else {
+		// TODO: prima di dare errore dovrebbe almeno
+		// provare a cercarlo in un file dove vengono
+		// memorizzati gli ultimi witness e poi se anche
+		// loro non funzionano magari il client può fare
+		// un'altra request se sono datati
+		*error = E_MISSING_WITNESS;
+		return false;
+	}
+	return isAdmin(username, witness.c_str(), error);
 }
 
-bool isAdmin(const char* username, const char* witness) {
+bool isAdmin(const char* username, const char* witness, char* error) {
+	*error = NO_ERROR;
+	if (string(witness).empty()) {
+		*error = E_EMPTY_WITNESS;
+		return false;
+	}
 	std::string username_str(username);
 	CTransaction txOut;
 	uint256 hashBlock;
@@ -215,12 +229,13 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
 
 Value addwitnesstouser(const Array& params, bool fHelp)
 {
+	printf(BOLDMAGENTA "\nadding new witness" RESET);
 	if (fHelp || params.size() != 2) {
 		throw runtime_error(
 							"addwitnesstouser <username> <new-witness>\n"
 							"Update the wallet with the new witness for the user.");
 	}
-	
+
 	if (params[0].type() != str_type)
 		throw JSONRPCError(RPC_INVALID_PARAMETER, "username must be string");
     string username = params[0].get_str();
@@ -228,12 +243,19 @@ Value addwitnesstouser(const Array& params, bool fHelp)
 		throw JSONRPCError(RPC_INVALID_PARAMETER, "witness must be string");
     string witness = params[1].get_str();
 	
+	printf(BOLDMAGENTA "\nfilling entry" RESET);
 	libtorrent::entry v = witness; // TODO: [AP] ovviamente ci andrebbe anche la firma!
 	
-	// publish witness to dht
-	ses->dht_putData(username, string("witness"), RES_T_SINGLE,
-                     v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?
 	
+	if (ses) {
+		// publish witness to dht
+		printf(BOLDMAGENTA "\npublish witness to dht:" RESET);
+		printf(BOLDMAGENTA "\n[ username: %s, v: %s ]" RESET, username.c_str(), v.string().c_str());
+		ses->dht_putData(username, string("witness"), RES_T_SINGLE,
+						 v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?
+	}
+	
+	printf(BOLDMAGENTA "\nwriting on disk" RESET);
 	if (!pwalletMain->AddWitnessTo(username, witness))
 		throw runtime_error(
 						   "addwitnesstouser() : could not addWitnessTo\n");
