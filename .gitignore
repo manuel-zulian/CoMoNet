@@ -103,3 +103,11 @@ peers.dat
 round_trip_ms.log
 .lock
 
+libtorrent/src/kademlia/.deps/dht_get.Po
+libtorrent/src/kademlia/.deps/dht_tracker.Po
+libtorrent/src/kademlia/.deps/find_data.Po
+libtorrent/src/kademlia/.deps/refresh.Po
+libtorrent/src/kademlia/.deps/routing_table.Po
+libtorrent/src/kademlia/.deps/rpc_manager.Po
+html-genuine/
+html-old/
