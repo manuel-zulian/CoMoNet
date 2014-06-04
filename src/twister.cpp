@@ -92,14 +92,16 @@ sha1_hash dhtTargetHash(std::string const &username, std::string const &resource
 torrent_handle startTorrentUser(std::string const &username, bool following)
 {
     bool userInTxDb = usernameExists(username); // keep this outside cs_twister to avoid deadlock
-    if( !userInTxDb ) // questo utente non esiste e quindi è illegale aprire un torrent per lui
+    if( !userInTxDb ) { // questo utente non esiste e quindi è illegale aprire un torrent per lui
+		printf(BOLDGREEN "was adding a torrent when realised %s does not exists\n" RESET, username.c_str());
         return torrent_handle();
+	}
 
     LOCK(cs_twister);
     if( !m_userTorrent.count(username) ) { // se non esistono torrent per l'utente
         sha1_hash ih = dhtTargetHash(username, "tracker", "m"); // l'info-hash di questo torrent
 
-        printf(GREEN "adding torrent for [%s,tracker]\n" RESET, username.c_str());
+        printf(BOLDGREEN "adding torrent for [%s,tracker]\n" RESET, username.c_str());
         add_torrent_params tparams;
         tparams.info_hash = ih;
         tparams.name = username;
@@ -115,7 +117,9 @@ torrent_handle startTorrentUser(std::string const &username, bool following)
             m_userTorrent[username].auto_managed(true);
         }
         m_userTorrent[username].force_dht_announce();
-    }
+    } else {
+		printf(GREEN "torrent is already existing\n" RESET);
+	}
     if( following ) {
         m_userTorrent[username].set_following(true);
         m_userTorrent[username].auto_managed(false);
@@ -1507,8 +1511,10 @@ Value newpostmsg(const Array& params, bool fHelp)
     if( !acceptSignedPost(buf.data(),buf.size(),strUsername,k,errmsg,NULL) )
         throw JSONRPCError(RPC_INVALID_PARAMS,errmsg);
 
+	printf(BOLDGREEN "about to start a torrent\n" RESET);
     torrent_handle h = startTorrentUser(strUsername, true);///<-true means follow ourselves
     if( h.is_valid() ) {
+		printf(BOLDGREEN "torrent started\n" RESET);
         // if member of torrent post it directly
         h.add_piece(k,buf.data(),buf.size());
     } else {
@@ -1764,17 +1770,21 @@ Value getposts(const Array& params, bool fHelp)
             if( i->name_ == "max_id" ) max_id = i->value_.get_int();
             if( i->name_ == "since_id" ) since_id = i->value_.get_int();
         }
-
+		
+		printf(CYAN "will find the torrent.." RESET);
         torrent_handle h = getTorrentUser(strUsername);
         if( h.is_valid() ){
+			printf(CYAN "..torrent found!\n" RESET);
             std::vector<std::string> pieces;
             h.get_pieces(pieces, count, max_id, since_id, flags);
 
             BOOST_FOREACH(string const& piece, pieces) {
+				printf(CYAN "\tprocessing piece..." RESET);
                 lazy_entry v;
                 int pos;
                 libtorrent::error_code ec;
                 if (lazy_bdecode(piece.data(), piece.data()+piece.size(), v, ec, &pos) == 0) {
+					printf(CYAN "..." RESET);
                     lazy_entry const* post = v.dict_find_dict("userpost");
                     int64 time = post->dict_find_int_value("time",-1);
 
@@ -1783,6 +1793,7 @@ Value getposts(const Array& params, bool fHelp)
                     hexcapePost(vEntry);
                     postsByTime.insert( pair<int64,entry>(time, vEntry) );
                 }
+				printf(CYAN "...done!\n" RESET);
             }
         }
     }
@@ -1902,22 +1913,25 @@ Value getspammsg(const Array& params, bool fHelp)
 
 Value follow(const Array& params, bool fHelp)
 {
-    if (fHelp || (params.size() != 3))
+    if (fHelp || (params.size() != 2))
         throw runtime_error(
-            "follow <username> [follow_username1,follow_username2,...] [witness1,witness2,...]\n"
+            "follow <username> [follow_username1,follow_username2,...]\n"
             "start following users");
 
     string localUser = params[0].get_str();
     Array users      = params[1].get_array();
-	Array witnesses  = params[2].get_array();
+	//Array witnesses  = params[2].get_array();
 
     for( unsigned int u = 0; u < users.size(); u++ ) {
         string username = users[u].get_str();
-		string witness  = witnesses[u].get_str();
+		//string witness  = witnesses[u].get_str();
 		
 		char isAdmin_error;
-		if (isAdmin(username.c_str(), witness.c_str(), &isAdmin_error)) {
+		//if (isAdmin(username.c_str(), witness.c_str(), &isAdmin_error)) {
+		if (true) {
 			// can follow only admins
+			/// il controllo dovrebbe comunque essere a monte controllando che il
+			/// nome del torrent sia accumulato
 			torrent_handle h = startTorrentUser(username, true);
 
 			if( h.is_valid() ) {

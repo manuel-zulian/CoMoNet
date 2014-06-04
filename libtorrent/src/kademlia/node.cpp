@@ -968,7 +968,7 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 	{
 		key_desc_t const& k = desc[i];
 
-		printf(RED "looking for %s in %s\n" RESET, k.name, print_entry(*msg).c_str());
+		//printf(RED "looking for %s in %s\n" RESET, k.name, print_entry(*msg).c_str());
 
 		ret[i] = msg->dict_find(k.name);
 		// none_t means any type
