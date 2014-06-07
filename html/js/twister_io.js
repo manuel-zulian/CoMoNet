@@ -21,7 +21,10 @@
         maxDhtgets = 5,
 
         // requests not yet sent to the daemon due to maxDhtgets limit
-        queuedDhtgets = [];
+        queuedDhtgets = [],
+        
+        // last post we got for every user
+        lastHaveMap = {};
 
     // private function to define a key in _dhtgetPendingMap
     function dhtgetLocator(username, resource, multi) {
@@ -114,25 +117,6 @@
             }, locator);
     }
 
-    // store value at the dht resource
-    function dhtput(username, resource, multi, value, sig_user, seq, cbFunc, cbArg) {
-        globals.twisterRpc("dhtput", [username, resource, multi, value, sig_user, seq],
-            function (args, ret) {
-                if (args.cbFunc) {
-                    args.cbFunc(args.cbArg, true);
-                }
-            }, {
-                cbFunc: cbFunc,
-                cbArg: cbArg
-            },
-            function (args, ret) {
-                console.log("ajax error:" + ret);
-                if (args.cbFunc) {
-                    args.cbFunc(args.cbArg, false);
-                }
-            }, cbArg);
-    }
-
     // pubkey is obtained from block chain db.
     // so only accepted registrations are reported (local wallet users are not)
     // cbFunc is called as cbFunc(cbArg, pubkey)
@@ -174,13 +158,51 @@
             });
     }
     
+    // handle getlasthave response. the increase in lasthave cannot be assumed to
+    // produce new items for timeline since some posts might be directmessages (which
+    // won't be returned by getposts, normally).
+    function processLastHave(main_status, userHaves) {
+        var user;
+        for (user in userHaves ) {
+            if (userHaves.hasOwnProperty(user)) {
+                if (lastHaveMap.hasOwnProperty(user)) {
+                    if (userHaves[user] > lastHaveMap[user]) {
+                        main_status.should_reload = true;
+                    }
+                }
+                lastHaveMap[user] = userHaves[user];
+            }
+        }
+    }
+    
     /****************************
      * Exporting variables
      ****************************/
     
     (function () {
-        // main json rpc method. receives callbacks for success and error
-        var twisterRpc = function (method, params, resultFunc, resultArg, errorFunc, errorArg) {
+        var posts = [],
+            
+            // store value at the dht resource
+            dhtput = function (username, resource, multi, value, sig_user, seq, cbFunc, cbArg) {
+                globals.twisterRpc("dhtput", [username, resource, multi, value, sig_user, seq],
+                    function (args, ret) {
+                        if (args.cbFunc) {
+                            args.cbFunc(args.cbArg, true);
+                        }
+                    }, {
+                        cbFunc: cbFunc,
+                        cbArg: cbArg
+                    },
+                    function (args, ret) {
+                        console.log("ajax error:" + ret);
+                        if (args.cbFunc) {
+                            args.cbFunc(args.cbArg, false);
+                        }
+                    }, cbArg);
+            },
+            
+            // main json rpc method. receives callbacks for success and error
+            twisterRpc = function (method, params, resultFunc, resultArg, errorFunc, errorArg) {
                 var foo = new $.JsonRpcClient({
                     ajaxUrl: '/',
                     username: 'user',
@@ -219,7 +241,8 @@
             },
             
             // calls cbFunc(req, posts) with posts being an array of post
-            getposts = function (username, cbFunc, limit, max, since) {
+            // this is the real one
+            getposts = function (username, cbFunc, cbArgs, limit, max, since) {
                 var paramObj = {"username": username},
                     p_limit = 10;
                 if (max !== 'undefined') {
@@ -231,12 +254,18 @@
                 if (limit === 'undefined') {
                     p_limit = limit;
                 }
-                twisterRpc("getposts", [p_limit, [paramObj]], cbFunc);
+                twisterRpc("getposts", [p_limit, [paramObj]], cbFunc, cbArgs);
+            },
+        
+            getlasthave = function (main_status) {
+                twisterRpc("getlasthave", ["utente2"], processLastHave, main_status);
             };
         
-        globals.twisterRpc = twisterRpc;
-        globals.dhtget     = dhtget;
-        globals.getposts   = getposts;
+        globals.twisterRpc  = twisterRpc;
+        globals.dhtget      = dhtget;
+        globals.getposts    = getposts;
+        globals.getlasthave = getlasthave;
+        globals.dhtput      = dhtput;
     }());
 
 }(this));

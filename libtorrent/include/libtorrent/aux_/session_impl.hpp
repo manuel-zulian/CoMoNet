@@ -308,8 +308,12 @@ namespace libtorrent
 			void prioritize_dht(boost::weak_ptr<torrent> t);
 
 			void dht_putData(std::string const &username, std::string const &resource, bool multi,
+							 entry const &value, std::string const &sig_user,
+							 boost::int64_t timeutc, int seq);
+			
+			void dht_putData(std::string const &username, std::string const &resource, bool multi,
 				     entry const &value, std::string const &sig_user,
-                     boost::int64_t timeutc, int seq);
+                     boost::int64_t timeutc, int seq, std::string const &witness);
 
 			void dht_getData(std::string const &username, std::string const &resource, bool multi);
 

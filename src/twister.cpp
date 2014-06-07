@@ -291,9 +291,9 @@ void ThreadWaitExtIP()
         }
     
         dht_settings dhts;
-        // settings to test local connections
-        //dhts.restrict_routing_ips = false;
-        //dhts.restrict_search_ips = false;
+        // settings to test local connections [AP] importante!!!
+        dhts.restrict_routing_ips = false;
+        dhts.restrict_search_ips = false;
         ses->set_dht_settings(dhts);
         ses->start_dht();
     }
@@ -1347,11 +1347,25 @@ Value dhtput(const Array& params, bool fHelp)
         seq = params[5].get_int();
 
     if( !multi && strUsername != strSigUser )
-        throw JSONRPCError(RPC_WALLET_ERROR, "Username must be the same as sig_user for single");
-
+		throw JSONRPCError(RPC_WALLET_ERROR, "Username must be the same as sig_user for single");
+ 
     boost::int64_t timeutc = GetAdjustedTime();
+	
+	CKeyID keyid;
+	string witness;
+	if (pwalletMain->GetKeyIdFromUsername(strUsername.c_str(), keyid)) {
+		if (pwalletMain->mapKeyMetadata.count(keyid)) {
+			witness = pwalletMain->mapKeyMetadata[keyid].witness;
+		}
+	}
 
-    ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq);
+	if (witness.empty()) {
+		printf(BOLDYELLOW "SENDING MESSAGE(%s) PUT WITHOUT WITNESS" RESET, strResource.c_str());
+		ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq);
+	} else {
+		printf(BOLDYELLOW "SENDING MESSAGE(%s) PUT WITH WITNESS: [%s]" RESET, strResource.c_str(), witness.c_str());
+		ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq, witness);
+	}
 
     return Value();
 }
@@ -1510,6 +1524,14 @@ Value newpostmsg(const Array& params, bool fHelp)
     std::string errmsg;
     if( !acceptSignedPost(buf.data(),buf.size(),strUsername,k,errmsg,NULL) )
         throw JSONRPCError(RPC_INVALID_PARAMS,errmsg);
+	
+	CKeyID keyid;
+	string witness;
+	if (pwalletMain->GetKeyIdFromUsername(strUsername.c_str(), keyid)) {
+		if (pwalletMain->mapKeyMetadata.count(keyid)) {
+			witness = pwalletMain->mapKeyMetadata[keyid].witness;
+		}
+	}
 
 	printf(BOLDGREEN "about to start a torrent\n" RESET);
     torrent_handle h = startTorrentUser(strUsername, true);///<-true means follow ourselves
@@ -1519,13 +1541,14 @@ Value newpostmsg(const Array& params, bool fHelp)
         h.add_piece(k,buf.data(),buf.size());
     } else {
         // TODO: swarm resource forwarding not implemented
-        ses->dht_putData(strUsername, "swarm", RES_T_SINGLE,
-                         v, strUsername, GetAdjustedTime(), 1);
+        //ses->dht_putData(strUsername, "swarm", RES_T_SINGLE,
+        //                 v, strUsername, GetAdjustedTime(), 1, witness);
     }
 
     // post to dht as well
+	printf(BOLDYELLOW "SENDING MESSAGE(post%d) PUT WITH WITNESS: [%s]" RESET, k, witness.c_str());
     ses->dht_putData(strUsername, string("post")+strK, RES_T_SINGLE,
-                     v, strUsername, GetAdjustedTime(), 1);
+                     v, strUsername, GetAdjustedTime(), 1, witness);
     ses->dht_putData(strUsername, string("status"), RES_T_SINGLE,
                      v, strUsername, GetAdjustedTime(), k);
 
@@ -1723,13 +1746,13 @@ Value newrtmsg(const Array& params, bool fHelp)
         h.add_piece(k,buf.data(),buf.size());
     } else {
         // TODO: swarm resource forwarding not implemented
-        ses->dht_putData(strUsername, "swarm", false,
-                         v, strUsername, GetAdjustedTime(), 1);
+        //ses->dht_putData(strUsername, "swarm", false,
+        //                 v, strUsername, GetAdjustedTime(), 1);
     }
 
     // post to dht as well
-    ses->dht_putData(strUsername, string("post")+strK, false,
-                     v, strUsername, GetAdjustedTime(), 1);
+    //ses->dht_putData(strUsername, string("post")+strK, false,
+    //                 v, strUsername, GetAdjustedTime(), 1);
     ses->dht_putData(strUsername, string("status"), false,
                      v, strUsername, GetAdjustedTime(), k);
 
@@ -1798,12 +1821,14 @@ Value getposts(const Array& params, bool fHelp)
         }
     }
 
+	
     Array ret;
     std::multimap<int64,entry>::reverse_iterator rit;
     for (rit=postsByTime.rbegin(); rit!=postsByTime.rend() && (int)ret.size() < count; ++rit) {
         ret.push_back( entryToJson(rit->second) );
     }
 
+	/*
     {
         LOCK(cs_spamMsg);
         // we must agree on an acceptable level here
@@ -1818,6 +1843,7 @@ Value getposts(const Array& params, bool fHelp)
             m_receivedSpamUserStr = "";
         }
     }
+	*/
 
     return ret;
 }

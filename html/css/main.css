@@ -326,19 +326,22 @@ textarea {
     background-color: #fdfdfc;
     min-height: 100%;
     width: 60%;
-    position: absolute;
+    top: 0px;
+    position: relative;
 }
 
 #producer {
     background-color: #fdfdf0;
     min-height: 100%;
     width: 60%;
-    position: absolute;
+    position: relative;
+    top: 0px;
 }
 
 aside {
     position: absolute;
     right: 0px;
+    top: 0px;
     min-height: 100%;
     width: 40%;
     background-color: #fdd;
@@ -352,3 +355,89 @@ aside {
     border-radius: 2px;
     padding: 4px;
 }
+
+nav {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    background-color: rgba(200,100,130,0.5);
+}
+
+#home-button {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #fbb;
+    padding: 4px;
+    margin: 8px;
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background-color: #f99;
+}
+
+#main-content {
+    width: 100%;
+    position: absolute;
+    height: 90%;
+    bottom: 0px;
+}
+.author-mini {
+    color: #663535;
+    background-color: rgb(249,225,123);
+    font-size: 20px;
+    padding-left: 15px;
+    font-weight: bold;
+}
+
+.minipost {
+    margin: 5px;
+    padding: 5px;
+    background-color: rgb(252,219,142);
+    border-radius: 5px;
+}
+
+.post-mini {
+    padding: 4px;
+}
+
+#subscribe-button {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #494;
+    padding: 4px;
+    margin: 8px;
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background-color: #7a7;
+}
+
+#producer-posts {
+}
+
+#producer-buttons {
+    height: 100px;
+}
+
+#feed {
+    position: absolute;
+    height: 45%;
+    width: 100%;
+    background-color: #ddc5bf;
+}
+
+#minimsgs {
+    position: absolute;
+    height: 45%;
+    width: 100%;
+    bottom: 0px;
+    background-color: #d5ddc5;
+}
+
+

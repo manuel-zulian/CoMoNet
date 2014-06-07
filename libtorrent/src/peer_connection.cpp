@@ -654,9 +654,12 @@ namespace libtorrent
 
     void peer_connection::on_metadata_impl()
 	{
+		printf(WHITE "\ton_metadata_impl()\n" RESET);
 		boost::shared_ptr<torrent> t = associated_torrent().lock();
+		printf(WHITE "\ton_metadata_impl(): there are initially: %d pieces\n" RESET, m_have_piece.count());
 		m_have_piece.resize(t->torrent_file().num_pieces(), m_have_all);
 		m_num_pieces = m_have_piece.count();
+		printf(WHITE "\ton_metadata_impl(): there are now: %d pieces\n" RESET, m_num_pieces);
 
 		// now that we know how many pieces there are
 		// remove any invalid allowed_fast and suggest pieces
@@ -669,6 +672,7 @@ namespace libtorrent
 				++i;
 				continue;
 			}
+			printf(WHITE "\ton_metadata_impl(): removing invalid allowed_fast\n" RESET);
 			i = m_allowed_fast.erase(i);
 		}
 
@@ -680,6 +684,7 @@ namespace libtorrent
 				++i;
 				continue;
 			}
+			printf(WHITE "\ton_metadata_impl(): removing invalid suggested piece\n" RESET);
 			i = m_suggested_pieces.erase(i);
 		}
 		on_metadata();

@@ -42,32 +42,6 @@
       <PathRunnable
          FilePath = "/Users/gurghet/Documents/Tesi/prototipo/accumunet/twisterd">
       </PathRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-datadir=/tmp/nodo02"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-rpcuser=user"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-rpcpassword=pwd"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-rpcallowip=127.0.0.1"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-port=26602"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-rpcport=27602"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

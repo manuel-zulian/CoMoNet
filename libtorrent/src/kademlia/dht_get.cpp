@@ -260,9 +260,9 @@ bool dht_get::invoke(observer_ptr o)
 	}
 
 	entry e;
-	e["z"] = "q";
+	e["h"] = "q";
 	e["q"] = "getData";
-	entry& a = e["x"];
+	entry& a = e["g"];
 	entry& target = a["target"];
 	target = m_target;
 	if (m_justToken) a["justtoken"] = 1;

@@ -97,8 +97,12 @@ namespace libtorrent { namespace dht
 			, boost::function<void(std::vector<tcp::endpoint> const&)> f);
 
 		void putData(std::string const &username, std::string const &resource, bool multi,
+					 entry const &value, std::string const &sig_user,
+					 boost::int64_t timeutc, int seq);
+		
+		void putData(std::string const &username, std::string const &resource, bool multi,
 			     entry const &value, std::string const &sig_user,
-                 boost::int64_t timeutc, int seq);
+                 boost::int64_t timeutc, int seq, std::string const &witness);
 
 		void getData(std::string const &username, std::string const &resource, bool multi,
 			     boost::function<void(entry::list_type const&)> fdata,

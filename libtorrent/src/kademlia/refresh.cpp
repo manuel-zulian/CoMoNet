@@ -71,9 +71,9 @@ observer_ptr refresh::new_observer(void* ptr
 bool refresh::invoke(observer_ptr o)
 {
 	entry e;
-	e["z"] = "q";
+	e["h"] = "q";
 	e["q"] = "findNode";
-	entry& a = e["x"];
+	entry& a = e["g"];
 	a["target"] = target().to_string();
 	return m_node.m_rpc.invoke(e, o->target_ep(), o);
 }

@@ -279,7 +279,7 @@ bool rpc_manager::incoming(msg const& m, node_id* id)
 	if (m_destructing) return false;
 
 	// we only deal with replies, not queries
-	TORRENT_ASSERT(m.message.dict_find_string_value("z") == "r");
+	TORRENT_ASSERT(m.message.dict_find_string_value("h") == "r");
 
 	// if we don't have the transaction id in our
 	// request list, ignore the packet
@@ -475,8 +475,8 @@ bool rpc_manager::invoke(entry& e, udp::endpoint target_addr
 
 	if (m_destructing) return false;
 
-	e["z"] = "q";
-	entry& a = e["x"];
+	e["h"] = "q";
+	entry& a = e["g"];
 	add_our_id(a);
 
 	std::string transaction_id;

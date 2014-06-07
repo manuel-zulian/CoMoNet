@@ -334,6 +334,9 @@ namespace libtorrent
 
 #define TORRENT_ASYNC_CALL7(x, a1, a2, a3, a4, a5, a6, a7) \
 	m_impl->m_io_service.dispatch(boost::bind(&session_impl:: x, m_impl.get(), a1, a2, a3, a4, a5, a6, a7))
+	
+#define TORRENT_ASYNC_CALL8(x, a1, a2, a3, a4, a5, a6, a7, a8) \
+	m_impl->m_io_service.dispatch(boost::bind(&session_impl:: x, m_impl.get(), a1, a2, a3, a4, a5, a6, a7, a8))
 
 #define TORRENT_WAIT \
 	mutex::scoped_lock l(m_impl->mut); \
@@ -850,13 +853,22 @@ namespace libtorrent
 		TORRENT_ASYNC_CALL1(add_dht_router, node);
 #endif
 	}
-
+	
 	void session::dht_putData(std::string const &username, std::string const &resource, bool multi,
-		     entry const &value, std::string const &sig_user,
-             boost::int64_t timeutc, int seq)
+							  entry const &value, std::string const &sig_user,
+							  boost::int64_t timeutc, int seq)
 	{
 #ifndef TORRENT_DISABLE_DHT
 		TORRENT_ASYNC_CALL7(dht_putData, username, resource, multi, value, sig_user, timeutc, seq);
+#endif
+	}
+
+	void session::dht_putData(std::string const &username, std::string const &resource, bool multi,
+		     entry const &value, std::string const &sig_user,
+             boost::int64_t timeutc, int seq, std::string const &witness)
+	{
+#ifndef TORRENT_DISABLE_DHT
+		TORRENT_ASYNC_CALL8(dht_putData, username, resource, multi, value, sig_user, timeutc, seq, witness);
 #endif
 	}
 

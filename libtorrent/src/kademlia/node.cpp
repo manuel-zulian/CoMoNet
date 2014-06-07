@@ -218,7 +218,7 @@ void node_impl::unreachable(udp::endpoint const& ep)
 void node_impl::incoming(msg const& m)
 {
 	// is this a reply?
-	lazy_entry const* y_ent = m.message.dict_find_string("z");
+	lazy_entry const* y_ent = m.message.dict_find_string("h");
 	if (!y_ent || y_ent->string_length() == 0)
 	{
 		entry e;
@@ -243,7 +243,7 @@ void node_impl::incoming(msg const& m)
 		case 'q':
 		{
 			// new request received
-			TORRENT_ASSERT(m.message.dict_find_string_value("z") == "q");
+			TORRENT_ASSERT(m.message.dict_find_string_value("h") == "q");
 			entry e;
 			incoming_request(m, e);
 			m_sock->send_packet(e, m.addr, 0);
@@ -293,9 +293,9 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["z"] = "q";
+			e["h"] = "q";
 			e["q"] = "announcePeer";
-			entry& a = e["x"];
+			entry& a = e["g"];
 			a["infoHash"] = ih.to_string();
 			a["port"] = listen_port;
 			a["token"] = i->second;
@@ -345,9 +345,9 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["z"] = "q";
+			e["h"] = "q";
 			e["q"] = "putData";
-			entry& a = e["x"];
+			entry& a = e["g"];
 			a["token"] = i->second;
 
             a["p"] = p;
@@ -404,7 +404,7 @@ void node_impl::add_node(udp::endpoint node)
 	o->m_in_constructor = false;
 #endif
 	entry e;
-	e["z"] = "q";
+	e["h"] = "q";
 	e["q"] = "ping";
 	m_rpc.invoke(e, node, o);
 }
@@ -413,9 +413,9 @@ void node_impl::announce(std::string const& trackerName, sha1_hash const& info_h
 	, boost::function<void(std::vector<tcp::endpoint> const&)> f)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	TORRENT_LOG(node) << "announcing [ ih: " << info_hash << " p: " << listen_port << " ]" ;
+	//TORRENT_LOG(node) << "announcing [ ih: " << info_hash << " p: " << listen_port << " ]" ;
 #endif
-	//printf("node_impl::announce '%s' host: %s:%d myself=%d\n", trackerName.c_str(), addr.to_string().c_str(), listen_port, myself);
+	printf("node_impl::announce '%s' host: %s:%d myself=%d\n", trackerName.c_str(), addr.to_string().c_str(), listen_port, myself);
 
 	// [MF] is_unspecified() is not always available. never mind.
 	//if( !addr.is_unspecified() ) {
@@ -432,12 +432,21 @@ void node_impl::announce(std::string const& trackerName, sha1_hash const& info_h
 		ta->start();
 	}
 }
+	
+void node_impl::putData(std::string const &username, std::string const &resource, bool multi,
+						entry const &value, std::string const &sig_user,
+						boost::int64_t timeutc, int seq)
+{
+	node_impl::putData(username, resource, multi,
+					   value, sig_user,
+					   timeutc, seq, std::string("no_witness"));
+}
 
 	/**
 	 */
 void node_impl::putData(std::string const &username, std::string const &resource, bool multi,
                         entry const &value, std::string const &sig_user,
-                        boost::int64_t timeutc, int seq)
+                        boost::int64_t timeutc, int seq, std::string const &witness)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 	TORRENT_LOG(node) << "putData [ username: " << username.c_str() << " res: " << resource.c_str() << " ]" ;
@@ -454,12 +463,20 @@ void node_impl::putData(std::string const &username, std::string const &resource
     if (seq >= 0 && !multi) p["seq"] = seq;
     p["v"] = value;
     p["time"] = timeutc;
+	if (strcmp("no_witness", witness.c_str())) {
+		p["witness"] = witness;
+		printf(BOLDMAGENTA "witness [%s] added to the put data message to send (%s)" RESET, witness.c_str(), resource.c_str());
+	} else {
+		printf(BOLDMAGENTA "witness not added to the put data message to send (%s)" RESET, resource.c_str());
+	}
     int height = getBestHeight()-1; // be conservative
     p["height"] = height;
 
     std::vector<char> pbuf;
     bencode(std::back_inserter(pbuf), p);
+	printf(MAGENTA "\tjust bencoded" RESET);
     std::string str_p = std::string(pbuf.data(),pbuf.size());
+	printf(MAGENTA "\tabout to sign" RESET);
     std::string sig_p = createSignature(str_p, sig_user);
     if( !sig_p.size() ) {
         printf("putData: createSignature error (this should have been caught earlier)\n");
@@ -468,19 +485,23 @@ void node_impl::putData(std::string const &username, std::string const &resource
 
 	// search for nodes with ids close to id or with peers
 	// for info-hash id. then send putData to them.
+	printf(MAGENTA "\tsearch for nodes with ids close to id\n" RESET);
 	boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
 		 boost::bind(&nop),
          boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true));
 
     // store it locally so it will be automatically refreshed with the rest
+	printf(MAGENTA "\tstore it locally so it will be automatically refreshed with the rest\n" RESET);
     dht_storage_item item(str_p, sig_p, sig_user);
     item.local_add_time = time(NULL);
     std::vector<char> vbuf;
+	printf(MAGENTA "\tabout to be back_inserted...(if you know what i mean)\n" RESET);
     bencode(std::back_inserter(vbuf), value);
     std::pair<char const*, int> bufv = std::make_pair(vbuf.data(), vbuf.size());
     store_dht_item(item, ta->target(), multi, seq, height, bufv);
     
     // now send it to the network (start transversal algorithm)
+	printf(MAGENTA "\tnow send it to the network (start transversal algorithm)\n" RESET);
     ta->start();
 }
 
@@ -950,10 +971,12 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 	, int size , char* error, int error_size)
 {
 	// clear the return buffer
+	printf(WHITE "\tclear the return buffer\n" RESET);
 	memset(ret, 0, sizeof(ret[0]) * size);
 
 	// when parsing child nodes, this is the stack
 	// of lazy_entry pointers to return to
+	printf(WHITE "\tlazy_entry pointers to return to\n" RESET);
 	lazy_entry const* stack[5];
 	int stack_ptr = -1;
 
@@ -962,28 +985,36 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 		snprintf(error, error_size, "not a dictionary");
 		return false;
 	}
+	printf(WHITE "\tit is a dictionary!\n" RESET);
 	++stack_ptr;
 	stack[stack_ptr] = msg;
+	printf(WHITE "\tthe size is %d\n" RESET, size);
 	for (int i = 0; i < size; ++i)
 	{
+		printf(WHITE "\t\telaborating the %d element\n" RESET, i);
 		key_desc_t const& k = desc[i];
 
 		//printf(RED "looking for %s in %s\n" RESET, k.name, print_entry(*msg).c_str());
-
+		printf(WHITE "\t\tlooking for %s\n" RESET, k.name);
+		
 		ret[i] = msg->dict_find(k.name);
 		// none_t means any type
 		if (ret[i] && ret[i]->type() != k.type && k.type != lazy_entry::none_t) ret[i] = 0;
 		if (ret[i] == 0 && (k.flags & key_desc_t::optional) == 0)
 		{
 			// the key was not found, and it's not an optional key
+			printf(WHITE "\t\t\tthe key was not found, and it's not an optional key (%s)!!\n" RESET, k.name);
 			snprintf(error, error_size, "missing '%s' key", k.name);
 			return false;
 		}
 
+		printf(WHITE "\t\tthe key was found(%s)!!\n" RESET, k.name);
+		
 		if (k.size > 0
 			&& ret[i]
 			&& k.type == lazy_entry::string_t)
 		{
+			
 			bool invalid = false;
 			if (k.flags & key_desc_t::size_divisible)
 				invalid = (ret[i]->string_length() % k.size) != 0;
@@ -993,11 +1024,17 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 			if (invalid)
 			{
 				// the string was not of the required size
+				printf(WHITE "\t\tthe string was not of the required size!!\n" RESET);
 				ret[i] = 0;
 				if ((k.flags & key_desc_t::optional) == 0)
 				{
 					snprintf(error, error_size, "invalid value for '%s'", k.name);
 					return false;
+				}
+			} else {
+				if (strcmp(k.name, "witness") == 0) {
+					printf(BOLDWHITE "\t\tthe value of the key %s is:\n" RESET, k.name);
+					printf(BOLDWHITE "\t\t%s\n" RESET, ret[i]->string_cstr());
 				}
 			}
 		}
@@ -1036,7 +1073,7 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 
 void incoming_error(entry& e, char const* msg)
 {
-	e["z"] = "e";
+	e["h"] = "e";
 	entry::list_type& l = e["e"].list();
 	l.push_back(entry(203));
 	l.push_back(entry(msg));
@@ -1047,12 +1084,12 @@ void node_impl::incoming_request(msg const& m, entry& e)
 {
 	printf(BOLDCYAN "\nReceived msg\n" RESET);
 	e = entry(entry::dictionary_t);
-	e["z"] = "r";
+	e["h"] = "r";
 	e["t"] = m.message.dict_find_string_value("t");
 
 	key_desc_t top_desc[] = {
 		{"q", lazy_entry::string_t, 0, 0},
-		{"x", lazy_entry::dict_t, 0, key_desc_t::parse_children},
+		{"g", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			{"id", lazy_entry::string_t, 20, key_desc_t::last_child},
 	};
 
@@ -1236,6 +1273,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 	}
 	else if (strcmp(query, "putData") == 0)
 	{
+		printf(WHITE "\tThe arrived message is putData\n" RESET);
 		const static key_desc_t msg_desc[] = {
 			{"token", lazy_entry::string_t, 0, 0},
 			{"sig_p", lazy_entry::string_t, 0, 0},
@@ -1243,6 +1281,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			{"p", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			    {"v", lazy_entry::none_t, 0, 0},
 			    {"seq", lazy_entry::int_t, 0, key_desc_t::optional},
+				{"witness", lazy_entry::string_t, 0, key_desc_t::optional},
 			    {"time", lazy_entry::int_t, 0, 0},
 			    {"height", lazy_entry::int_t, 0, 0},
 			    {"target", lazy_entry::dict_t, 0, key_desc_t::parse_children},
@@ -1251,10 +1290,11 @@ void node_impl::incoming_request(msg const& m, entry& e)
 				{"t", lazy_entry::string_t, 0, 0},
 		};
 		enum {mk_token=0, mk_sig_p, mk_sig_user, mk_p, mk_v,
-		      mk_seq, mk_time, mk_height, mk_target, mk_n,
+		      mk_seq, mk_witness, mk_time, mk_height, mk_target, mk_n,
 		      mk_r, mk_t};
 
 		// attempt to parse the message
+		printf(WHITE "\tattempt to parse the message\n" RESET);
 		lazy_entry const* msg_keys[13];
 		if (!verify_message(arg_ent, msg_desc, msg_keys, 13, error_string, sizeof(error_string)))
 		{
@@ -1297,6 +1337,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		// specific target hashes. it must match the one we got a "get" for
 		if (!verify_token(msg_keys[mk_token]->string_value(), (char const*)&target[0], m.addr))
 		{
+			printf(BOLDMAGENTA "invalid token\n" RESET);
 			incoming_error(e, "invalid token");
 			return;
 		}
@@ -1306,31 +1347,43 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		if (!verifySignature(str_p,
 				    msg_keys[mk_sig_user]->string_value(),
 				    msg_keys[mk_sig_p]->string_value())) {
+			printf(BOLDMAGENTA "invalid signature\n" RESET);
 			incoming_error(e, "invalid signature");
 			return;
 		}
 		
 		// al posto del seguente blocco dovrei prendere dalla rete dht un witness, magari in modo asincrono, e controllare se questa risorsa ha il permesso di essere memorizzata
-		/*
+		
 		const char* received_username = msg_keys[mk_n]->string_value().c_str();
+		printf(YELLOW "received_username=%s\n" RESET, received_username);
 		const char* received_rsc_type = msg_keys[mk_r]->string_value().c_str();
+		printf(YELLOW "received_rsc_type=%s\n" RESET, received_rsc_type);
+		printf(BOLDMAGENTA "controllo se la richiesta di putData è swarm o post...\n" RESET);
 		if (!strcmp(received_rsc_type, "swarm") || // if "swarm" match rcvd type OR
 			strstr(received_rsc_type, "post") != NULL // if post is contained in rcvd type
 			) { // we have to check that username is an admin
-			
+			printf(BOLDMAGENTA "lo è!!\n" RESET);
 			if (!msg_keys[mk_witness]->string_length()) {
 				// TODO: [AP] not sure this is the right way to check if the witness field is missing, maybe i'm calling string_value() on a null pointer, or lenght() on a null pointer...
+				printf(BOLDMAGENTA "però manca il witness!!\n" RESET);
 				incoming_error(e, "witness missing, forbidden action");
 				return;
 			}
 			
-			// qui dovrebbe recuperare il witness dalla rete dht
+			// qui dovrebbe almeno tentare di recuperare il witness dalla rete dht
 			//const char* received_witness = msg_keys[mk_witness]->string_value().c_str();
-			//if (!isAdmin(received_username, received_witness)) {
-			//	incoming_error(e, "forbidden action, must be an admin");
-			//	return;
-			//}
-		}*/
+			char error;
+			printf(BOLDYELLOW "received witness=%s\n" RESET, msg_keys[mk_witness]->string_value().c_str());
+			if (!isAdmin(received_username, msg_keys[mk_witness]->string_value().c_str(), &error)) {
+				printf(BOLDMAGENTA "il witness non è di un amministratore\n" RESET);
+				incoming_error(e, "forbidden action, must be an admin");
+				return;
+			} else {
+				printf(BOLDMAGENTA "tutto a posto il witness è valido.\n" RESET);
+			}
+		} else {
+			printf(BOLDMAGENTA "...no\n" RESET);
+		}
 
 		if (!multi && msg_keys[mk_sig_user]->string_value() !=
 			      msg_keys[mk_n]->string_value() ) {

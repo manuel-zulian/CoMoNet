@@ -432,12 +432,19 @@ namespace libtorrent { namespace dht
 	{
 		m_dht.announce(trackerName, ih, addr, listen_port, seed, myself, list_peers, f);
 	}
+	
+	void dht_tracker::putData(std::string const &username, std::string const &resource, bool multi,
+							  entry const &value, std::string const &sig_user,
+							  boost::int64_t timeutc, int seq)
+	{
+		m_dht.putData(username,resource, multi, value, sig_user, timeutc, seq);
+	}
 
 	void dht_tracker::putData(std::string const &username, std::string const &resource, bool multi,
 		     entry const &value, std::string const &sig_user,
-             boost::int64_t timeutc, int seq)
+             boost::int64_t timeutc, int seq, std::string const &witness)
 	{
-		m_dht.putData(username,resource, multi, value, sig_user, timeutc, seq);
+		m_dht.putData(username,resource, multi, value, sig_user, timeutc, seq, witness);
 	}
 
 	void dht_tracker::getData(std::string const &username, std::string const &resource, bool multi,
@@ -674,7 +681,7 @@ namespace libtorrent { namespace dht
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 			m_total_out_bytes += m_send_buf.size();
 		
-			if (e["z"].string() == "r")
+			if (e["h"].string() == "r")
 			{
 				// TODO: 2 fix this stats logging. For instance,
 				// the stats counters could be factored out into its own
@@ -682,7 +689,7 @@ namespace libtorrent { namespace dht
 //				++m_replies_sent[e["r"]];
 //				m_replies_bytes_sent[e["r"]] += int(m_send_buf.size());
 			}
-			else if (e["z"].string() == "q")
+			else if (e["h"].string() == "q")
 			{
 				m_queries_out_bytes += m_send_buf.size();
 			}

@@ -207,9 +207,9 @@ bool find_data::invoke(observer_ptr o)
 	}
 
 	entry e;
-	e["z"] = "q";
+	e["h"] = "q";
 	e["q"] = "getData"; // "getPeers"
-	entry& a = e["x"];
+	entry& a = e["g"];
 	entry& target = a["target"];
 	target["n"] = m_trackerName;
 	target["r"] = "tracker";

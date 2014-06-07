@@ -1194,7 +1194,7 @@ namespace libtorrent
 	void torrent::on_disk_write_complete(int ret, disk_io_job const& j
 		, peer_request p)
 	{
-		//printf("on_disk_write_complete: size %d\n", j.buffer_size);
+		printf("on_disk_write_complete: size %d\n", j.buffer_size);
 
 		TORRENT_ASSERT(m_ses.is_network_thread());
 
@@ -4963,9 +4963,11 @@ namespace libtorrent
         if (m_connections_initialized)
         {
             // all peer connections have to update num_pieces
+			printf(BOLDWHITE "all peer connections have to update num_pieces:\n" RESET);
             for (torrent::peer_iterator i = m_connections.begin();
                 i != m_connections.end();)
             {
+				printf(WHITE "\tpeer is going to be updated!\n" RESET);
                 peer_connection* pc = *i;
                 ++i;
                 if (pc->is_disconnecting()) continue;
@@ -4973,6 +4975,7 @@ namespace libtorrent
                 //if (pc->is_disconnecting()) continue;
                 //pc->init();
             }
+			printf(BOLDWHITE "all peer connections are updated. job done.\n" RESET);
         }
     }
 

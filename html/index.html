@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-ng-app="main"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,27 +19,57 @@
         <script src="js/jquery.json-2.4.js"></script>
         <script src="js/jquery.jsonrpcclient.js"></script>
         <script src="js/twister_io.js"></script>
+        <script src="js/angular.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
         <!-- Add your site or application content here -->
-        <section id="producers">
-            <article id="template-producer" class="producer">
-                <div class="author">Autore</div>
-                <div class="status">Bla bl bla.</div>
-            </article>
-        </section>
-        <section id="producer">
-            <article id="template-post" class="post">
-                Hello
-            </article>
-        </section>
-        <aside>
-            stuff
-        </aside>
+        <div id="main-content" data-ng-controller="ContentController as content">
+            <section id="producers" data-ng-show="content.isCurrentSection('home')">
+                <article class="producer" data-ng-repeat="producer in main_state.producers">
+                    <div class="author"><a href data-ng-click="content.goToProducerPage(producer)">{{producer}}</a></div>
+                    <div class="status">{{"producer.status"}}</div>
+                </article>
+            </section>
+            <section id="producer" data-ng-show="content.isCurrentSection('producer')">
+                <div id="producer-buttons" data-ng-switch on="content.isFollowing(main_state.current_producer)">
+                    <a href data-ng-switch-when='false' data-ng-click="content.follow(main_state.current_producer)" class="subscribe-button">Abbonati</a>
+                    <a href data-ng-switch-when='true' data-ng-click="content.unfollow(main_state.current_producer)" class="subscribe-button">Disabbonati</a>
+                    <form novalidate class="direct-message-form">
+                        <input type="text" data-ng-model="dmsg" />
+                        <button data-ng-click="content.send(dmsg)">send</button>
+                    </form>
+                </div>
+                <div id="producer-posts">
+                    <article class="post" data-ng-repeat="post in main_state.posts">
+                        {{post.userpost.msg}}
+                    </article>
+                </div>
+            </section>
+            <aside>
+                <form novalidate class="login-form">
+                    <input type="text" data-ng-model="username" />
+                    <button data-ng-click="content.login(username)">login</button>
+                </form>
+                <div id="feed">
+                    <div class="minipost" data-ng-repeat="minipost in main_state.miniposts">
+                        <div class="author-mini">{{minipost.userpost.n}}</div>
+                        <div class="post-mini">{{minipost.userpost.msg}}</div>
+                    </div>
+                </div>
+                <div id="minimsgs">
+                    <div class="minimsg" data-ng-repeat="minimsg in main_state.minimsgs">
+                        <div class="author-mini">{{minimsg.author}}</div>
+                        <div class="post-mini">{{minimsg.v}}</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <nav data-ng-controller="NavigationController as navCtrl">
+            <a id="home-button" href data-ng-click="navCtrl.goToHomePage()">Home</a>
+        </nav>
 
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
