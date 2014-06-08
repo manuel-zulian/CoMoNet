@@ -258,7 +258,7 @@
             },
         
             getlasthave = function (main_status) {
-                twisterRpc("getlasthave", ["utente2"], processLastHave, main_status);
+                twisterRpc("getlasthave", [main_status.current_user], processLastHave, main_status);
             };
         
         globals.twisterRpc  = twisterRpc;

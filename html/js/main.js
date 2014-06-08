@@ -126,7 +126,7 @@
                 main_state.s.should_reload = false;
             }
             globals.dhtget(main_state.s.current_user, "dmgs", "m", controller.addMiniMsgs);
-            globals.getlasthave(main_state);
+            globals.getlasthave(main_state.s);
         };
         
         this.reloadFeed();

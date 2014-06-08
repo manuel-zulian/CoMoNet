@@ -2,7 +2,10 @@
 
 CUR_DIR=~/Documents/Tesi/inst-t
 BIN=twisterd
-extip=$EXTIP
+#extip=$EXTIP
+extip=127.0.0.1
+pb=380
+pb2=$(($pb+100))
 
 if [ "$1" = "start" ]; then
     if [ -z "$2" ]; then
@@ -34,8 +37,8 @@ if [ "$1" = "start" ]; then
 	    mkdir -p $CUR_DIR/acc-$i
 	fi
 	# scrive su file il suo pid in modo da poter essere killato in automatico
-	echo "./$BIN -datadir=$CUR_DIR/acc-$i -port=360$i -genproclimit=1 -daemon -rpcport=460$i -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid"
-	./$BIN -datadir=$CUR_DIR/acc-$i -port=360$i -genproclimit=1 -daemon -rpcport=460$i -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid > /dev/null
+	echo "./$BIN -datadir=$CUR_DIR/acc-$i -port=$pb$i -genproclimit=1 -daemon -rpcport=$pb2$i -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid"
+	./$BIN -datadir=$CUR_DIR/acc-$i -port="$pb$i" -genproclimit=1 -daemon -rpcport="$pb2$i" -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid > /dev/null
     done
     echo -n "Starting servers"
     for i in $(seq $2 $(($end_node-$rnodes)))
@@ -46,7 +49,7 @@ if [ "$1" = "start" ]; then
     echo -e "\nServers initialized.\n"
 elif [ "$1" = "connect" ]; then
     if [ "$2" != "" ] && [ "$3" != "" ]; then
-	if ! $0 cmd $2 addnode $extip:360$(printf %02g $3) onetry; then
+	if ! $0 cmd $2 addnode $extip:$pb$(printf %02g $3) onetry; then
 	    echo "connection aborted"
 	else
 	    echo "connecting $2 to $3"
@@ -77,8 +80,8 @@ elif [ "$1" = "cmd" ]; then
 		params=$params\ ${args[$i]}
 	fi
     done
-    echo "./$BIN -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=460$(printf %02g $2)"\ $params
-    ./$BIN -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=460$(printf %02g $2) $params
+    echo "./$BIN -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=$pb2$(printf %02g $2)"\ $params
+    ./$BIN -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=$pb2$(printf %02g $2) $params
 elif [ "$1" = "pause" ]; then
     if [ -z "$2" ]; then
 	echo -e "usage:\n\t$0 pause <node> [end-node]"
@@ -103,7 +106,7 @@ elif [ "$1" = "pause" ]; then
 	fi
 	echo "./$BIN -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=2\
 76$i stop"
-	./$BIN -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=460$i stop
+	./$BIN -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=$pb2$i stop
     done
 elif [ "$1" = "delete" ]; then
     if [ -z "$2" ]; then
