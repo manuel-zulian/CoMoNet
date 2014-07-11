@@ -36,12 +36,6 @@
         };
     });
     
-    main.controller('MainController', ['main_state', 'ModalDemoCtrl', function (main_state, modalLogin) {
-        if (main_state === undefined) {
-            modalLogin.open();
-        }
-    }]);
-    
     main.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
         $scope.items = ['item1', 'item2', 'item3'];
 
@@ -66,6 +60,12 @@
             });
         };
     });
+    
+    main.controller('MainController', ['main_state', '$scope', function (main_state, $scope) {
+        if (main_state === undefined) {
+            $scope.open();
+        }
+    }]);
     
     main.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
         $scope.items = items;
