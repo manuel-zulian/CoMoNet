@@ -71,7 +71,6 @@
         </div>
         <nav data-ng-controller="NavigationController as navCtrl">
             <a id="home-button" href data-ng-click="navCtrl.goToHomePage()">Home</a>
-            <div ng-controller="ModalDemoCtrl">
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">I'm a modal!</h3>
@@ -90,7 +89,6 @@
         </div>
     </script>
     <div ng-show="selected">Selection from a modal: {{ selected }}</div>
-</div>
         </nav>
 
         <script src="js/plugins.js"></script>

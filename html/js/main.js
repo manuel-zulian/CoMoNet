@@ -36,15 +36,11 @@
         };
     });
     
-    main.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
-        $scope.items = ['item1', 'item2', 'item3'];
-
-        $scope.open = function (size) {
-
+    main.controller('MainController', ['main_state', '$scope', '$modal', function (main_state, $scope, $modal) {
+        if (main_state.s.current_user === undefined) {
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
-                size: size,
                 backdrop: 'static',
                 resolve: {
                     items: function () {
@@ -52,23 +48,16 @@
                     }
                 }
             });
-
             modalInstance.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                $scope.selected = ('Modal dismissed at: ' + new Date());
             });
-        };
-    });
-    
-    main.controller('MainController', ['main_state', '$scope', function (main_state, $scope) {
-        if (main_state === undefined) {
-            $scope.open();
         }
     }]);
     
     main.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-        $scope.items = items;
+        $scope.items = ['bim', 'bum', 'bam'];
         $scope.selected = {
             item: $scope.items[0]
         };
