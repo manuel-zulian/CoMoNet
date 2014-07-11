@@ -3962,11 +3962,11 @@ void GenesisMiner()
             {
                 nHPSTimerStart = GetTimeMillis();
                 nHashCounter = 0;
-            }
-            else
+            } else {
                 nHashCounter += nHashesDone;
-            if (GetTimeMillis() - nHPSTimerStart > 4000)
-            {
+            }
+            
+            if (GetTimeMillis() - nHPSTimerStart > 4000) {
                 static CCriticalSection cs;
                 {
                     LOCK(cs);
