@@ -23,7 +23,7 @@
     main.factory('main_state', function () {
         return {
             s : {
-                current_user: "utente2",
+                current_user: undefined,
                 current_section: "home",
                 current_producer: undefined,
                 should_reload: false,
@@ -35,6 +35,12 @@
             }
         };
     });
+    
+    main.controller('MainController', ['main_state', 'ModalDemoCtrl', function (main_state, modalLogin) {
+        if (main_state === undefined) {
+            modalLogin.open();
+        }
+    }]);
     
     main.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
         $scope.items = ['item1', 'item2', 'item3'];
