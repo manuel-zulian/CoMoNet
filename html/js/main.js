@@ -45,6 +45,7 @@
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 size: size,
+                backdrop: 'static',
                 resolve: {
                     items: function () {
                         return $scope.items;
