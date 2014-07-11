@@ -19,7 +19,9 @@
         <script src="js/jquery.json-2.4.js"></script>
         <script src="js/jquery.jsonrpcclient.js"></script>
         <script src="js/twister_io.js"></script>
-        <script src="js/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -69,6 +71,30 @@
         </div>
         <nav data-ng-controller="NavigationController as navCtrl">
             <a id="home-button" href data-ng-click="navCtrl.goToHomePage()">Home</a>
+            <div ng-controller="ModalDemoCtrl">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button class="btn btn-default" ng-click="open()">Open me!</button>
+    <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
+    <button class="btn btn-default" ng-click="open('sm')">Small modal</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>
         </nav>
 
         <script src="js/plugins.js"></script>
