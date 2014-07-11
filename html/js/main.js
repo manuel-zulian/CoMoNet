@@ -160,8 +160,13 @@
                 controller.reloadFeed();
                 main_state.s.should_reload = false;
             }
-            globals.dhtget(main_state.s.current_user, "dmgs", "m", controller.addMiniMsgs);
-            globals.getlasthave(main_state.s);
+            if (main_state.s.current_user !== undefined) {
+                globals.getlasthave(main_state.s.current_user);
+                globals.dhtget(main_state.s.current_user, "dmgs", "m", controller.addMiniMsgs);
+            } else {
+                // should ask for login
+                var no_operation;
+            }
         };
         
         this.reloadFeed();
