@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" data-ng-app="main"> <!--<![endif]-->
-    <head data-ng-controller="MainController">
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Accumunet</title>
@@ -23,7 +23,7 @@
         <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     </head>
-    <body>
+    <body data-ng-controller="MainController">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -71,9 +71,10 @@
         </div>
         <nav data-ng-controller="NavigationController as navCtrl">
             <a id="home-button" href data-ng-click="navCtrl.goToHomePage()">Home</a>
+            <h3 id="current-user">{{main_state.current_user}}</h3>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
+            <h3 class="modal-title">Seleziona il tuo username</h3>
         </div>
         <div class="modal-body">
             <ul>
@@ -81,14 +82,12 @@
                     <a ng-click="selected.item = item">{{ item }}</a>
                 </li>
             </ul>
-            Selected: <b>{{ selected.item }}</b>
+            Selezionato: <b>{{ selected.item }}</b>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </script>
-    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
         </nav>
 
         <script src="js/plugins.js"></script>

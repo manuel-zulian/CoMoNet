@@ -257,8 +257,8 @@
                 twisterRpc("getposts", [p_limit, [paramObj]], cbFunc, cbArgs);
             },
         
-            getlasthave = function (main_status) {
-                twisterRpc("getlasthave", [main_status.current_user], processLastHave, main_status);
+            getlasthave = function (current_user, main_status) {
+                twisterRpc("getlasthave", [current_user], processLastHave, main_status);
             };
         
         globals.twisterRpc  = twisterRpc;

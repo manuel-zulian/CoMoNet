@@ -49,25 +49,22 @@
                 }
             });
             modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
+                main_state.s.current_user = selectedItem;
             }, function () {
-                $scope.selected = ('Modal dismissed at: ' + new Date());
+                // error occurred
+                var error;
             });
         }
     }]);
     
     main.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-        $scope.items = ['bim', 'bum', 'bam'];
+        $scope.items = ['utente1', 'utente2', 'utente3'];
         $scope.selected = {
             item: $scope.items[0]
         };
         
         $scope.ok = function () {
             $modalInstance.close($scope.selected.item);
-        };
-        
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
         };
     });
     
@@ -161,7 +158,7 @@
                 main_state.s.should_reload = false;
             }
             if (main_state.s.current_user !== undefined) {
-                globals.getlasthave(main_state.s.current_user);
+                globals.getlasthave(main_state.s.current_user, main_state.s);
                 globals.dhtget(main_state.s.current_user, "dmgs", "m", controller.addMiniMsgs);
             } else {
                 // should ask for login
