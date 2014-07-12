@@ -21,6 +21,7 @@
         <script src="js/twister_io.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
         <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body data-ng-controller="MainController">
@@ -28,20 +29,23 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <!-- Add your site or application content here -->
-        <div id="main-content" data-ng-controller="ContentController as content">
-            <section id="producers" data-ng-show="content.isCurrentSection('home')">
-                <article class="producer" data-ng-repeat="producer in main_state.producers">
-                    <div class="author"><a href data-ng-click="content.goToProducerPage(producer)">{{producer}}</a></div>
+        <div data-ng-view></div>
+        <script type="text/ng-template" id="producers.html">
+            <section id="producers">
+                <article class="producer" data-ng-repeat="producer in producers">
+                    <div class="author"><a data-ng-href="#/producer/{{producer}}">{{producer}}</a></div>
                     <div class="status">{{"producer.status"}}</div>
                 </article>
             </section>
-            <section id="producer" data-ng-show="content.isCurrentSection('producer')">
-                <div id="producer-buttons" data-ng-switch on="content.isFollowing(main_state.current_producer)">
-                    <a href data-ng-switch-when='false' data-ng-click="content.follow(main_state.current_producer)" class="subscribe-button">Abbonati</a>
-                    <a href data-ng-switch-when='true' data-ng-click="content.unfollow(main_state.current_producer)" class="subscribe-button">Disabbonati</a>
+        </script>
+        <script type="text/ng-template" id="producer.html">
+            <section id="producer">
+                <div id="producer-buttons" data-ng-switch on="isFollowing()">
+                    <a href data-ng-switch-when='false' data-ng-click="follow()" class="subscribe-button">Abbonati</a>
+                    <a href data-ng-switch-when='true' data-ng-click="unfollow()" class="subscribe-button">Disabbonati</a>
                     <form novalidate class="direct-message-form">
                         <input type="text" data-ng-model="dmsg" />
-                        <button data-ng-click="content.send(dmsg)">send</button>
+                        <button data-ng-click="send()">send</button>
                     </form>
                 </div>
                 <div id="producer-posts">
@@ -50,27 +54,23 @@
                     </article>
                 </div>
             </section>
+        </script>
             <aside>
-                <form novalidate class="login-form">
-                    <input type="text" data-ng-model="username" />
-                    <button data-ng-click="content.login(username)">login</button>
-                </form>
-                <div id="feed">
+                <div id="feed" data-ng-controller="FeedController">
                     <div class="minipost" data-ng-repeat="minipost in main_state.miniposts">
                         <div class="author-mini">{{minipost.userpost.n}}</div>
                         <div class="post-mini">{{minipost.userpost.msg}}</div>
                     </div>
                 </div>
-                <div id="minimsgs">
+                <div id="minimsgs" data-ng-controller="MessagesController">
                     <div class="minimsg" data-ng-repeat="minimsg in main_state.minimsgs">
                         <div class="author-mini">{{minimsg.author}}</div>
                         <div class="post-mini">{{minimsg.v}}</div>
                     </div>
                 </div>
             </aside>
-        </div>
         <nav data-ng-controller="NavigationController as navCtrl">
-            <a id="home-button" href data-ng-click="navCtrl.goToHomePage()">Home</a>
+            <a id="home-button" href="#/">Home</a>
             <h3 id="current-user">{{main_state.current_user}}</h3>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">

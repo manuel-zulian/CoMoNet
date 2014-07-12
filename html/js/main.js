@@ -18,15 +18,28 @@
         }
     }
 
-    var main = angular.module('main', ['ui.bootstrap']);
+    var main = angular.module('main', ['ui.bootstrap', 'ngRoute']);
+    
+    main.config(['$routeProvider',
+                function ($routeProvider) {
+            $routeProvider
+                .when('/', {
+                    templateUrl: 'producers.html',
+                    controller: 'ProducersController'
+                })
+                .when('/producer/:name', {
+                    templateUrl: 'producer.html',
+                    controller: 'ProducerController'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+        }]);
     
     main.factory('main_state', function () {
         return {
             s : {
                 current_user: undefined,
-                current_section: "home",
-                current_producer: undefined,
-                should_reload: false,
                 following: [],
                 producers: [],
                 posts: [],
@@ -36,9 +49,25 @@
         };
     });
     
+    main.factory('rpcQuery', function ($q, main_state) {
+        return {
+            dhtget: function (user, resource, type) {
+                var deferred = $q.defer();
+                globals.dhtget(user, resource, type, function (req, value, rawJson) {
+                    deferred.resolve(req, value, rawJson);
+                });
+            },
+            getposts: function (user) {
+                var deferred = $q.defer();
+                globals.getposts(user, function (req, posts) {
+                    deferred.resolve(posts);
+                });
+            }
+        };
+    });
+    
     main.controller('MainController', ['main_state', '$scope', '$modal', function (main_state, $scope, $modal) {
-        if (main_state.s.current_user === undefined) {
-            var modalInstance = $modal.open({
+        var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 backdrop: 'static',
@@ -48,6 +77,8 @@
                     }
                 }
             });
+        if (main_state.s.current_user === undefined) {
+            
             modalInstance.result.then(function (selectedItem) {
                 main_state.s.current_user = selectedItem;
             }, function () {
@@ -55,6 +86,9 @@
                 var error;
             });
         }
+        
+        
+        
     }]);
     
     main.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
@@ -70,105 +104,96 @@
     
     main.controller('NavigationController', function ($scope, main_state) {
         $scope.main_state = main_state.s;
-        this.goToHomePage = function () {
-            $scope.main_state.current_section = "home";
-            $scope.main_state.current_producer = undefined;
-        };
-        
     });
     
-    main.controller('ContentController', function ($scope, main_state) {
+    main.controller('ProducersController', function ($scope, rpcQuery) {
+        var fillProducers = function (req, producersArray, rawJSon) {
+            $scope.producers = producersArray;
+        };
+        rpcQuery.dhtget("utente1", "home", "s").then(fillProducers);
+    });
+    
+    main.controller('ProducerController', function ($scope, main_state, $routeParams, rpcQuery) {
         $scope.main_state = main_state.s;
-        var controller = this;
-        this.fillProducers = function (req, value, rawJson) {
-            $scope.$apply(function () {
-                $scope.main_state.producers = value;
-            });
-        };
-        this.fillPosts = function (req, posts) {
-            $scope.$apply(function () {
-                $scope.main_state.posts = posts;
-            });
-        };
-        this.addMiniPost = function (req, posts) {
-            $scope.$apply(function () {
-                $scope.main_state.miniposts = $scope.main_state.miniposts.concat(posts);
-                $scope.main_state.miniposts.sort(comparePosts);
-            });
-        };
-        this.addMiniMsgs = function (req, posts, rawJson) {
+        
+        var fillPosts = function (posts) {
+            $scope.main_state.posts = posts;
+        },
+            send = function (dmsg) {
+                globals.dhtput($routeParams.name, "dmgs", "m", $scope.dmsg, main_state.s.current_user, 0);
+            },
+            isFollowing = function () {
+                return (main_state.s.following.indexOf($routeParams.name) > -1);
+            },
+            follow = function () {
+                $scope.main_state.following.push($routeParams.name);
+                // reloadFeed(); TODO: add $watch in feedcontroller
+            },
+            unfollow = function () {
+                var index;
+                index = main_state.s.following.indexOf($routeParams.name);
+                if (index > -1) {
+                    $scope.main_state.following.splice(index, 1);
+                }
+                // reloadFeed(); TODO: add $watch in feedcontroller
+            };
+        
+        rpcQuery.getposts($routeParams.name).then(fillPosts);
+    });
+    
+    main.controller('FeedController', function ($scope, main_state, $interval, rpcQuery) {
+        $scope.main_state = main_state.s;
+        var addMiniPost = function (posts) {
+            $scope.main_state.miniposts = $scope.main_state.miniposts.concat(posts);
+            $scope.main_state.miniposts.sort(comparePosts);
+        },
+            reloadFeed = function () {
+                var i;
+                for (i = 0; i < main_state.s.following.length; i += 1) {
+                    rpcQuery.getposts(main_state.s.following[i]).then(addMiniPost);
+                }
+                while (main_state.s.miniposts.length) {
+                    main_state.s.miniposts.pop();
+                }
+            },
+            tick = function () {
+                if (main_state.s.current_user !== undefined) {
+                    globals.getlasthave(main_state.s.current_user, reloadFeed);
+                } else {
+                // should ask for login
+                    var no_operation;
+                }
+            };
+        
+        reloadFeed();
+        $scope.$watch($scope.main_state.following, reloadFeed);
+        $interval(tick, 1000);
+    });
+    
+    main.controller('MessagesController', function ($scope, main_state, $interval, rpcQuery) {
+        $scope.main_state = main_state.s;
+        var addMiniMsgs = function (req, posts, rawJson) {
             var i;
             if (rawJson.length !== main_state.s.minimsgs.length) {
                 while (main_state.s.minimsgs.length) {
                     main_state.s.minimsgs.pop();
                 }
-                $scope.$apply(function () {
-                    for (i = 0; i < rawJson.length; i += 1) {
-                        rawJson[i].p.author = rawJson[i].sig_user;
-                        $scope.main_state.minimsgs.push(rawJson[i].p);
-                    }
-                    $scope.main_state.minimsgs.sort(compareMsgs);
-                });
+                for (i = 0; i < rawJson.length; i += 1) {
+                    rawJson[i].p.author = rawJson[i].sig_user;
+                    $scope.main_state.minimsgs.push(rawJson[i].p);
+                }
+                $scope.main_state.minimsgs.sort(compareMsgs);
             }
-        };
-        
-        this.send = function (dmsg) {
-            globals.dhtput(main_state.s.current_producer, "dmgs", "m", dmsg, main_state.s.current_user, 0);
-        };
-        this.login = function (username) {
-            main_state.s.current_user = username;
-        };
-        this.isCurrentSection = function (section) {
-            return section === $scope.main_state.current_section;
-        };
-        this.goToProducerPage = function (prodName) {
-            globals.getposts(prodName, controller.fillPosts);
-            $scope.main_state.current_producer = prodName;
-            $scope.main_state.current_section = "producer";
-        };
-        this.isFollowing = function (prodName) {
-            return (main_state.s.following.indexOf(prodName) > -1);
-        };
-        this.follow = function (prodName) {
-            $scope.main_state.following.push(prodName);
-            controller.reloadFeed();
-        };
-        this.unfollow = function (prodName) {
-            var index;
-            index = main_state.s.following.indexOf(prodName);
-            if (index > -1) {
-                $scope.main_state.following.splice(index, 1);
-            }
-            controller.reloadFeed();
-        };
-        this.reloadFeed = function () {
-            var i;
-            for (i = 0; i < main_state.s.following.length; i += 1) {
-                globals.getposts(main_state.s.following[i],
-                                 controller.addMiniPost
-                                );
-            }
-            while (main_state.s.miniposts.length) {
-                main_state.s.miniposts.pop();
-            }
-        };
-        this.tick = function () {
-            if (main_state.s.should_reload) {
-                controller.reloadFeed();
-                main_state.s.should_reload = false;
-            }
-            if (main_state.s.current_user !== undefined) {
-                globals.getlasthave(main_state.s.current_user, main_state.s);
-                globals.dhtget(main_state.s.current_user, "dmgs", "m", controller.addMiniMsgs);
-            } else {
+        },
+            tick = function () {
+                if (main_state.s.current_user !== undefined) {
+                    rpcQuery.dhtget(main_state.s.current_user, "dmgs", "m").then(addMiniMsgs);
+                } else {
                 // should ask for login
-                var no_operation;
-            }
-        };
-        
-        this.reloadFeed();
-        setInterval(this.tick, 7000);
-        globals.dhtget("utente1", "home", "s", controller.fillProducers);
+                    var no_operation;
+                }
+            };
+        $interval(tick, 7000);
     });
     
 }(this));

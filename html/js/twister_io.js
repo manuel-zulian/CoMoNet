@@ -161,17 +161,20 @@
     // handle getlasthave response. the increase in lasthave cannot be assumed to
     // produce new items for timeline since some posts might be directmessages (which
     // won't be returned by getposts, normally).
-    function processLastHave(main_status, userHaves) {
-        var user;
+    function processLastHave(reloadCallback, userHaves) {
+        var user, should_reload;
         for (user in userHaves ) {
             if (userHaves.hasOwnProperty(user)) {
                 if (lastHaveMap.hasOwnProperty(user)) {
                     if (userHaves[user] > lastHaveMap[user]) {
-                        main_status.should_reload = true;
+                        should_reload = true;
                     }
                 }
                 lastHaveMap[user] = userHaves[user];
             }
+        }
+        if (should_reload === true) {
+            reloadCallback();
         }
     }
     
@@ -257,8 +260,8 @@
                 twisterRpc("getposts", [p_limit, [paramObj]], cbFunc, cbArgs);
             },
         
-            getlasthave = function (current_user, main_status) {
-                twisterRpc("getlasthave", [current_user], processLastHave, main_status);
+            getlasthave = function (current_user, reloadCallback) {
+                twisterRpc("getlasthave", [current_user], processLastHave, reloadCallback);
             };
         
         globals.twisterRpc  = twisterRpc;
