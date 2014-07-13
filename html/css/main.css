@@ -304,30 +304,38 @@ textarea {
 }
 
 .author {
-    background-color: #ddd;
+    background-color: rgb(240,240,240);
     color: red;
     padding-right: 10px;
-    padding-left: 15px;
+    padding-left: 25px;
     padding-bottom: 2px;
     padding-top: 2px;
     font-weight: bold;
+    font-size: 35px;
+    font-family: 'Lobster', cursive;
+    border-radius: 5px;
+}
+
+.author a {
+    color: rgb(190,20,0);
+}
+
+.author a:hover {
+    color: rgb(230,40,20);
 }
 
 .producer {
-    width: 200px;
-    height: 100px;
-    text-align: justify;
-    background-color: #f0f0f0;
-    padding: 7px;
-    margin: 9px;
-}
-
-#producers {
-    background-color: #fdfdfc;
+    width: 90%;
     position: relative;
-    top: 0px;
-    left: 0px;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 14px;
+    background-color: rgb(255,256,250);
+    margin-bottom: 15px;
+    border-radius: 3px;
+    font-size: 20px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 300;
 }
 
 #producer {
@@ -361,6 +369,10 @@ nav {
     width: 100%;
     height: 100px;;
     background-color: rgba(220,220,250,0.5);
+    padding: 7px;
+    font-size: 55px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-style: italic;
 }
 
 
@@ -368,6 +380,9 @@ nav {
 #main-content {
     width: 100%;
     position: relative;
+    background-color: rgba(250,256,254,0.8);
+    padding-top: 20px;
+    padding-bottom: 50px;
 }
 .author-mini {
     color: #663535;
@@ -425,12 +440,6 @@ nav {
     background-color: #d5ddc5;
 }
 
-
-
-#current-user {
-    float: right;
-}
-
 #wrapper {
     width: 620px;
     position: relative;
@@ -441,14 +450,49 @@ nav {
 header {
     width: 100%;
     position: relative;
-    height: 400px;
+    height: 330px;
+    background-image: url(https://yy2.staticflickr.com/3245/2605498464_bea7c31df9_z.jpg?zz=1);
+    background-size: 100%;
+    background-position: bottom;
     background-color: rgba(230, 220, 256, 0.2)
 }
 
 body {
-    background-image: url(http://upload.wikimedia.org/wikipedia/commons/8/85/Manarola_-_Le_terrazze.jpg);
+    background-image: url(http://upload.wikimedia.org/wikipedia/commons/5/51/Adobe_guadalupe_winery.jpg);
     background-repeat: no-repeat;
     background-position: top left;
     background-attachment: fixed;
     background-size: 1270px;
+}
+
+.nav-button {
+    color: rgb(100,0,0);
+}
+
+#current-user {
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    font-size: smaller;
+    color: black;
+}
+#current-user:hover {
+    text-decoration: none;
+}
+
+.nav-button:after {
+    content: ' / ';
+}
+.nav-button:before {
+    content: ' / ';
+}
+
+.nav-button:hover {
+    text-decoration: none;
+    color: rgb(256,256,256);
+}
+
+.status {
+    padding: 5px;
+    text-indent: 23px;
 }

@@ -26,6 +26,7 @@
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lobster|Open+Sans+Condensed:300,300italic' rel='stylesheet' type='text/css'>
 </head>
 
 <body data-ng-controller="MainController">
@@ -37,7 +38,7 @@
         <header>Header</header>
         <nav data-ng-controller="NavigationController as navCtrl">
             <a id="home-button" class="nav-button" href="#/">Home</a>
-            <h3 id="current-user">{{main_state.current_user}}</h3>
+            <a id="current-user">{{main_state.current_user}}</a>
         </nav>
         <div data-ng-view id="main-content"></div>
     </div>
