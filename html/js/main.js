@@ -133,7 +133,7 @@
             $scope.posts = posts;
         },
             send = function (dmsg) {
-                globals.dhtput($routeParams.name, "dmgs", "m", $scope.dmsg, main_state.s.current_user, 0);
+                globals.dhtput($routeParams.name, "dmgs", "m", dmsg, main_state.s.current_user, 0);
             },
             reloadFeed = function () {
                 rpcQuery.getposts($routeParams.name).then(fillPosts);
