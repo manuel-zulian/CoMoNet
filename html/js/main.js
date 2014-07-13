@@ -115,6 +115,7 @@
             } else {
                 $scope.isAdmin = false;
             }
+            $scope.current_user = main_state.s.current_user;
         });
     });
     
@@ -152,35 +153,6 @@
         $scope.buy = function (text) {
             send(text);
         };
-    });
-    
-    main.controller('FeedController', function ($scope, main_state, $interval, rpcQuery) {
-        $scope.main_state = main_state.s;
-        var addMiniPost = function (posts) {
-            $scope.main_state.miniposts = $scope.main_state.miniposts.concat(posts);
-            $scope.main_state.miniposts.sort(comparePosts);
-        },
-            reloadFeed = function () {
-                var i;
-                for (i = 0; i < main_state.s.following.length; i += 1) {
-                    rpcQuery.getposts(main_state.s.following[i]).then(addMiniPost);
-                }
-                while (main_state.s.miniposts.length) {
-                    main_state.s.miniposts.pop();
-                }
-            },
-            tick = function () {
-                if (main_state.s.current_user !== undefined) {
-                    globals.getlasthave(main_state.s.current_user, reloadFeed);
-                } else {
-                // should ask for login
-                    var no_operation;
-                }
-            };
-        
-        reloadFeed();
-        $scope.$watch($scope.main_state.following, reloadFeed);
-        $interval(tick, 1000);
     });
     
     main.controller('OrdinazioniController', function ($scope, main_state, $interval, rpcQuery) {

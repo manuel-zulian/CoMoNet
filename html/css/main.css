@@ -469,8 +469,8 @@ body {
 #current-user {
     position: absolute;
     right: 10px;
-    bottom: 0px;
-    font-size: smaller;
+    bottom: -2px;
+    font-size: 24px;
     color: black;
 }
 #current-user:hover {
