@@ -54,14 +54,17 @@
             dhtget: function (user, resource, type) {
                 var deferred = $q.defer();
                 globals.dhtget(user, resource, type, function (req, value, rawJson) {
-                    deferred.resolve(req, value, rawJson);
+                    var bulk = {req: req, value: value, rawJson: rawJson};
+                    deferred.resolve(bulk);
                 });
+                return deferred.promise;
             },
             getposts: function (user) {
                 var deferred = $q.defer();
                 globals.getposts(user, function (req, posts) {
                     deferred.resolve(posts);
                 });
+                return deferred.promise;
             }
         };
     });
@@ -107,7 +110,8 @@
     });
     
     main.controller('ProducersController', function ($scope, rpcQuery) {
-        var fillProducers = function (req, producersArray, rawJSon) {
+        var fillProducers = function (bulk) {
+            var producersArray = bulk.value;
             $scope.producers = producersArray;
         };
         rpcQuery.dhtget("utente1", "home", "s").then(fillProducers);
@@ -172,8 +176,9 @@
     
     main.controller('MessagesController', function ($scope, main_state, $interval, rpcQuery) {
         $scope.main_state = main_state.s;
-        var addMiniMsgs = function (req, posts, rawJson) {
-            var i;
+        var addMiniMsgs = function (bulk) {
+            var i,
+                rawJson = bulk.rawJson;
             if (rawJson.length !== main_state.s.minimsgs.length) {
                 while (main_state.s.minimsgs.length) {
                     main_state.s.minimsgs.pop();

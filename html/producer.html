@@ -1,0 +1,15 @@
+<section id="producer">
+    <div id="producer-buttons" data-ng-switch on="isFollowing()">
+        <a href data-ng-switch-when='false' data-ng-click="follow()" class="subscribe-button">Abbonati</a>
+        <a href data-ng-switch-when='true' data-ng-click="unfollow()" class="subscribe-button">Disabbonati</a>
+        <form novalidate class="direct-message-form">
+            <input type="text" data-ng-model="dmsg" />
+            <button data-ng-click="send()">send</button>
+        </form>
+    </div>
+    <div id="producer-posts">
+        <article class="post" data-ng-repeat="post in main_state.posts">
+            {{post.userpost.msg}}
+        </article>
+    </div>
+</section>

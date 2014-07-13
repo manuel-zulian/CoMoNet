@@ -2,95 +2,49 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" data-ng-app="main"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Accumunet</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--[if gt IE 8]><!-->
+<html class="no-js" data-ng-app="main">
+<!--<![endif]-->
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Accumunet</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script src="js/jquery-2.1.1.js"></script>
-        <script src="js/jquery.json-2.4.js"></script>
-        <script src="js/jquery.jsonrpcclient.js"></script>
-        <script src="js/twister_io.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
-        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body data-ng-controller="MainController">
-        <!--[if lt IE 7]>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/jquery.json-2.4.js"></script>
+    <script src="js/jquery.jsonrpcclient.js"></script>
+    <script src="js/twister_io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body data-ng-controller="MainController">
+    <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <!-- Add your site or application content here -->
-        <div data-ng-view></div>
-        <script type="text/ng-template" id="producers.html">
-            <section id="producers">
-                <article class="producer" data-ng-repeat="producer in producers">
-                    <div class="author"><a data-ng-href="#/producer/{{producer}}">{{producer}}</a></div>
-                    <div class="status">{{"producer.status"}}</div>
-                </article>
-            </section>
-        </script>
-        <script type="text/ng-template" id="producer.html">
-            <section id="producer">
-                <div id="producer-buttons" data-ng-switch on="isFollowing()">
-                    <a href data-ng-switch-when='false' data-ng-click="follow()" class="subscribe-button">Abbonati</a>
-                    <a href data-ng-switch-when='true' data-ng-click="unfollow()" class="subscribe-button">Disabbonati</a>
-                    <form novalidate class="direct-message-form">
-                        <input type="text" data-ng-model="dmsg" />
-                        <button data-ng-click="send()">send</button>
-                    </form>
-                </div>
-                <div id="producer-posts">
-                    <article class="post" data-ng-repeat="post in main_state.posts">
-                        {{post.userpost.msg}}
-                    </article>
-                </div>
-            </section>
-        </script>
-            <aside>
-                <div id="feed" data-ng-controller="FeedController">
-                    <div class="minipost" data-ng-repeat="minipost in main_state.miniposts">
-                        <div class="author-mini">{{minipost.userpost.n}}</div>
-                        <div class="post-mini">{{minipost.userpost.msg}}</div>
-                    </div>
-                </div>
-                <div id="minimsgs" data-ng-controller="MessagesController">
-                    <div class="minimsg" data-ng-repeat="minimsg in main_state.minimsgs">
-                        <div class="author-mini">{{minimsg.author}}</div>
-                        <div class="post-mini">{{minimsg.v}}</div>
-                    </div>
-                </div>
-            </aside>
+    <!-- Add your site or application content here -->
+    <div id="wrapper">
+        <header>Header</header>
         <nav data-ng-controller="NavigationController as navCtrl">
-            <a id="home-button" href="#/">Home</a>
+            <a id="home-button" class="nav-button" href="#/">Home</a>
             <h3 id="current-user">{{main_state.current_user}}</h3>
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Seleziona il tuo username</h3>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a ng-click="selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selezionato: <b>{{ selected.item }}</b>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-        </div>
-    </script>
         </nav>
+        <div data-ng-view id="main-content"></div>
+    </div>
 
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
 </html>
