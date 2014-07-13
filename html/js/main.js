@@ -31,6 +31,10 @@
                     templateUrl: 'producer.html',
                     controller: 'ProducerController'
                 })
+                .when('/ordinazioni', {
+                    templateUrl: 'ordinazioni.html',
+                    controller: 'OrdinazioniController'
+                })
                 .otherwise({
                     redirectTo: '/'
                 });
@@ -39,12 +43,7 @@
     main.factory('main_state', function () {
         return {
             s : {
-                current_user: undefined,
-                following: [],
-                producers: [],
-                posts: [],
-                miniposts: [],
-                minimsgs: []
+                current_user: undefined
             }
         };
     });
@@ -84,6 +83,7 @@
             
             modalInstance.result.then(function (selectedItem) {
                 main_state.s.current_user = selectedItem;
+                $scope.$broadcast("userChanged");
             }, function () {
                 // error occurred
                 var error;
@@ -106,7 +106,16 @@
     });
     
     main.controller('NavigationController', function ($scope, main_state) {
-        $scope.main_state = main_state.s;
+        $scope.isAdmin = false;
+        
+        $scope.$on("userChanged", function () {
+            // TODO: ovviamente questa è solo una simulazione bisogna controllare che sia admin sul serio
+            if (main_state.s.current_user === 'utente1' || main_state.s.current_user === 'utente2') {
+                $scope.isAdmin = true;
+            } else {
+                $scope.isAdmin = false;
+            }
+        });
     });
     
     main.controller('ProducersController', function ($scope, rpcQuery) {
@@ -117,32 +126,32 @@
         rpcQuery.dhtget("utente1", "home", "s").then(fillProducers);
     });
     
-    main.controller('ProducerController', function ($scope, main_state, $routeParams, rpcQuery) {
+    main.controller('ProducerController', function ($scope, main_state, $routeParams, rpcQuery, $interval) {
         $scope.main_state = main_state.s;
         
         var fillPosts = function (posts) {
-            $scope.main_state.posts = posts;
+            $scope.posts = posts;
         },
             send = function (dmsg) {
                 globals.dhtput($routeParams.name, "dmgs", "m", $scope.dmsg, main_state.s.current_user, 0);
             },
-            isFollowing = function () {
-                return (main_state.s.following.indexOf($routeParams.name) > -1);
+            reloadFeed = function () {
+                rpcQuery.getposts($routeParams.name).then(fillPosts);
             },
-            follow = function () {
-                $scope.main_state.following.push($routeParams.name);
-                // reloadFeed(); TODO: add $watch in feedcontroller
-            },
-            unfollow = function () {
-                var index;
-                index = main_state.s.following.indexOf($routeParams.name);
-                if (index > -1) {
-                    $scope.main_state.following.splice(index, 1);
+            tick = function () {
+                if (main_state.s.current_user !== undefined) {
+                    globals.getlasthave(main_state.s.current_user, reloadFeed);
+                } else {
+                // should ask for login
+                    var no_operation;
                 }
-                // reloadFeed(); TODO: add $watch in feedcontroller
             };
         
-        rpcQuery.getposts($routeParams.name).then(fillPosts);
+        reloadFeed();
+        $interval(tick, 1000);
+        $scope.buy = function (text) {
+            send(text);
+        };
     });
     
     main.controller('FeedController', function ($scope, main_state, $interval, rpcQuery) {
@@ -174,25 +183,23 @@
         $interval(tick, 1000);
     });
     
-    main.controller('MessagesController', function ($scope, main_state, $interval, rpcQuery) {
+    main.controller('OrdinazioniController', function ($scope, main_state, $interval, rpcQuery) {
+        $scope.ordinazioni = [];
         $scope.main_state = main_state.s;
-        var addMiniMsgs = function (bulk) {
+        var fillOrdinazioni = function (bulk) {
             var i,
-                rawJson = bulk.rawJson;
-            if (rawJson.length !== main_state.s.minimsgs.length) {
-                while (main_state.s.minimsgs.length) {
-                    main_state.s.minimsgs.pop();
-                }
-                for (i = 0; i < rawJson.length; i += 1) {
-                    rawJson[i].p.author = rawJson[i].sig_user;
-                    $scope.main_state.minimsgs.push(rawJson[i].p);
-                }
-                $scope.main_state.minimsgs.sort(compareMsgs);
+                rawJson = bulk.rawJson,
+                ordinazioni = [];
+            for (i = 0; i < rawJson.length; i += 1) {
+                rawJson[i].p.author = rawJson[i].sig_user;
+                ordinazioni.push(rawJson[i].p);
             }
+            ordinazioni.sort(compareMsgs);
+            $scope.ordinazioni = ordinazioni;
         },
             tick = function () {
                 if (main_state.s.current_user !== undefined) {
-                    rpcQuery.dhtget(main_state.s.current_user, "dmgs", "m").then(addMiniMsgs);
+                    rpcQuery.dhtget(main_state.s.current_user, "dmgs", "m").then(fillOrdinazioni);
                 } else {
                 // should ask for login
                     var no_operation;

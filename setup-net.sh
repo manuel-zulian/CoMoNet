@@ -38,10 +38,10 @@ sleep 0.5
 echo "starting miner..."
 echo -e "\nPress any button when the dht is loaded"
 read -n1
-$BIN cmd 1 newpostmsg utente1 1 \"Primo_post_utente1\"
-$BIN cmd 1 newpostmsg utente1 2 \"Vendo_vino_buono\"
-$BIN cmd 2 newpostmsg utente2 1 \"Ciao_sono_utente2\"
-$BIN cmd 2 newpostmsg utente2 2 \"Vendo_vino_buonissimo\"
+#$BIN cmd 1 newpostmsg utente1 1 \"Primo_post_utente1\"
+#$BIN cmd 1 newpostmsg utente1 2 \"Vendo_vino_buono\"
+#$BIN cmd 2 newpostmsg utente2 1 \"Ciao_sono_utente2\"
+#$BIN cmd 2 newpostmsg utente2 2 \"Vendo_vino_buonissimo\"
 $BIN cmd 1 follow utente1 [\"utente1\",\"utente2\"]
 $BIN cmd 2 follow utente2 [\"utente1\",\"utente2\"]
 $BIN cmd 3 follow utente3 [\"utente1\",\"utente2\"] 

@@ -17,7 +17,6 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/jquery.json-2.4.js"></script>
     <script src="js/jquery.jsonrpcclient.js"></script>
@@ -35,9 +34,11 @@
         <![endif]-->
     <!-- Add your site or application content here -->
     <div id="wrapper">
-        <header>Header</header>
-        <nav data-ng-controller="NavigationController as navCtrl">
+        <header><h1 id="title">Accumunet</h1></header>
+        <nav data-ng-controller="NavigationController">
             <a id="home-button" class="nav-button" href="#/">Home</a>
+            <a class="nav-button" href="#/ordinazioni" data-ng-show="isAdmin">Ordinazioni</a>
+            <a class="nav-button" href="#/">About</a>
             <a id="current-user">{{main_state.current_user}}</a>
         </nav>
         <div data-ng-view id="main-content"></div>

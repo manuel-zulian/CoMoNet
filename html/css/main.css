@@ -338,12 +338,7 @@ textarea {
     font-weight: 300;
 }
 
-#producer {
-    background-color: #fdfdf0;
-    min-height: 100%;
-    width: 60%;
-    position: absolute;
-    top: 0px;
+.internal {
 }
 
 aside {
@@ -361,7 +356,7 @@ aside {
     border-color: #cca;
     border-style: solid;
     border-radius: 2px;
-    padding: 4px;
+    /*padding: 4px;*/
 }
 
 nav {
@@ -400,17 +395,17 @@ nav {
 }
 
 .post-mini {
-    padding: 4px;
+    /*padding: 4px;*/
 }
 
 #subscribe-button {
     border-style: solid;
     border-width: 3px;
     border-color: #494;
-    padding: 4px;
+    /*padding: 4px;*/
     margin: 8px;
     position: absolute;
-    left: 4px;
+    /*left: 4px;*/
     top: 0px;
     text-decoration: none;
     font-weight: bold;
@@ -454,7 +449,9 @@ header {
     background-image: url(https://yy2.staticflickr.com/3245/2605498464_bea7c31df9_z.jpg?zz=1);
     background-size: 100%;
     background-position: bottom;
-    background-color: rgba(230, 220, 256, 0.2)
+    background-color: rgba(230, 220, 256, 0.2);
+    vertical-align: bottom;
+    display: inline-block;
 }
 
 body {
@@ -495,4 +492,83 @@ body {
 .status {
     padding: 5px;
     text-indent: 23px;
+}
+
+.item {
+    width: 280px;
+    height: 200px;
+    display: inline-block;
+    background-color: white;
+    margin: 10px;
+    position: relative;
+}
+
+.item-text {
+    width: 175px;
+    height: 150px;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.generic-img-container {
+    width: 100px;
+    height: 200px;
+    display: inline-block;
+}
+
+.generic-img-container:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    margin: 0px;
+}
+
+.generic-img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 95%;
+    max-height: 100%;
+}
+
+.internal {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.action {
+    width: 185px;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    vertical-align: bottom;
+    bottom: 0px;
+    right: 0px;
+    height: 50px;
+}
+
+.buy-btn {
+    display: inline-block;
+    background-color: rgba(220,150,40,.3);
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    font-size: 16px;
+    color: rgb(40,0,0);
+    border-style: solid;
+    border-color: rgb(90,30,30);
+    border-width:thin;
+}
+
+#title {
+    color: white;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 28px;
+    font-style: italic;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
 }

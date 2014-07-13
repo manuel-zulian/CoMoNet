@@ -1,15 +1,13 @@
-<section id="producer">
-    <div id="producer-buttons" data-ng-switch on="isFollowing()">
-        <a href data-ng-switch-when='false' data-ng-click="follow()" class="subscribe-button">Abbonati</a>
-        <a href data-ng-switch-when='true' data-ng-click="unfollow()" class="subscribe-button">Disabbonati</a>
-        <form novalidate class="direct-message-form">
-            <input type="text" data-ng-model="dmsg" />
-            <button data-ng-click="send()">send</button>
-        </form>
-    </div>
-    <div id="producer-posts">
-        <article class="post" data-ng-repeat="post in main_state.posts">
-            {{post.userpost.msg}}
-        </article>
-    </div>
+<section class="internal">
+    <article class="item" data-ng-repeat="post in posts">
+        <div class="generic-img-container">
+        <img class="generic-img" src="http://www.erickrousephoto.com/data/photos/51_1wine_bottle.jpg">
+        </div>
+        <div class="item-text">
+            <p>{{post.userpost.msg}}</p>
+        </div>
+        <div class="action">
+        <a class="buy-btn" href data-ng-click="buy(post.userpost.msg)">Compra adesso</a>
+        </div>
+    </article>
 </section>
