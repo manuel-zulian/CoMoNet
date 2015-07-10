@@ -1,14 +1,12 @@
-twister - p2p microblogging
-===========================
+# twister - p2p microblogging
 
 <http://www.twister.net.co>
 
-Bitcoin Copyright (c) 2009-2013 Bitcoin Developers  
+Bitcoin Copyright (c) 2009-2013 Bitcoin Core developers  
 libtorrent Copyright (c) 2003 - 2007, Arvid Norberg  
-twister Copyright (c) 2013 Miguel Freitas  
+twister Copyright (c) 2013 Miguel Freitas
 
-What is twister?
-----------------
+## What is twister?
 
 twister is an experimental peer-to-peer microblogging software.
 
@@ -21,20 +19,28 @@ are provided by libtorrent.
 Both Bitcoin and libtorrent versions included here are highly patched and do
 not interoperate with existing networks (on purpose).
 
-Compiling
-----------------
-You can build twister using these docs: 
+## Compiling
 
-[Ubuntu/Debian](https://github.com/miguelfreitas/twister-core/blob/master/doc/building-on-ubuntu-debian.md)
+Please follow the instructions for your platform:
 
-[Mac OS X](https://github.com/miguelfreitas/twister-core/blob/master/doc/build-osx.md)
+- [UNIX](https://github.com/miguelfreitas/twister-core/blob/master/doc/build-unix.md)
+- [Debian/Ubuntu](https://github.com/miguelfreitas/twister-core/blob/master/doc/building-on-ubuntu-debian.md)
+- [Mac OS X](https://github.com/miguelfreitas/twister-core/blob/master/doc/build-osx.md)
+- [Windows (untested)](https://github.com/miguelfreitas/twister-core/wiki/Compiling-for-Windows)
 
-[Windows (untested)](https://github.com/miguelfreitas/twister-core/wiki/Compiling-for-Windows)
+> According to our tests, at least 1GB of RAM is needed to compile Twister.
 
-[Unix](https://github.com/miguelfreitas/twister-core/blob/master/doc/build-unix.md)
+Alternatively, you can run Twister on an isolated Linux container, using [Docker](http://docker.io/). First, [install Docker on your system](https://docs.docker.com/installation/#installation). Then run:
 
-License
--------
+    # Leave out the "sudo -E" if you added yourself to the "docker" group
+    sudo -E ./twister-on-docker run --remote
+
+The above command downloads and runs a [pre-built image](https://registry.hub.docker.com/u/miguelfreitas/twister) from the Docker index. You can also build and run your own container:
+
+    sudo -E ./twister-on-docker build
+    sudo -E ./twister-on-docker run
+
+## License
 
 Bitcoin is released under the terms of the MIT license. See `COPYING` for more
 information or see http://opensource.org/licenses/MIT.
@@ -44,8 +50,7 @@ libtorrent is released under the BSD-license.
 twister specific code is released under the MIT license or BSD, you choose.
 (it shouldn't matter anyway, except for the "non-endorsement clause").
 
-Development process
--------------------
+## Development process
 
 There is no development process defined yet.
 
@@ -53,8 +58,7 @@ Developers of either bitcoin or libtorrent are welcomed and will be granted
 immediate write-access to the repository (a small retribution for
 bastardizing their codebases).
 
-Testing
--------
+## Testing
 
 Some security checks are disabled (temporarily) allowing multiple clients per IP.
 Therefore it is possible to run multiple twisterd instances at the same machine:
@@ -66,11 +70,10 @@ Therefore it is possible to run multiple twisterd instances at the same machine:
 Note: some features (like block generation and dht put/get) do not work unless
 the network has at least two nodes, like these two instances in the example above.
 
-Wire protocol
--------------
+## Wire protocol
 
 Bitcoin and libtorrent protocol signatures have been changed on purpose to
-make twister network incompatible. This avoids the so called 
+make twister network incompatible. This avoids the so called
 ["merge bug"](http://blog.notdot.net/2008/6/Nearly-all-DHT-implementations-vulnerable-to-merge-bug).
 
 - Bitcoin signature changed from "f9 be b4 d9" to "f0 da bb d2".
@@ -79,8 +82,7 @@ make twister network incompatible. This avoids the so called
 - Torrent/DHT query changed from "y" to "z"
 - Torrent/DHT answer changed from "a" to "x"
 
-Quick JSON command examples
----------------------------
+## Quick JSON command examples
 
 In order to use JSON-RPC you must set user/password/port by either command
 line or configuration file. This is the same as in [bitcoin](https://en.bitcoin.it/wiki/Running_Bitcoin)
@@ -157,13 +159,17 @@ To obtain the full list of commands
     ./twisterd help
 
 
-Running the web interface
--------------------------
+## Running the web interface
 
 First you'll need to grab the latest version of the web UI code and put it
 in your twister data dir:
 
     cd ~/.twister/
+    git clone https://github.com/miguelfreitas/twister-html.git ./html
+
+In OS X
+
+    cd ~/Library/Application\ Support/twister
     git clone https://github.com/miguelfreitas/twister-html.git ./html
 
 Next, run the twister daemon. The RPC username and password are currently
@@ -172,15 +178,23 @@ them:
 
     ./twisterd -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1
 
-Visit [http://localhost:28332/index.html](http://localhost:28332/index.html)
+Visit [http://user:pwd@localhost:28332](http://user:pwd@localhost:28332)
 in your web browser and you should see a page asking you to choose between the
 Desktop and Mobile interfaces.
 
-Different themes
--------------------------
+## Different themes
 
 If you prefer new modern look of twister with new untested things, you can try twister-calm theme
 But be careful, it is in beta stage.
 
     cd ~/.twister/
     git clone https://github.com/iHedgehog/twister-calm.git ./html
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+See [COPYING](COPYING)
+

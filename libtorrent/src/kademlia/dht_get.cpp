@@ -121,6 +121,14 @@ void dht_get_observer::reply(msg const& m)
 #endif
 				continue;
 			}
+			
+			int64 p_time = p->dict_find_int_value("time");
+			if(!p_time || p_time > GetAdjustedTime() + MAX_TIME_IN_FUTURE ) {
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+				TORRENT_LOG(traversal) << "dht_get_observer::reply invalid time";
+#endif
+				continue;
+			}
 
 			values_list.push_back(entry());
 			values_list.back() = *e;
@@ -137,8 +145,10 @@ void dht_get_observer::reply(msg const& m)
 				entry::dictionary_type v;
 				v["followers"] = followers;
 				const lazy_entry *values = r->dict_find_list("values");
-				if( values )
+				if( values ) {
 					v["values_size"] = values->list_size();
+					v["values"] = *values;
+				}
 
 				entry::dictionary_type target;
 				target["n"] = dget->m_targetUser;
@@ -212,7 +222,8 @@ dht_get::dht_get(
 	, bool multi
 	, data_callback const& dcallback
 	, nodes_callback const& ncallback
-	, bool justToken)
+	, bool justToken
+	, bool dontDrop)
 	: traversal_algorithm(node, node_id())
 	, m_data_callback(dcallback)
 	, m_nodes_callback(ncallback)
@@ -223,6 +234,7 @@ dht_get::dht_get(
 	, m_done(false)
 	, m_got_data(false)
 	, m_justToken(justToken)
+	, m_dontDrop(dontDrop)
 {
 	m_target["n"] = m_targetUser;
 	m_target["r"] = m_targetResource;
@@ -266,6 +278,7 @@ bool dht_get::invoke(observer_ptr o)
 	entry& target = a["target"];
 	target = m_target;
 	if (m_justToken) a["justtoken"] = 1;
+	o->m_dont_drop = m_dontDrop;
 	return m_node.m_rpc.invoke(e, o->target_ep(), o);
 }
 

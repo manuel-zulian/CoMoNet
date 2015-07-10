@@ -6,6 +6,7 @@
 #include <libtorrent/bencode.hpp>
 
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <stdio.h>
 
@@ -158,6 +159,14 @@ int saveUserData(std::string const& filename, std::map<std::string,UserData> con
             }
         }
 
+        if( udata.m_mentionsPosts.size() ) {
+            entry &userData = userDict[i->first];
+            entry &mentionsList = userData["mentions"];
+            BOOST_FOREACH( libtorrent::entry const &mention, udata.m_mentionsPosts) {
+                mentionsList.list().push_back(mention);
+            }
+        }
+
         if( udata.m_directmsg.size() ) {
             entry &userData = userDict[i->first];
             entry &dmDict = userData["dm"];
@@ -170,8 +179,18 @@ int saveUserData(std::string const& filename, std::map<std::string,UserData> con
                     dmElem["time"]   = stoDm.m_utcTime;
                     dmElem["text"]   = stoDm.m_text;
                     dmElem["fromMe"] = stoDm.m_fromMe;
+                    dmElem["from"]   = stoDm.m_from;
+                    dmElem["k"]      = stoDm.m_k;
                     dmList.list().push_back(dmElem);
                 }
+            }
+        }
+
+        if( udata.m_ignoreGroups.size() ) {
+            entry &userData = userDict[i->first];
+            entry &ignoreGroupsList = userData["ignore_groups"];
+            BOOST_FOREACH( std::string const &n, udata.m_ignoreGroups) {
+                ignoreGroupsList.list().push_back(n);
             }
         }
     }
@@ -210,6 +229,27 @@ int loadUserData(std::string const& filename, std::map<std::string,UserData> &us
                     }
                 }
 
+                const lazy_entry *mentionsList = userData->dict_find("mentions");
+                if( mentionsList ) {
+                    if( mentionsList->type() != lazy_entry::list_t ) goto data_error;
+
+                    for( int j = 0; j < mentionsList->list_size(); j++ ) {
+                        const lazy_entry *v = mentionsList->list_at(j);
+                        if( v->type() != lazy_entry::dict_t ) goto data_error;
+                        lazy_entry const* post = v->dict_find_dict("userpost");
+                        if( !post ) goto data_error;
+                        
+                        std::string username = post->dict_find_string_value("n");
+                        int64 time = post->dict_find_int_value("time",-1);
+                        std::string postKey = username + ";" + boost::lexical_cast<std::string>(time);
+                        udata.m_mentionsKeys.insert(postKey);
+                        
+                        entry vEntry;
+                        vEntry = *v;
+                        udata.m_mentionsPosts.push_back( vEntry );
+                    }
+                }
+
                 const lazy_entry *dmDict = userData->dict_find("dm");
                 if( dmDict ) {
                     if( dmDict->type() != lazy_entry::dict_t ) goto data_error;
@@ -226,10 +266,22 @@ int loadUserData(std::string const& filename, std::map<std::string,UserData> &us
                             stoDm.m_text    = dmElem->dict_find_string_value("text");
                             stoDm.m_utcTime = dmElem->dict_find_int_value("time");
                             stoDm.m_fromMe  = dmElem->dict_find_int_value("fromMe");
+                            stoDm.m_from    = dmElem->dict_find_string_value("from");
+                            stoDm.m_k       = dmElem->dict_find_int_value("k",-1);
                             udata.m_directmsg[dmDict->dict_at(j).first].push_back(stoDm);
                         }
                     }
                 }
+
+                const lazy_entry *ignoreGroupsList = userData->dict_find("ignore_groups");
+                if( ignoreGroupsList ) {
+                    if( ignoreGroupsList->type() != lazy_entry::list_t ) goto data_error;
+
+                    for( int j = 0; j < ignoreGroupsList->list_size(); j++ ) {
+                        udata.m_ignoreGroups.insert( ignoreGroupsList->list_string_value_at(j) );
+                    }
+                }
+
                 users[userDict.dict_at(i).first] = udata;
             }
             return 0;
@@ -241,6 +293,74 @@ data_error:
     printf("loadUserData: unexpected bencode type - user_data corrupt!\n");
     return -2;
 }
+
+int saveGroupData(std::string const& filename, std::map<std::string,GroupChat> const &groups)
+{
+    entry groupsDict;
+
+    std::map<std::string,GroupChat>::const_iterator i;
+    for (i = groups.begin(); i != groups.end(); ++i) {
+        GroupChat const &gchat = i->second;
+        entry &groupData = groupsDict[i->first];
+        groupData["description"] = gchat.m_description;
+        groupData["privkey"] = gchat.m_privKey;
+
+        if( gchat.m_members.size() ) {
+            entry &membersList = groupData["members"];
+            BOOST_FOREACH( std::string const &n, gchat.m_members) {
+                membersList.list().push_back(n);
+            }
+        }
+    }
+
+    std::vector<char> buf;
+    if( groupsDict.type() == entry::dictionary_t ) {
+        bencode(std::back_inserter(buf), groupsDict);
+        return save_file(filename, buf);
+    } else {
+        return 0;
+    }
+}
+
+
+int loadGroupData(std::string const& filename, std::map<std::string,GroupChat> &groups)
+{
+    std::vector<char> in;
+    if (load_file(filename, in) == 0) {
+        lazy_entry groupsDict;
+        libtorrent::error_code ec;
+        if (lazy_bdecode(&in[0], &in[0] + in.size(), groupsDict, ec) == 0) {
+            if( groupsDict.type() != lazy_entry::dict_t ) goto data_error;
+
+            for( int i = 0; i < groupsDict.dict_size(); i++) {
+                GroupChat gchat;
+
+                const lazy_entry *groupData = groupsDict.dict_at(i).second;
+                if( groupData->type() != lazy_entry::dict_t ) goto data_error;
+
+                gchat.m_description = groupData->dict_find_string_value("description");
+                gchat.m_privKey = groupData->dict_find_string_value("privkey");
+
+                const lazy_entry *membersList = groupData->dict_find("members");
+                if( membersList ) {
+                    if( membersList->type() != lazy_entry::list_t ) goto data_error;
+
+                    for( int j = 0; j < membersList->list_size(); j++ ) {
+                        gchat.m_members.insert( membersList->list_string_value_at(j) );
+                    }
+                }
+                groups[groupsDict.dict_at(i).first] = gchat;
+            }
+            return 0;
+        }
+    }
+    return -1;
+
+data_error:
+    printf("loadGroupData: unexpected bencode type - user_data corrupt!\n");
+    return -2;
+}
+
 
 void findAndHexcape(libtorrent::entry &e, string const& key)
 {
@@ -267,12 +387,20 @@ void hexcapePost(libtorrent::entry &e)
             entry &userpost = e["userpost"];
             if( userpost.type() == libtorrent::entry::dictionary_t ) {
                 findAndHexcape(userpost,"sig_rt");
+                findAndHexcape(userpost, "sig_fav");
                 if( userpost.find_key("dm") ) {
                     entry &dm = userpost["dm"];
                     if( dm.type() == libtorrent::entry::dictionary_t ) {
                         findAndHexcape(dm,"body");
                         findAndHexcape(dm,"key");
                         findAndHexcape(dm,"mac");
+                    }
+                } else if( userpost.find_key("pfav") ) {
+                    entry &pfav = userpost["pfav"];
+                    if( pfav.type() == libtorrent::entry::dictionary_t ) {
+                        findAndHexcape(pfav,"body");
+                        findAndHexcape(pfav,"key");
+                        findAndHexcape(pfav,"mac");
                     }
                 }
             }
@@ -339,7 +467,7 @@ void unHexcapeDht(libtorrent::entry &e)
     }
 }
 
-std::string safeGetEntryString(libtorrent::entry &e, std::string const& key)
+std::string safeGetEntryString(libtorrent::entry const &e, std::string const& key)
 {
     if( e.type() == libtorrent::entry::dictionary_t &&
         e.find_key(key) && e[key].type() == libtorrent::entry::string_t ) {
@@ -349,3 +477,45 @@ std::string safeGetEntryString(libtorrent::entry &e, std::string const& key)
     }
 }
 
+int safeGetEntryInt(libtorrent::entry const &e, std::string const& key)
+{
+    if( e.type() == libtorrent::entry::dictionary_t &&
+        e.find_key(key) && e[key].type() == libtorrent::entry::int_t ) {
+        return e[key].integer();
+    } else {
+        return 0;
+    }
+}
+
+libtorrent::entry safeGetEntryDict(libtorrent::entry const &e, std::string const& key)
+{
+    static libtorrent::entry::dictionary_type dummy;
+    if( e.type() == libtorrent::entry::dictionary_t &&
+        e.find_key(key) && e[key].type() == libtorrent::entry::dictionary_t ) {
+        return e[key].dict();
+    } else {
+        return dummy;
+    }
+}
+
+sha1_hash dhtTargetHash(std::string const &username, std::string const &resource, std::string const &type)
+{
+    entry target;
+    target["n"] = username;
+    target["r"] = resource;
+    target["t"] = type;
+
+    std::vector<char> buf;
+    bencode(std::back_inserter(buf), target);
+    return hasher(buf.data(), buf.size()).final();
+}
+
+std::string getRandomGroupAlias()
+{
+    std::string groupAlias("*xxxxxxxx");
+    
+    for(int i = 1; i < groupAlias.length(); i++) {
+        groupAlias[i] = 'a' + 26 * (rand() / (RAND_MAX + 1.0));
+    }
+    return groupAlias;
+}

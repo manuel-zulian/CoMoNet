@@ -118,18 +118,20 @@ struct torrent_entry
 struct dht_storage_item
 {
     // FIXME: optimize so bdecode is not needed all the time
-    dht_storage_item() : p(), sig_p(), sig_user(), local_add_time(0) {}
+    dht_storage_item() : p(), sig_p(), sig_user(), local_add_time(0), confirmed(true), next_refresh_time() {}
     dht_storage_item(std::string const &_p, lazy_entry const *_sig_p, lazy_entry const *_sig_user)
         : p(_p), sig_p(_sig_p->string_value()), sig_user(_sig_user->string_value()),
-          local_add_time(0) {}
+          local_add_time(0), confirmed(true), next_refresh_time() {}
     dht_storage_item(std::string const &_p, std::string const &_sig_p, std::string const &_sig_user)
-        : p(_p), sig_p(_sig_p), sig_user(_sig_user), local_add_time(0) {}
+        : p(_p), sig_p(_sig_p), sig_user(_sig_user), local_add_time(0), confirmed(true), next_refresh_time() {}
         std::string p;
         std::string sig_p;
         std::string sig_user;
         boost::int64_t local_add_time;
         // the last time we heard about this
         //ptime last_seen;
+        bool confirmed;
+        ptime next_refresh_time;
 };
 
 
@@ -175,6 +177,7 @@ class TORRENT_EXTRA_EXPORT node_impl : boost::noncopyable
 typedef std::map<node_id, torrent_entry> table_t;
 typedef std::list<dht_storage_item> dht_storage_list_t;
 typedef std::map<node_id, dht_storage_list_t> dht_storage_table_t;
+typedef std::map< std::string, std::pair<int,int> > dht_posts_by_user_t; // total known, latest known
 
 public:
 	node_impl(alert_dispatcher* alert_disp, udp_socket_interface* sock
@@ -223,17 +226,15 @@ public:
 		, address addr, int listen_port, bool seed, bool myself, int list_peers
 		, boost::function<void(std::vector<tcp::endpoint> const&)> f);
 
-	void putData(std::string const &username, std::string const &resource, bool multi,
-			 entry const &value, std::string const &sig_user,
-			 boost::int64_t timeutc, int seq);
-	
-	void putData(std::string const &username, std::string const &resource, bool multi,
-		     entry const &value, std::string const &sig_user,
-             boost::int64_t timeutc, int seq, std::string const &witness);
+	void putDataSigned(std::string const &username, std::string const &resource, bool multi,
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local);
+
+	void putDataSigned(std::string const &username, std::string const &resource, bool multi,
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness);
 
 	void getData(std::string const &username, std::string const &resource, bool multi,
 		     boost::function<void(entry::list_type const&)> fdata,
-		     boost::function<void(bool, bool)> fdone);
+		     boost::function<void(bool, bool)> fdone, bool local);
 
 	bool verify_token(std::string const& token, char const* info_hash
 		, udp::endpoint const& addr);

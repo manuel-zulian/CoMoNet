@@ -85,6 +85,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/random.hpp"
 #include "libtorrent/magnet_uri.hpp"
 
+#include "twister.h" // for LIBTORRENT_PORT_OFFSET
+
 #if defined TORRENT_STATS && defined __MACH__
 #include <mach/task.h>
 #endif
@@ -2431,9 +2433,6 @@ retry:
 		}
 
 		m_udp_socket.set_option(type_of_service(m_settings.peer_tos), ec);
-		printf(BOLDYELLOW "\nbound to UDP interface \"%s\": %s" RESET
-			   , print_endpoint(m_listen_interface).c_str(), ec.message().c_str());
-		printf(BOLDYELLOW "\n>>> SET_TOS[ udp_socket tos: %d e: %s ]\n" RESET, m_settings.peer_tos, ec.message().c_str());
 #if defined TORRENT_VERBOSE_LOGGING
 		(*m_logger) << ">>> SET_TOS[ udp_socket tos: " << m_settings.peer_tos << " e: " << ec.message() << " ]\n";
 #endif
@@ -2466,6 +2465,9 @@ retry:
 		{
 			if (m_tcp_mapping[0] != -1) m_natpmp->delete_mapping(m_tcp_mapping[0]);
 			m_tcp_mapping[0] = m_natpmp->add_mapping(natpmp::tcp, tcp_port, tcp_port);
+			if (m_twister_tcp_mapping[0] != -1) m_natpmp->delete_mapping(m_twister_tcp_mapping[0]);
+			m_twister_tcp_mapping[0] = m_natpmp->add_mapping(natpmp::tcp, 
+			                           tcp_port-LIBTORRENT_PORT_OFFSET, tcp_port-LIBTORRENT_PORT_OFFSET);
 #ifdef TORRENT_USE_OPENSSL
 			if (m_ssl_mapping[0] != -1) m_natpmp->delete_mapping(m_ssl_mapping[0]);
 			m_ssl_mapping[0] = m_natpmp->add_mapping(natpmp::tcp, ssl_port, ssl_port);
@@ -2475,6 +2477,9 @@ retry:
 		{
 			if (m_tcp_mapping[1] != -1) m_upnp->delete_mapping(m_tcp_mapping[1]);
 			m_tcp_mapping[1] = m_upnp->add_mapping(upnp::tcp, tcp_port, tcp_port);
+			if (m_twister_tcp_mapping[1] != -1) m_upnp->delete_mapping(m_twister_tcp_mapping[1]);
+			m_twister_tcp_mapping[1] = m_upnp->add_mapping(upnp::tcp, 
+			                           tcp_port-LIBTORRENT_PORT_OFFSET, tcp_port-LIBTORRENT_PORT_OFFSET);
 #ifdef TORRENT_USE_OPENSSL
 			if (m_ssl_mapping[1] != -1) m_upnp->delete_mapping(m_ssl_mapping[1]);
 			m_ssl_mapping[1] = m_upnp->add_mapping(upnp::tcp, ssl_port, ssl_port);
@@ -5711,6 +5716,9 @@ retry:
 
 		s.peerlist_size = peerlist_size;
 
+		boost::system::error_code ec;
+		s.external_addr_v4 = external_address().external_address(address_v4()).to_string(ec);
+
 		return s;
 	}
 
@@ -5783,18 +5791,16 @@ retry:
 			boost::bind(&session_impl::on_dht_router_name_lookup, this, _1, _2));
 	}
 
-	void session_impl::dht_putData(std::string const &username, std::string const &resource, bool multi,
-								   entry const &value, std::string const &sig_user,
-								   boost::int64_t timeutc, int seq)
+	void session_impl::dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+		     entry const &p, std::string const &sig_p, std::string const &sig_user, bool local)
 	{
-	    if (m_dht) m_dht->putData(username, resource, multi, value, sig_user, timeutc, seq);
+	    if (m_dht) m_dht->putDataSigned(username, resource, multi, p, sig_p, sig_user, local);
 	}
 
-	void session_impl::dht_putData(std::string const &username, std::string const &resource, bool multi,
-		     entry const &value, std::string const &sig_user,
-             boost::int64_t timeutc, int seq, std::string const &witness)
+	void session_impl::dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+		     entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness)
 	{
-	    if (m_dht) m_dht->putData(username, resource, multi, value, sig_user, timeutc, seq, witness);
+	    if (m_dht) m_dht->putDataSigned(username, resource, multi, p, sig_p, sig_user, local, witness);
 	}
 
 	void post_dht_getData(aux::session_impl *si, entry::list_type const&lst)
@@ -5815,12 +5821,23 @@ retry:
 	    }
 	}
 
-	void session_impl::dht_getData(std::string const &username, std::string const &resource, bool multi)
+	void session_impl::dht_getData(std::string const &username, std::string const &resource, bool multi, bool local)
 	{
 	    if (m_dht) m_dht->getData(username, resource, multi,
 				      boost::bind( post_dht_getData, this, _1),
-				      boost::bind( getDataDone_fun, this, username, resource, multi, _1, _2));
+				      boost::bind( getDataDone_fun, this, username, resource, multi, _1, _2),
+				      local);
     }
+
+	entry session_impl::dht_getLocalData() const
+	{
+		if( m_dht ) {
+			entry state = m_dht->state();
+			return state["storage_table"];
+		} else {
+			return entry();
+		}
+	}
 
 	void session_impl::on_dht_router_name_lookup(error_code const& e
 		, tcp::resolver::iterator host)
@@ -6260,6 +6277,7 @@ retry:
 			m_upnp->close();
 			m_udp_mapping[1] = -1;
 			m_tcp_mapping[1] = -1;
+			m_twister_tcp_mapping[1] = -1;
 #ifdef TORRENT_USE_OPENSSL
 			m_ssl_mapping[1] = -1;
 #endif

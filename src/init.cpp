@@ -211,13 +211,7 @@ std::string HelpMessage()
     strUsage += "  -bantime=<n>           " + _("Number of seconds to keep misbehaving peers from reconnecting (default: 86400)") + "\n";
     strUsage += "  -maxreceivebuffer=<n>  " + _("Maximum per-connection receive buffer, <n>*1000 bytes (default: 5000)") + "\n";
     strUsage += "  -maxsendbuffer=<n>     " + _("Maximum per-connection send buffer, <n>*1000 bytes (default: 1000)") + "\n";
-#ifdef USE_UPNP
-#if USE_UPNP
     strUsage += "  -upnp                  " + _("Use UPnP to map the listening port (default: 1 when listening)") + "\n";
-#else
-    strUsage += "  -upnp                  " + _("Use UPnP to map the listening port (default: 0)") + "\n";
-#endif
-#endif
     strUsage += "  -paytxfee=<amt>        " + _("Fee per KB to add to transactions you send") + "\n";
     if (fHaveGUI)
         strUsage += "  -server                " + _("Accept command line and JSON-RPC commands") + "\n";
@@ -242,7 +236,7 @@ std::string HelpMessage()
     strUsage += "  -rpcallowip=<ip>       " + _("Allow JSON-RPC connections from specified IP address") + "\n";
     if (!fHaveGUI)
         strUsage += "  -rpcconnect=<ip>       " + _("Send commands to node running on <ip> (default: 127.0.0.1)") + "\n";
-    strUsage += "  -rpcthreads=<n>        " + _("Set the number of threads to service RPC calls (default: 4)") + "\n";
+    strUsage += "  -rpcthreads=<n>        " + _("Set the number of threads to service RPC calls (default: 10)") + "\n";
     strUsage += "  -blocknotify=<cmd>     " + _("Execute command when the best block changes (%s in cmd is replaced by block hash)") + "\n";
     strUsage += "  -walletnotify=<cmd>    " + _("Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)") + "\n";
     strUsage += "  -alertnotify=<cmd>     " + _("Execute command when a relevant alert is received (%s in cmd is replaced by message)") + "\n";
@@ -431,7 +425,11 @@ bool AppInit2(boost::thread_group& threadGroup)
         // to protect privacy, do not listen by default if a proxy server is specified
         SoftSetBoolArg("-listen", false);
     }
-
+    
+    if (mapArgs.count("-proxy") || mapArgs.count("-tor")) {
+        SoftSetBoolArg("-dhtproxy", true);
+    }
+    
     if (!GetBoolArg("-listen", true)) {
         // do not map ports or try to retrieve public IP when not listening (pointless)
         SoftSetBoolArg("-upnp", false);

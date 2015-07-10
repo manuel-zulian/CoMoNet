@@ -99,6 +99,14 @@ Value getinfo(const Array& params, bool fHelp)
         obj.push_back(Pair("public_server_mode", GetBoolArg("-public_server_mode",false)));
         obj.push_back(Pair("errors",        GetWarnings("statusbar")));
     }
+
+    const CNetAddr paddrPeer("8.8.8.8");
+    CAddress addr( GetLocalAddress(&paddrPeer) );
+    obj.push_back(Pair("ext_addr_net1", addr.IsValid() ? addr.ToStringIP() : string()) );
+
+    Object torrent_stats = getLibtorrentSessionStatus();
+    obj.insert( obj.end(), torrent_stats.begin(), torrent_stats.end() );
+
     return obj;
 }
 
@@ -164,7 +172,8 @@ Value listwalletusers(const Array& params, bool fHelp)
     LOCK(pwalletMain->cs_wallet);
     BOOST_FOREACH(const PAIRTYPE(CKeyID, CKeyMetadata)& item, pwalletMain->mapKeyMetadata)
     {
-      ret.push_back(item.second.username);
+        if (item.second.username[0] != '*')
+            ret.push_back(item.second.username);
     }
     return ret;
 }

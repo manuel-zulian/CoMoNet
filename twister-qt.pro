@@ -58,23 +58,6 @@ contains(USE_QRCODE, 1) {
     LIBS += -lqrencode
 }
 
-# use: qmake "USE_UPNP=1" ( enabled by default; default)
-#  or: qmake "USE_UPNP=0" (disabled by default)
-#  or: qmake "USE_UPNP=-" (not supported)
-# miniupnpc (http://miniupnp.free.fr/files/) must be installed for support
-contains(USE_UPNP, -) {
-    message(Building without UPNP support)
-} else {
-    message(Building with UPNP support)
-    count(USE_UPNP, 0) {
-        USE_UPNP=1
-    }
-    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
-    INCLUDEPATH += $$MINIUPNPC_INCLUDE_PATH
-    LIBS += $$join(MINIUPNPC_LIB_PATH,,-L,) -lminiupnpc
-    win32:LIBS += -liphlpapi
-}
-
 # use: qmake "USE_DBUS=1"
 contains(USE_DBUS, 1) {
     message(Building with DBUS (Freedesktop notifications) support)
@@ -200,7 +183,9 @@ HEADERS +=  \
     src/limitedmap.h \
     src/scrypt.h \
     src/utf8core.h \
+    src/dhtproxy.h \
     src/twister.h \
+    src/twister_rss.h \
     src/twister_utils.h
 
 #    src/qt/bitcoingui.h
@@ -276,7 +261,9 @@ SOURCES += \ #src/qt/bitcoin.cpp \
     src/leveldb.cpp \
     src/txdb.cpp \
     src/scrypt.cpp \
+    src/dhtproxy.cpp \
     src/twister.cpp \
+    src/twister_rss.cpp \
     src/twister_utils.cpp
 
 #    src/qt/guiutil.cpp \

@@ -36,6 +36,10 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <boost/bind.hpp>
 #include <boost/function/function1.hpp>
 //#include <boost/date_time/posix_time/time_formatters_limited.hpp>
+#include <boost/random.hpp>
+#include <boost/nondet_random.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/foreach.hpp>
 
 #include "libtorrent/io.hpp"
 #include "libtorrent/bencode.hpp"
@@ -57,7 +61,20 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../src/twister.h"
 #include "../../src/accumunet.h"
-#define ENABLE_DHT_ITEM_EXPIRE
+
+/* refresh dht itens we know by putting them to other peers every 60 minutes.
+ * this period must be small enough to ensure persistency and big enough to
+ * not cause too much wasteful network traffic / overhead.
+ * see http://conferences.sigcomm.org/imc/2007/papers/imc150.pdf for a good
+ * discussion about that (quote: "These results suggest that periodic
+ * insertions can be performed at the granularity of hours with little impact
+ * on data persistence.")
+ *
+ * locally generated items are considered "unconfirmed" and have a smaller
+ * refresh period (1 minute) until we read them back from other nodes.
+ */
+#define DHT_REFRESH_CONFIRMED minutes(60)
+#define DHT_REFRESH_UNCONFIRMED minutes(1)
 
 namespace libtorrent { namespace dht
 {
@@ -106,9 +123,10 @@ node_impl::node_impl(alert_dispatcher* alert_disp
 	, m_id(nid == (node_id::min)() || !verify_id(nid, external_address) ? generate_id(external_address) : nid)
 	, m_table(m_id, 8, settings)
 	, m_rpc(m_id, m_table, sock, observer)
+	, m_storage_table()
+	, m_posts_by_user()
 	, m_last_tracker_tick(time_now())
 	, m_next_storage_refresh(time_now())
-	, m_last_refreshed_item()
 	, m_post_alert(alert_disp)
 	, m_sock(sock)
 {
@@ -218,12 +236,13 @@ void node_impl::unreachable(udp::endpoint const& ep)
 void node_impl::incoming(msg const& m)
 {
 	// is this a reply?
-	lazy_entry const* y_ent = m.message.dict_find_string("h");
+	lazy_entry const* y_ent = m.message.dict_find_string("z");
 	if (!y_ent || y_ent->string_length() == 0)
 	{
 		entry e;
-		incoming_error(e, "missing 'y' entry");
-		m_sock->send_packet(e, m.addr, 0);
+		incoming_error(e, "missing 'z' entry");
+		// [MF] silently ignore bad packet
+		//m_sock->send_packet(e, m.addr, 0);
 		return;
 	}
 
@@ -243,7 +262,7 @@ void node_impl::incoming(msg const& m)
 		case 'q':
 		{
 			// new request received
-			TORRENT_ASSERT(m.message.dict_find_string_value("h") == "q");
+			TORRENT_ASSERT(m.message.dict_find_string_value("z") == "q");
 			entry e;
 			incoming_request(m, e);
 			m_sock->send_packet(e, m.addr, 0);
@@ -258,6 +277,11 @@ void node_impl::incoming(msg const& m)
 				TORRENT_LOG(node) << "INCOMING ERROR: " << err->list_string_value_at(1);
 			}
 #endif
+			lazy_entry const* err = m.message.dict_find_list("e");
+			if (err && err->list_size() >= 2)
+			{
+				printf("INCOMING ERROR: %s\n", err->list_string_value_at(1).c_str());
+			}
 			break;
 		}
 	}
@@ -293,9 +317,9 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["h"] = "q";
+			e["z"] = "q";
 			e["q"] = "announcePeer";
-			entry& a = e["g"];
+			entry& a = e["x"];
 			a["infoHash"] = ih.to_string();
 			a["port"] = listen_port;
 			a["token"] = i->second;
@@ -304,20 +328,58 @@ namespace
 		}
 	}
 
+	double getRandom()
+	{
+		static boost::mt19937 m_random_seed;
+		static boost::uniform_real<double> m_random_dist(0.0, 1.0);
+		static boost::variate_generator<boost::mt19937&, boost::uniform_real<double> > m_random(m_random_seed, m_random_dist);
+
+		return m_random();
+	}
+
+	ptime getNextRefreshTime(bool confirmed = true)
+	{
+		static ptime nextRefreshTime[2] = { ptime(), ptime() };
+		nextRefreshTime[confirmed] = std::max(
+				nextRefreshTime[confirmed] + milliseconds(500),
+				// add +/-10% diffusion to next refresh time
+				time_now() + (confirmed ? DHT_REFRESH_CONFIRMED : DHT_REFRESH_UNCONFIRMED)
+					   * ( 0.9 + 0.2 * getRandom() )
+			);
+		return nextRefreshTime[confirmed];
+	}
+
+	void putData_confirm(entry::list_type const& values_list, dht_storage_item& item)
+	{
+		if( !item.confirmed ) {
+			BOOST_FOREACH(const entry &e, values_list) {
+				entry const *sig_p = e.find_key("sig_p");
+				if( sig_p && sig_p->type() == entry::string_t &&
+				    sig_p->string() == item.sig_p ) {
+					item.confirmed = true;
+					break;
+				}
+			}
+			if( !item.confirmed && time(NULL) > item.local_add_time + 60*60*24*2 ) {
+				item.confirmed = true; // force confirm by timeout
+			}
+			if( item.confirmed ) {
+				item.next_refresh_time = getNextRefreshTime();
+			}
+		}
+	}
+
 	void putData_fun(std::vector<std::pair<node_entry, std::string> > const& v,
 			 node_impl& node,
              entry const &p, std::string const &sig_p, std::string const &sig_user)
 	{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		TORRENT_LOG(node) << "[AP] forse non accurato vedi node.cpp:316:\nsending putData [ username: " << p["target"]["n"]
-			<< " res: " << p["target"]["r"]
+		TORRENT_LOG(node) << "sending putData [ username: " << username
+			<< " res: " << resource
 			<< " nodes: " << v.size() << " ]" ;
 #endif
-        // [AP] le righe sopra danno errori, forse MF non le ha mai usate
-		// [AP] dovrei averle riparate se è vero che stiamo realmente mandando quel messaggio!
-		// controllare se il messaggio mandato è effettivamente quello
-        
-		// create a dummy traversal_algorithm [AP] perché?
+
+		// create a dummy traversal_algorithm
 		boost::intrusive_ptr<traversal_algorithm> algo(
 			new traversal_algorithm(node, (node_id::min)()));
 
@@ -326,15 +388,6 @@ namespace
 			, end(v.end()); i != end; ++i)
 		{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-			entry::dictionary_type target_dict;
-			target_dict["n"] = p["target"]["n"];
-			target_dict["r"] = p["target"]["r"];
-			target_dict["t"] = p["target"]["t"];
-			std::vector<char> ih_buffer;
-			sha1_hash ih;
-			bencode(std::back_inserter(ih_buffer), target_dict);
-			ih = hasher(ih_buffer.data(), ih_buffer.size()).final();
-			
 			TORRENT_LOG(node) << "  putData-distance: " << (160 - distance_exp(ih, i->first.id));
 #endif
 
@@ -345,9 +398,9 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["h"] = "q";
+			e["z"] = "q";
 			e["q"] = "putData";
-			entry& a = e["g"];
+			entry& a = e["x"];
 			a["token"] = i->second;
 
             a["p"] = p;
@@ -404,7 +457,7 @@ void node_impl::add_node(udp::endpoint node)
 	o->m_in_constructor = false;
 #endif
 	entry e;
-	e["h"] = "q";
+	e["z"] = "q";
 	e["q"] = "ping";
 	m_rpc.invoke(e, node, o);
 }
@@ -413,9 +466,9 @@ void node_impl::announce(std::string const& trackerName, sha1_hash const& info_h
 	, boost::function<void(std::vector<tcp::endpoint> const&)> f)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	//TORRENT_LOG(node) << "announcing [ ih: " << info_hash << " p: " << listen_port << " ]" ;
+	TORRENT_LOG(node) << "announcing [ ih: " << info_hash << " p: " << listen_port << " ]" ;
 #endif
-	printf("node_impl::announce '%s' host: %s:%d myself=%d\n", trackerName.c_str(), addr.to_string().c_str(), listen_port, myself);
+	//printf("node_impl::announce '%s' host: %s:%d myself=%d\n", trackerName.c_str(), addr.to_string().c_str(), listen_port, myself);
 
 	// [MF] is_unspecified() is not always available. never mind.
 	//if( !addr.is_unspecified() ) {
@@ -433,90 +486,97 @@ void node_impl::announce(std::string const& trackerName, sha1_hash const& info_h
 	}
 }
 	
-void node_impl::putData(std::string const &username, std::string const &resource, bool multi,
-						entry const &value, std::string const &sig_user,
-						boost::int64_t timeutc, int seq)
+
+void node_impl::putDataSigned(std::string const &username, std::string const &resource, bool multi,
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local) 
 {
-	node_impl::putData(username, resource, multi,
-					   value, sig_user,
-					   timeutc, seq, std::string("no_witness"));
+	node_impl::putData(username, resource, bool multi,
+                        value, sig_user,
+                        timeutc, int seq, std::string("no_witness"));
 }
 
-	/**
-	 */
-void node_impl::putData(std::string const &username, std::string const &resource, bool multi,
-                        entry const &value, std::string const &sig_user,
-                        boost::int64_t timeutc, int seq, std::string const &witness)
+void node_impl::putDataSigned(std::string const &username, std::string const &resource, bool multi,
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness)
 {
-#ifdef TORRENT_DHT_VERBOSE_LOGGING
-	TORRENT_LOG(node) << "putData [ username: " << username.c_str() << " res: " << resource.c_str() << " ]" ;
-#endif
-	printf( RED "putData: username=%s,res=%s,multi=%d, sig_user=%s\n" RESET,
-		   username.c_str(), resource.c_str(), multi, sig_user.c_str());
+    printf("putDataSigned: username=%s,res=%s,multi=%d sig_user=%s\n",
+            username.c_str(), resource.c_str(), multi, sig_user.c_str());
 
-    // construct p dictionary and sign it
-    entry p;
-    entry& target = p["target"];
-    target["n"] = username;
-    target["r"] = resource;
-    target["t"] = (multi) ? "m" : "s";
-    if (seq >= 0 && !multi) p["seq"] = seq;
-    p["v"] = value;
-    p["time"] = timeutc;
+    // consistency checks
+    entry const* seqEntry = p.find_key("seq");
+    entry const* heightEntry = p.find_key("height");
+    entry const* target = p.find_key("target");
+    std::string n, r, t;
+    if( target ) {
+        entry const* nEntry = target->find_key("n");
+        entry const* rEntry = target->find_key("r");
+        entry const* tEntry = target->find_key("t");
+        if( nEntry && nEntry->type() == entry::string_t )
+            n = nEntry->string();
+        if( rEntry && rEntry->type() == entry::string_t )
+            r = rEntry->string();
+        if( tEntry && tEntry->type() == entry::string_t )
+            t = tEntry->string();
+    }
+
+// [MZ] Merge con twister, spero vada qua.
 	if (strcmp("no_witness", witness.c_str())) {
 		p["witness"] = witness;
 		printf(BOLDMAGENTA "witness [%s] added to the put data message to send (%s)" RESET, witness.c_str(), resource.c_str());
 	} else {
 		printf(BOLDMAGENTA "witness not added to the put data message to send (%s)" RESET, resource.c_str());
 	}
-    int height = getBestHeight()-1; // be conservative
-    p["height"] = height;
 
-    std::vector<char> pbuf;
-    bencode(std::back_inserter(pbuf), p);
-	printf(MAGENTA "\tjust bencoded" RESET);
-    std::string str_p = std::string(pbuf.data(),pbuf.size());
-	printf(MAGENTA "\tabout to sign" RESET);
-    std::string sig_p = createSignature(str_p, sig_user);
-    if( !sig_p.size() ) {
-        printf("putData: createSignature error (this should have been caught earlier)\n");
-        return;
-    }
+    if( p.find_key("v") && heightEntry && heightEntry->type() == entry::int_t &&
+        (multi || (seqEntry && seqEntry->type() == entry::int_t)) && target &&
+        n == username && r == resource && ((!multi && t == "s") || (multi && t == "m")) ) {
 
-	// search for nodes with ids close to id or with peers
-	// for info-hash id. then send putData to them.
-	printf(MAGENTA "\tsearch for nodes with ids close to id\n" RESET);
-	boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
-		 boost::bind(&nop),
-         boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true));
-
-    // store it locally so it will be automatically refreshed with the rest
-	printf(MAGENTA "\tstore it locally so it will be automatically refreshed with the rest\n" RESET);
-    dht_storage_item item(str_p, sig_p, sig_user);
-    item.local_add_time = time(NULL);
-    std::vector<char> vbuf;
-	printf(MAGENTA "\tabout to be back_inserted...(if you know what i mean)\n" RESET);
-    bencode(std::back_inserter(vbuf), value);
-    std::pair<char const*, int> bufv = std::make_pair(vbuf.data(), vbuf.size());
-    store_dht_item(item, ta->target(), multi, seq, height, bufv);
+        // search for nodes with ids close to id or with peers
+        // for info-hash id. then send putData to them.
+        boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
+             boost::bind(&nop),
+             boost::bind(&putData_fun, _1, boost::ref(*this), p, sig_p, sig_user), true, local));
     
-    // now send it to the network (start transversal algorithm)
-	printf(MAGENTA "\tnow send it to the network (start transversal algorithm)\n" RESET);
-    ta->start();
+        if( local ) {
+            // store it locally so it will be automatically refreshed with the rest
+            std::vector<char> pbuf;
+            bencode(std::back_inserter(pbuf), p);
+            std::string str_p = std::string(pbuf.data(),pbuf.size());
+    
+            dht_storage_item item(str_p, sig_p, sig_user);
+            item.local_add_time = time(NULL);
+            item.confirmed = false;
+            std::vector<char> vbuf;
+            bencode(std::back_inserter(vbuf), p["v"]);
+            std::pair<char const*, int> bufv = std::make_pair(vbuf.data(), vbuf.size());
+    
+            int seq = (seqEntry && seqEntry->type() == entry::int_t) ? seqEntry->integer() : -1;
+            int height = heightEntry->integer();
+            if( store_dht_item(item, ta->target(), multi, seq, height, bufv) ) {
+                // local items not yet processed for hashtags and post counts
+                // not that bad - but we may eventually want to implement this
+                //process_newly_stored_entry(p);
+            }
+        }
+    
+        // now send it to the network (start transversal algorithm)
+        ta->start();
+    } else {
+        printf("putDataSigned: consistency checks failed!\n");
+    }
 }
 
 void node_impl::getData(std::string const &username, std::string const &resource, bool multi,
 			boost::function<void(entry::list_type const&)> fdata,
-			boost::function<void(bool, bool)> fdone)
+			boost::function<void(bool, bool)> fdone, bool local)
 {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-	TORRENT_LOG(node) << "getData [ username: [AP] missing data"; //<< info_hash << " res: " << resource << " ]" ;
+	TORRENT_LOG(node) << "getData [ username: " << info_hash << " res: " << resource << " ]" ;
 #endif
 	// search for nodes with ids close to id or with peers
 	// for info-hash id. callback is used to return data.
 	boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
 		 fdata,
-		 boost::bind(&getDataDone_fun, _1, _2, _3, boost::ref(*this), fdone), false));
+		 boost::bind(&getDataDone_fun, _1, _2, _3, boost::ref(*this), fdone), false, local));
 	ta->start();
 }
 
@@ -532,11 +592,17 @@ void node_impl::tick()
     }
 }
 
-static void processEntryForHashtags(lazy_entry &p)
+void node_impl::process_newly_stored_entry(const lazy_entry &p)
 {
     const lazy_entry *target = p.dict_find_dict("target");
-    bool multi = (target && target->dict_find_string_value("t") == "m");
+    if( !target )
+        return;
     
+    std::string username = target->dict_find_string_value("n");
+    std::string resource = target->dict_find_string_value("r");
+    bool multi = (target->dict_find_string_value("t") == "m");
+
+    // update hashtags stats
     const lazy_entry *v = p.dict_find_dict("v");
     if( v && !multi ) {
         const lazy_entry *userpost = v->dict_find_dict("userpost");
@@ -554,6 +620,15 @@ static void processEntryForHashtags(lazy_entry &p)
             }
         }
     }
+    
+    // update posts stats
+    std::string resourcePost("post");
+    if( resource.compare(0, resourcePost.length(), resourcePost) == 0 ) {
+        int resourceNumber = atoi( resource.c_str() + resourcePost.length() );
+        std::pair<int,int> &userStats = m_posts_by_user[username];
+        userStats.first++; //total
+        userStats.second = std::max(userStats.second, resourceNumber);
+    }
 }
 
 bool node_impl::refresh_storage() {
@@ -561,26 +636,33 @@ bool node_impl::refresh_storage() {
     bool refresh_next_item = false;
     int num_refreshable = 0;
 
-    for (dht_storage_table_t::const_iterator i = m_storage_table.begin(),
+    ptime const now = time_now();
+    m_next_storage_refresh = now + DHT_REFRESH_CONFIRMED;
+
+    for (dht_storage_table_t::iterator i = m_storage_table.begin(),
          end(m_storage_table.end()); i != end; ++i )
     {
-        dht_storage_list_t const& lsto = i->second;
-        dht_storage_list_t::const_iterator j(lsto.begin()), jEnd(lsto.end());
+        dht_storage_list_t& lsto = i->second;
+        dht_storage_list_t::iterator j(lsto.begin()), jEnd(lsto.end());
         for(int jIdx = 0; j != jEnd; ++j, ++jIdx ) {
-            dht_storage_item const& item = *j;
+            dht_storage_item& item = *j;
 
-            if( std::make_pair(i->first,jIdx) == m_last_refreshed_item ) {
-                refresh_next_item = true;
-                num_refreshable++;
-                continue;
-            }
-
-#ifdef ENABLE_DHT_ITEM_EXPIRE
             if( has_expired(item, true) ) {
                 continue;
             }
-#endif
 
+            if( item.next_refresh_time > now ) {
+                // this item won't be refreshed this time,
+                // but it may shorten sleep time to next refresh
+                if( m_next_storage_refresh > item.next_refresh_time ) {
+                    m_next_storage_refresh = item.next_refresh_time;
+                }
+                continue;
+            }
+
+            bool skip = false;
+            bool local_and_recent = (item.local_add_time && item.local_add_time + 60*60*24*2 > time(NULL));
+            
             lazy_entry p;
             int pos;
             error_code err;
@@ -589,64 +671,73 @@ bool node_impl::refresh_storage() {
 
             int height = p.dict_find_int_value("height");
             if( height > getBestHeight() ) {
-                continue;  // how?
+                skip = true;  // invalid? how come?
             }
             
             const lazy_entry *target = p.dict_find_dict("target");
+            if( !target )
+                continue;
             std::string username = target->dict_find_string_value("n");
             std::string resource = target->dict_find_string_value("r");
             bool multi = (target->dict_find_string_value("t") == "m");
 
-            // refresh only signed single posts and mentions
-            if( !multi || (multi && resource == "mention") ||
-                (multi && item.local_add_time && item.local_add_time + 60*60*24*2 > time(NULL)) ) {
-                num_refreshable++;
+            // probabilistic refresh for users that post a lot.
+            // note: we don't know the true total number of posts by user, but
+            //       rather just what we have stored and still not expired.
+            std::string resourcePost("post");
+            if( resource.compare(0, resourcePost.length(), resourcePost) == 0 ) {
+                int resourceNumber = atoi( resource.c_str() + resourcePost.length() );
+                std::pair<int,int> &userStats = m_posts_by_user[username];
+                int knownPosts = userStats.first;
+                int lastPost = userStats.second;
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+                printf("node dht: probabilistic post refresh for user: %s (total: %d last: %d cur: %d)\n", 
+                       username.c_str(), knownPosts, lastPost, resourceNumber);
+#endif
+                if( resourceNumber < lastPost - 100 && knownPosts > 25 ) {
+                    double p = 25. / (knownPosts - 25);
+                    if( getRandom() > p ) {
+                        skip = true;
+                    }
+                }
+            }
 
-                if( refresh_next_item ) {
-                    refresh_next_item = false;
-                    m_last_refreshed_item = std::make_pair(i->first,jIdx);
+            // refresh only signed single posts and mentions
+            if( !skip &&
+                (!multi || resource == "mention" || local_and_recent) ) {
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
                     printf("node dht: refreshing storage: [%s,%s,%s]\n",
                            username.c_str(),
                            resource.c_str(),
                            target->dict_find_string_value("t").c_str());
 #endif
+                entry entryP;
+                entryP = p; // lazy to non-lazy
 
-                    processEntryForHashtags(p);
+                // search for nodes with ids close to id or with peers
+                // for info-hash id. then send putData to them.
+                boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
+                                                             boost::bind(&putData_confirm, _1, boost::ref(item)),
+                                                             boost::bind(&putData_fun, _1, boost::ref(*this),
+                                                                         entryP, item.sig_p, item.sig_user),
+                                                             item.confirmed,
+                                                             item.local_add_time));
+                ta->start();
+                did_something = true;
+            }
 
-                    entry entryP;
-                    entryP = p; // lazy to non-lazy
-
-                    // search for nodes with ids close to id or with peers
-                    // for info-hash id. then send putData to them.
-                    boost::intrusive_ptr<dht_get> ta(new dht_get(*this, username, resource, multi,
-                                                                 boost::bind(&nop),
-                                                                 boost::bind(&putData_fun, _1, boost::ref(*this),
-                                                                             entryP, item.sig_p, item.sig_user), true));
-                    ta->start();
-                    did_something = true;
-                }
+            // we are supposed to have refreshed this item by now (but we may have not - see above)
+            // so regardless of what we actually did, calculate when the next refresh is due
+            item.next_refresh_time = getNextRefreshTime(item.confirmed);
+            if( m_next_storage_refresh > item.next_refresh_time ) {
+                m_next_storage_refresh = item.next_refresh_time;
             }
         }
     }
-
-    if( !did_something && m_storage_table.size() ) {
-        m_last_refreshed_item = std::make_pair(m_storage_table.begin()->first,0);
-    }
-
-    time_duration sleepToRefresh;
-    if( num_refreshable ) {
-        sleepToRefresh = minutes(60) / num_refreshable;
-    } else {
-        sleepToRefresh = minutes(10);
-    }
-    m_next_storage_refresh = time_now() + sleepToRefresh;
-
 /*
-    printf("node dht: next storage refresh in %s\n",
-           boost::posix_time::to_simple_string(sleepToRefresh).c_str() );
+    printf("node dht: next storage refresh in %d\n",
+           m_next_storage_refresh - now );
 */
-
     return did_something;
 }
 
@@ -703,7 +794,7 @@ bool node_impl::save_storage(entry &save) const {
     if( m_storage_table.size() == 0 )
         return did_something;
 
-    printf( RED "node dht: saving storage... (storage_table.size = %lu)\n" RESET, m_storage_table.size());
+    printf("node dht: saving storage... (storage_table.size = %lu)\n", m_storage_table.size());
 
     for (dht_storage_table_t::const_iterator i = m_storage_table.begin(),
          iend(m_storage_table.end()); i != iend; ++i )
@@ -724,6 +815,7 @@ bool node_impl::save_storage(entry &save) const {
                 entry_item["sig_user"] = item.sig_user;
                 if( item.local_add_time )
                     entry_item["local_add_time"] = item.local_add_time;
+                entry_item["confirmed"] = item.confirmed ? 1 : 0;
                 save_list.list().push_back(entry_item);
             }
         }
@@ -739,6 +831,9 @@ bool node_impl::save_storage(entry &save) const {
 void node_impl::load_storage(entry const* e) {
     if( !e || e->type() != entry::dictionary_t)
         return;
+
+    ptime const now = time_now();
+    time_duration const refresh_interval = std::max( DHT_REFRESH_CONFIRMED, milliseconds(e->dict().size() * 500) );
 
     printf("node dht: loading storage... (%lu node_id keys)\n", e->dict().size());
 
@@ -758,23 +853,26 @@ void node_impl::load_storage(entry const* e) {
             entry const *local_add_time( j->find_key("local_add_time") );
             if(local_add_time)
                 item.local_add_time = local_add_time->integer();
+            entry const *confirmed( j->find_key("confirmed") );
+            if(confirmed) {
+                item.confirmed = (confirmed->integer() != 0);
+            }
 
-            // just for printf for now
             bool expired = has_expired(item);
-#ifdef ENABLE_DHT_ITEM_EXPIRE
             if( !expired ) {
-#endif
                 lazy_entry p;
                 int pos;
                 error_code err;
                 // FIXME: optimize to avoid bdecode (store seq separated, etc)
                 int ret = lazy_bdecode(item.p.data(), item.p.data() + item.p.size(), p, err, &pos, 10, 500);
-                processEntryForHashtags(p);
+                process_newly_stored_entry(p);
+
+                // wait 1 minute (to load torrents, etc.)
+                // randomize refresh time
+                item.next_refresh_time = now + minutes(1) + refresh_interval * getRandom();
 
                 to_add.push_back(item);
-#ifdef ENABLE_DHT_ITEM_EXPIRE
             }
-#endif
         }
         m_storage_table.insert(std::make_pair(target, to_add));
     }
@@ -964,19 +1062,16 @@ namespace
 	}
 }
 
-/* general-purpose verifier:
- *		verifies that a message has all the required
- *		entries and returns them in ret					*/
+// verifies that a message has all the required
+// entries and returns them in ret
 bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry const* ret[]
 	, int size , char* error, int error_size)
 {
 	// clear the return buffer
-	printf(WHITE "\tclear the return buffer\n" RESET);
 	memset(ret, 0, sizeof(ret[0]) * size);
 
 	// when parsing child nodes, this is the stack
 	// of lazy_entry pointers to return to
-	printf(WHITE "\tlazy_entry pointers to return to\n" RESET);
 	lazy_entry const* stack[5];
 	int stack_ptr = -1;
 
@@ -985,36 +1080,28 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 		snprintf(error, error_size, "not a dictionary");
 		return false;
 	}
-	printf(WHITE "\tit is a dictionary!\n" RESET);
 	++stack_ptr;
 	stack[stack_ptr] = msg;
-	printf(WHITE "\tthe size is %d\n" RESET, size);
 	for (int i = 0; i < size; ++i)
 	{
-		printf(WHITE "\t\telaborating the %d element\n" RESET, i);
 		key_desc_t const& k = desc[i];
 
-		//printf(RED "looking for %s in %s\n" RESET, k.name, print_entry(*msg).c_str());
-		printf(WHITE "\t\tlooking for %s\n" RESET, k.name);
-		
+//		fprintf(stderr, "looking for %s in %s\n", k.name, print_entry(*msg).c_str());
+
 		ret[i] = msg->dict_find(k.name);
 		// none_t means any type
 		if (ret[i] && ret[i]->type() != k.type && k.type != lazy_entry::none_t) ret[i] = 0;
 		if (ret[i] == 0 && (k.flags & key_desc_t::optional) == 0)
 		{
 			// the key was not found, and it's not an optional key
-			printf(WHITE "\t\t\tthe key was not found, and it's not an optional key (%s)!!\n" RESET, k.name);
 			snprintf(error, error_size, "missing '%s' key", k.name);
 			return false;
 		}
 
-		printf(WHITE "\t\tthe key was found(%s)!!\n" RESET, k.name);
-		
 		if (k.size > 0
 			&& ret[i]
 			&& k.type == lazy_entry::string_t)
 		{
-			
 			bool invalid = false;
 			if (k.flags & key_desc_t::size_divisible)
 				invalid = (ret[i]->string_length() % k.size) != 0;
@@ -1024,17 +1111,11 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 			if (invalid)
 			{
 				// the string was not of the required size
-				printf(WHITE "\t\tthe string was not of the required size!!\n" RESET);
 				ret[i] = 0;
 				if ((k.flags & key_desc_t::optional) == 0)
 				{
 					snprintf(error, error_size, "invalid value for '%s'", k.name);
 					return false;
-				}
-			} else {
-				if (strcmp(k.name, "witness") == 0) {
-					printf(BOLDWHITE "\t\tthe value of the key %s is:\n" RESET, k.name);
-					printf(BOLDWHITE "\t\t%s\n" RESET, ret[i]->string_cstr());
 				}
 			}
 		}
@@ -1073,7 +1154,7 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 
 void incoming_error(entry& e, char const* msg)
 {
-	e["h"] = "e";
+	e["z"] = "e";
 	entry::list_type& l = e["e"].list();
 	l.push_back(entry(203));
 	l.push_back(entry(msg));
@@ -1082,14 +1163,13 @@ void incoming_error(entry& e, char const* msg)
 // build response
 void node_impl::incoming_request(msg const& m, entry& e)
 {
-	printf(BOLDCYAN "\nReceived msg\n" RESET);
 	e = entry(entry::dictionary_t);
-	e["h"] = "r";
+	e["z"] = "r";
 	e["t"] = m.message.dict_find_string_value("t");
 
 	key_desc_t top_desc[] = {
 		{"q", lazy_entry::string_t, 0, 0},
-		{"g", lazy_entry::dict_t, 0, key_desc_t::parse_children},
+		{"x", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			{"id", lazy_entry::string_t, 20, key_desc_t::last_child},
 	};
 
@@ -1273,7 +1353,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 	}
 	else if (strcmp(query, "putData") == 0)
 	{
-		printf(WHITE "\tThe arrived message is putData\n" RESET);
 		const static key_desc_t msg_desc[] = {
 			{"token", lazy_entry::string_t, 0, 0},
 			{"sig_p", lazy_entry::string_t, 0, 0},
@@ -1294,7 +1373,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		      mk_r, mk_t};
 
 		// attempt to parse the message
-		printf(WHITE "\tattempt to parse the message\n" RESET);
 		lazy_entry const* msg_keys[13];
 		if (!verify_message(arg_ent, msg_desc, msg_keys, 13, error_string, sizeof(error_string)))
 		{
@@ -1307,7 +1385,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 
 		// pointer and length to the whole entry
 		std::pair<char const*, int> buf = msg_keys[mk_p]->data_section();
-		int maxSize = (multi) ? 512 : 8192; // single is bigger for avatar image etc
+		int maxSize = (multi) ? 768 : 8192; // single is bigger for avatar image etc
 		// Note: when increasing maxSize, check m_buf_size @ udp_socket.cpp.
 		if (buf.second > maxSize || buf.second <= 0)
 		{
@@ -1326,7 +1404,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		sha1_hash target = hasher(targetbuf.first,targetbuf.second).final();
 
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-		printf( RED "PUT target={%s,%s,%s} from=%s:%d\n" RESET
+		printf("PUT target={%s,%s,%s} from=%s:%d\n"
 			, msg_keys[mk_n]->string_value().c_str()
 			, msg_keys[mk_r]->string_value().c_str()
 			, msg_keys[mk_t]->string_value().c_str()
@@ -1337,7 +1415,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		// specific target hashes. it must match the one we got a "get" for
 		if (!verify_token(msg_keys[mk_token]->string_value(), (char const*)&target[0], m.addr))
 		{
-			printf(BOLDMAGENTA "invalid token\n" RESET);
 			incoming_error(e, "invalid token");
 			return;
 		}
@@ -1347,7 +1424,6 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		if (!verifySignature(str_p,
 				    msg_keys[mk_sig_user]->string_value(),
 				    msg_keys[mk_sig_p]->string_value())) {
-			printf(BOLDMAGENTA "invalid signature\n" RESET);
 			incoming_error(e, "invalid signature");
 			return;
 		}
@@ -1413,6 +1489,11 @@ void node_impl::incoming_request(msg const& m, entry& e)
 			return;
 		}
 
+		if (msg_keys[mk_time]->int_value() > GetAdjustedTime() + MAX_TIME_IN_FUTURE) {
+			incoming_error(e, "time > GetAdjustedTime");
+			return;
+		}
+
 		m_table.node_seen(id, m.addr, 0xffff);
 		//f->last_seen = time_now();
 
@@ -1433,14 +1514,18 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		// trust it to NOT store this value. someone might be trying to
 		// attack this resource by storing value into non-final nodes.
 		if( !possiblyNeighbor ) {
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
 			printf("putData with possiblyNeighbor=false, ignoring request.\n");
+#endif
 			return;
 		}
 
 		dht_storage_item item(str_p, msg_keys[mk_sig_p], msg_keys[mk_sig_user]);
 		std::pair<char const*, int> bufv = msg_keys[mk_v]->data_section();
-		store_dht_item(item, target, multi, !multi ? msg_keys[mk_seq]->int_value() : 0,
-		               msg_keys[mk_height]->int_value(), bufv);
+		if( store_dht_item(item, target, multi, !multi ? msg_keys[mk_seq]->int_value() : 0,
+		                   msg_keys[mk_height]->int_value(), bufv) ) {
+			process_newly_stored_entry(*msg_keys[mk_p]);
+		}
 	}
 	else if (strcmp(query, "getData") == 0)
 	{
@@ -1499,7 +1584,7 @@ void node_impl::incoming_request(msg const& m, entry& e)
 		if( msg_keys[mk_r]->string_value() == "tracker" ) {
 			lookup_peers(target, 20, reply, false, false);
 			entry::list_type& pe = reply["values"].list();
-			printf( RED "tracker=> replying with %d peers\n" RESET, pe.size());
+			//printf("tracker=> replying with %d peers\n", pe.size());
 		} else {
 			dht_storage_table_t::iterator i = m_storage_table.find(target);
 			if (i != m_storage_table.end())
@@ -1566,9 +1651,16 @@ void node_impl::incoming_request(msg const& m, entry& e)
 	}
 }
 
-void node_impl::store_dht_item(dht_storage_item &item, const big_number &target, 
+bool node_impl::store_dht_item(dht_storage_item &item, const big_number &target, 
                                bool multi, int seq, int height, std::pair<char const*, int> &bufv)
 {
+    bool stored = false;
+    
+    item.next_refresh_time = getNextRefreshTime(item.confirmed);
+    if( m_next_storage_refresh > item.next_refresh_time ) {
+        m_next_storage_refresh = item.next_refresh_time;
+    }
+
     dht_storage_table_t::iterator i = m_storage_table.find(target);
     if (i == m_storage_table.end()) {
         // make sure we don't add too many items
@@ -1582,6 +1674,7 @@ void node_impl::store_dht_item(dht_storage_item &item, const big_number &target,
 
         boost::tie(i, boost::tuples::ignore) = m_storage_table.insert(
             std::make_pair(target, to_add));
+        stored = true;
     } else {
         dht_storage_list_t & lsto = i->second;
 
@@ -1599,10 +1692,11 @@ void node_impl::store_dht_item(dht_storage_item &item, const big_number &target,
             if( !multi ) {
                 if( seq > p.dict_find_int("seq")->int_value() ) {
                     olditem = item;
+                    stored = true;
                 } else {
                     // don't report this error (because of refresh storage)
                     //incoming_error(e, "old sequence number");
-                    return;
+                    break;
                 }
             } else {
                 // compare contents before adding to the list
@@ -1622,12 +1716,14 @@ void node_impl::store_dht_item(dht_storage_item &item, const big_number &target,
         if(multi && j == rend) {
             // new entry
             lsto.insert(insert_pos, item);
+            stored = true;
         }
 
         if(lsto.size() > m_settings.max_entries_per_multi) {
             lsto.resize(m_settings.max_entries_per_multi);
         }
     }
+    return stored;
 }
 
 } } // namespace libtorrent::dht

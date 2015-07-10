@@ -307,15 +307,14 @@ namespace libtorrent
 			// the DHT, to get the initial peers quickly
 			void prioritize_dht(boost::weak_ptr<torrent> t);
 
-			void dht_putData(std::string const &username, std::string const &resource, bool multi,
-							 entry const &value, std::string const &sig_user,
-							 boost::int64_t timeutc, int seq);
-			
-			void dht_putData(std::string const &username, std::string const &resource, bool multi,
-				     entry const &value, std::string const &sig_user,
-                     boost::int64_t timeutc, int seq, std::string const &witness);
+			void dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+			         entry const &p, std::string const &sig_p, std::string const &sig_user, bool local);
 
-			void dht_getData(std::string const &username, std::string const &resource, bool multi);
+			void dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+			         entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness);
+
+			void dht_getData(std::string const &username, std::string const &resource, bool multi, bool local);
+			entry dht_getLocalData() const;
 
 
 #ifndef TORRENT_NO_DEPRECATE
@@ -962,6 +961,7 @@ namespace libtorrent
 
 			// 0 is natpmp 1 is upnp
 			int m_tcp_mapping[2];
+			int m_twister_tcp_mapping[2];
 			int m_udp_mapping[2];
 #ifdef TORRENT_USE_OPENSSL
 			int m_ssl_mapping[2];

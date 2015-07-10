@@ -98,7 +98,11 @@ void locking_callback(int mode, int i, const char* file, int line)
 
 static unsigned long id_callback(void)
 {
+#if defined(WIN32)
+  return ((unsigned long)GetCurrentThreadId());
+#else
   return ((unsigned long)pthread_self());
+#endif
 }
 
 LockedPageManager LockedPageManager::instance;
@@ -1099,10 +1103,13 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 boost::filesystem::path GetHTMLDir()
 {
     namespace fs = boost::filesystem;
+    fs::path sysHtmlDir("/usr/share/twister/html");
     fs::path path;
 
     if (mapArgs.count("-htmldir")) {
         path = fs::system_complete(mapArgs["-htmldir"]);
+    } else if (fs::is_directory(sysHtmlDir)) {
+        path = sysHtmlDir;
     } else {
         path = GetDataDir() / "html";
     }
@@ -1151,6 +1158,7 @@ boost::filesystem::path GetPidFile()
     return pathPidFile;
 }
 
+#ifndef WIN32
 void CreatePidFile(const boost::filesystem::path &path, pid_t pid)
 {
     FILE* file = fopen(path.string().c_str(), "w");
@@ -1160,6 +1168,7 @@ void CreatePidFile(const boost::filesystem::path &path, pid_t pid)
         fclose(file);
     }
 }
+#endif
 
 bool RenameOver(boost::filesystem::path src, boost::filesystem::path dest)
 {

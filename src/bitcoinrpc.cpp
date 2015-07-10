@@ -13,6 +13,7 @@
 #include "db.h"
 
 #include "twister_utils.h"
+#include "twister_rss.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/asio.hpp>
@@ -232,6 +233,7 @@ static const CRPCCommand vRPCCommands[] =
     { "listsinceblock",         &listsinceblock,         false,     false,      false },
     { "dumpprivkey",            &dumpprivkey,            true,      false,      false },
     { "dumppubkey",             &dumppubkey,             false,     false,      false },
+    { "testvector",             &testvector,             false,     false,      false },
     { "dumpwallet",             &dumpwallet,             true,      false,      false },
     { "importprivkey",          &importprivkey,          false,     false,      false },
     { "importwallet",           &importwallet,           false,     false,      false },
@@ -244,15 +246,20 @@ static const CRPCCommand vRPCCommands[] =
     { "getlastsoftcheckpoint",  &getlastsoftcheckpoint,  true,      false,      false },
     // twister dht network
     { "dhtput",                 &dhtput,                 false,     true,       false },
+    { "dhtputraw",              &dhtputraw,              false,     true,       true },
     { "dhtget",                 &dhtget,                 false,     true,       true },
     { "newpostmsg",             &newpostmsg,             false,     true,       false },
-	{ "newpostreply",			&newpostreply,			 false,		false,		false },
     { "newdirectmsg",           &newdirectmsg,           false,     true,       false },
     { "newrtmsg",               &newrtmsg,               false,     true,       false },
+    { "newfavmsg",              &newfavmsg,              false,     true,       false },
     { "getposts",               &getposts,               false,     true,       false },
     { "getdirectmsgs",          &getdirectmsgs,          false,     true,       false },
+    { "getmentions",            &getmentions,            false,     true,       false },
+    { "getfavs",                &getfavs,                false,     true,       false },
     { "setspammsg",             &setspammsg,             false,     false,      false },
     { "getspammsg",             &getspammsg,             false,     false,      false },
+    { "setpreferredspamlang",   &setpreferredspamlang,   false,     false,      false },
+    { "getpreferredspamlang",   &getpreferredspamlang,   false,     false,      false },
     { "follow",                 &follow,                 false,     true,       false },
     { "unfollow",               &unfollow,               false,     true,       false },
     { "getfollowing",           &getfollowing,           false,     true,       false },
@@ -264,6 +271,15 @@ static const CRPCCommand vRPCCommands[] =
     { "gettrendinghashtags",    &gettrendinghashtags,    false,     true,       true },
     { "getspamposts",           &getspamposts,           false,     true,       false },
     { "torrentstatus",          &torrentstatus,          false,     true,       false },
+    { "search",                 &search,                 false,     true,       false },
+    { "creategroup",            &creategroup,            false,     true,       false },
+    { "listgroups",             &listgroups,             false,     true,       false },
+    { "getgroupinfo",           &getgroupinfo,           false,     true,       false },
+    { "newgroupinvite",         &newgroupinvite,         false,     true,       false },
+    { "newgroupdescription",    &newgroupdescription,    false,     true,       false },
+    { "leavegroup",             &leavegroup,             false,     true,       false },
+    { "getpieceavailability",   &getpieceavailability,   false,     true,       true },
+    { "getpiecemaxseen",        &getpiecemaxseen,        false,     true,       true },
 	{ "createrawaccumulatortransaction", &createrawaccumulatortransaction, true, true, true},
 	{ "addwitnesstouser",		&addwitnesstouser,		 true,		false,		true},
 };
@@ -978,11 +994,9 @@ static string JSONRPCExecBatch(const Array& vReq)
 
 void ServiceConnection(AcceptedConnection *conn)
 {
-	printf(BOLDCYAN "\nServiceConnection" RESET);
     bool fRun = true;
-    while (fRun)
+    while (fRun && !ShutdownRequested())
     {
-		printf(BOLDCYAN "\nfRun" RESET);
         int nProto = 0;
         map<string, string> mapHeaders;
         string strRequest, strMethod, strURI;
@@ -994,10 +1008,32 @@ void ServiceConnection(AcceptedConnection *conn)
         // Read HTTP message headers and body
         ReadHTTPMessage(conn->stream(), mapHeaders, strRequest, nProto);
 
+        // Check authorization
+        if (mapHeaders.count("authorization") == 0)
+        {
+            conn->stream() << HTTPReply(HTTP_UNAUTHORIZED, "", false) << std::flush;
+            break;
+        }
+        if (!HTTPAuthorized(mapHeaders))
+        {
+            printf("ThreadRPCServer incorrect password attempt from %s\n", conn->peer_address_to_string().c_str());
+            /* Deter brute-forcing short passwords.
+               If this results in a DOS the user really
+               shouldn't have their RPC port exposed.*/
+            if (mapArgs["-rpcpassword"].size() < 20)
+                MilliSleep(250);
+
+            conn->stream() << HTTPReply(HTTP_UNAUTHORIZED, "", false) << std::flush;
+            break;
+        }
+
+        if (mapHeaders["connection"] == "close")
+            fRun = false;
+        
         if(strMethod == "GET" && strURI == "/")
             strURI="/home.html";
 
-        if (strURI != "/" && strURI.find("..") == std::string::npos ) {
+        if (strURI != "/" && strURI.substr(0, 4) != "/rss" && strURI.find("..") == std::string::npos ) {
             filesystem::path pathFile = filesystem::path(GetHTMLDir()) / strURI;
             std::string fname = pathFile.string();
             size_t qMarkIdx = fname.find('?');
@@ -1034,31 +1070,34 @@ void ServiceConnection(AcceptedConnection *conn)
             continue;
         }
 
-        // Check authorization
-        if (mapHeaders.count("authorization") == 0)
+        if(strMethod == "GET" && strURI.substr(0, 4) == "/rss" && !GetBoolArg("-public_server_mode",false))
         {
-            conn->stream() << HTTPReply(HTTP_UNAUTHORIZED, "", false) << std::flush;
-            break;
-        }
-        if (!HTTPAuthorized(mapHeaders))
-        {
-            printf("ThreadRPCServer incorrect password attempt from %s\n", conn->peer_address_to_string().c_str());
-            /* Deter brute-forcing short passwords.
-               If this results in a DOS the user really
-               shouldn't have their RPC port exposed.*/
-            if (mapArgs["-rpcpassword"].size() < 20)
-                MilliSleep(250);
+            string rssOutput;
+            int rssResult = generateRSS(strURI, &rssOutput);
 
-            conn->stream() << HTTPReply(HTTP_UNAUTHORIZED, "", false) << std::flush;
-            break;
+            switch(rssResult)
+            {
+                case RSS_OK:
+                    conn->stream() << HTTPReply(HTTP_OK, rssOutput, false, "application/rss+xml") << std::flush;
+                    continue;
+                case RSS_ERROR_NO_ACCOUNT:
+                    conn->stream() << HTTPReply(HTTP_BAD_REQUEST, "No accounts found - please register a username", false) << std::flush;
+                    continue;
+                case RSS_ERROR_BAD_ACCOUNT:
+                    conn->stream() << HTTPReply(HTTP_BAD_REQUEST, "Requested account is not registered on this node", false) << std::flush;
+                    continue;
+                case RSS_ERROR_NOT_A_NUMBER:
+                    conn->stream() << HTTPReply(HTTP_BAD_REQUEST, "Parameter 'max' must be a number", false) << std::flush;
+                    continue;
+                case RSS_ERROR_BOOST_REGEX:
+                    conn->stream() << HTTPReply(HTTP_BAD_REQUEST, "boost-regex support missing", false) << std::flush;
+                    continue;
+            }
         }
-        if (mapHeaders["connection"] == "close")
-            fRun = false;
 
         JSONRequest jreq;
         try
         {
-			printf(BOLDCYAN "\ntry Parse json" RESET);
             // Parse request
             Value valRequest;
             if (!read_string(strRequest, valRequest))
@@ -1068,35 +1107,28 @@ void ServiceConnection(AcceptedConnection *conn)
 
             // singleton request
             if (valRequest.type() == obj_type) {
-				printf(BOLDCYAN "\njson object passed:" RESET);
                 jreq.parse(valRequest);
 
                 Value result = tableRPC.execute(jreq.strMethod, jreq.params);
-				printf(BOLDCYAN "\n[%s, ...]" RESET, jreq.strMethod.c_str());
 
                 // Send reply
                 strReply = JSONRPCReply(result, Value::null, jreq.id);
-				printf(BOLDCYAN "\nreply sent" RESET, jreq.strMethod.c_str());
 
             // array of requests
-            } else if (valRequest.type() == array_type) {
-				printf(BOLDCYAN "\narray of requests" RESET);
+            } else if (valRequest.type() == array_type)
                 strReply = JSONRPCExecBatch(valRequest.get_array());
-            } else
+            else
                 throw JSONRPCError(RPC_PARSE_ERROR, "Top-level object parse error");
 
             conn->stream() << HTTPReply(HTTP_OK, strReply, fRun) << std::flush;
-			printf(BOLDCYAN "\nreply sent: %s" RESET, strReply.c_str());
         }
         catch (Object& objError)
         {
-			printf(BOLDCYAN "\nERROR: objError!" RESET);
             ErrorReply(conn->stream(), objError, jreq.id);
             break;
         }
         catch (std::exception& e)
         {
-			printf(BOLDCYAN "\nERROR JSONRPCError!" RESET);
             ErrorReply(conn->stream(), JSONRPCError(RPC_PARSE_ERROR, e.what()), jreq.id);
             break;
         }
@@ -1296,16 +1328,26 @@ Array RPCConvertValues(const std::string &strMethod, const std::vector<std::stri
     if (strMethod == "dhtget"                 && n > 4) ConvertTo<boost::int64_t>(params[4]);
     if (strMethod == "dhtget"                 && n > 5) ConvertTo<boost::int64_t>(params[5]);
     if (strMethod == "newpostmsg"             && n > 1) ConvertTo<boost::int64_t>(params[1]);
-	if (strMethod == "newpostreply"           && n > 1) ConvertTo<boost::int64_t>(params[1]);
-    if (strMethod == "newpostreply"           && n > 4) ConvertTo<boost::int64_t>(params[4]);
+    if (strMethod == "newpostmsg"             && n > 4) ConvertTo<boost::int64_t>(params[4]);
+    if (strMethod == "newpostraw"             && n > 1) ConvertTo<boost::int64_t>(params[1]);
     if (strMethod == "newdirectmsg"           && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "newdirectmsg"           && n > 4) ConvertTo<bool>(params[4]);
     if (strMethod == "newrtmsg"               && n > 1) ConvertTo<boost::int64_t>(params[1]);
     if (strMethod == "newrtmsg"               && n > 2) ConvertTo<Object>(params[2]);
+    if (strMethod == "newfavmsg"              && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "newfavmsg"              && n > 2) ConvertTo<Object>(params[2]);
+    if (strMethod == "newfavmsg"              && n > 3) ConvertTo<bool>(params[3]);
+    if (strMethod == "getlasthave"            && n > 1) ConvertTo<Array>(params[1]);
     if (strMethod == "getposts"               && n > 0) ConvertTo<boost::int64_t>(params[0]);
     if (strMethod == "getposts"               && n > 1) ConvertTo<Array>(params[1]);
     if (strMethod == "getposts"               && n > 2) ConvertTo<boost::int64_t>(params[2]);
+    if (strMethod == "getposts"               && n > 3) ConvertTo<boost::int64_t>(params[3]);
     if (strMethod == "getdirectmsgs"          && n > 1) ConvertTo<boost::int64_t>(params[1]);
     if (strMethod == "getdirectmsgs"          && n > 2) ConvertTo<Array>(params[2]);
+    if (strMethod == "getmentions"            && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "getmentions"            && n > 2) ConvertTo<Object>(params[2]);
+    if (strMethod == "getfavs"                && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "getfavs"                && n > 2) ConvertTo<Object>(params[2]);
     if (strMethod == "follow"                 && n > 1) ConvertTo<Array>(params[1]);
     if (strMethod == "unfollow"               && n > 1) ConvertTo<Array>(params[1]);
     if (strMethod == "listusernamespartial"   && n > 1) ConvertTo<boost::int64_t>(params[1]);
@@ -1314,6 +1356,12 @@ Array RPCConvertValues(const std::string &strMethod, const std::vector<std::stri
     if (strMethod == "getspamposts"           && n > 0) ConvertTo<boost::int64_t>(params[0]);
     if (strMethod == "getspamposts"           && n > 1) ConvertTo<boost::int64_t>(params[1]);
     if (strMethod == "getspamposts"           && n > 2) ConvertTo<boost::int64_t>(params[2]);
+    if (strMethod == "search"                 && n > 2) ConvertTo<boost::int64_t>(params[2]);
+    if (strMethod == "newgroupinvite"         && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "newgroupinvite"         && n > 3) ConvertTo<Array>(params[3]);
+    if (strMethod == "newgroupdescription"    && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "getpieceavailability"   && n > 1) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "getpiecemaxseen"        && n > 1) ConvertTo<boost::int64_t>(params[1]);
 
     return params;
 }

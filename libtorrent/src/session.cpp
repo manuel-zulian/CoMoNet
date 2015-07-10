@@ -332,6 +332,12 @@ namespace libtorrent
 #define TORRENT_ASYNC_CALL3(x, a1, a2, a3) \
 	m_impl->m_io_service.dispatch(boost::bind(&session_impl:: x, m_impl.get(), a1, a2, a3))
 
+#define TORRENT_ASYNC_CALL4(x, a1, a2, a3, a4) \
+	m_impl->m_io_service.dispatch(boost::bind(&session_impl:: x, m_impl.get(), a1, a2, a3, a4))
+
+#define TORRENT_ASYNC_CALL6(x, a1, a2, a3, a4, a5, a6) \
+	m_impl->m_io_service.dispatch(boost::bind(&session_impl:: x, m_impl.get(), a1, a2, a3, a4, a5, a6))
+
 #define TORRENT_ASYNC_CALL7(x, a1, a2, a3, a4, a5, a6, a7) \
 	m_impl->m_io_service.dispatch(boost::bind(&session_impl:: x, m_impl.get(), a1, a2, a3, a4, a5, a6, a7))
 	
@@ -854,28 +860,35 @@ namespace libtorrent
 #endif
 	}
 	
-	void session::dht_putData(std::string const &username, std::string const &resource, bool multi,
-							  entry const &value, std::string const &sig_user,
-							  boost::int64_t timeutc, int seq)
+	void session::dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+		     entry const &p, std::string const &sig_p, std::string const &sig_user, bool local)
 	{
 #ifndef TORRENT_DISABLE_DHT
-		TORRENT_ASYNC_CALL7(dht_putData, username, resource, multi, value, sig_user, timeutc, seq);
+		TORRENT_ASYNC_CALL7(dht_putDataSigned, username, resource, multi, p, sig_p, sig_user, local);
 #endif
 	}
 
-	void session::dht_putData(std::string const &username, std::string const &resource, bool multi,
-		     entry const &value, std::string const &sig_user,
-             boost::int64_t timeutc, int seq, std::string const &witness)
+	void session::dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+		     entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness)
 	{
 #ifndef TORRENT_DISABLE_DHT
-		TORRENT_ASYNC_CALL8(dht_putData, username, resource, multi, value, sig_user, timeutc, seq, witness);
+		TORRENT_ASYNC_CALL8(dht_putDataSigned, username, resource, multi, p, sig_p, sig_user, local, witness);
 #endif
 	}
 
-	void session::dht_getData(std::string const &username, std::string const &resource, bool multi)
+	void session::dht_getData(std::string const &username, std::string const &resource, bool multi, bool local)
 	{
 #ifndef TORRENT_DISABLE_DHT
-		TORRENT_ASYNC_CALL3(dht_getData, username, resource, multi);
+		TORRENT_ASYNC_CALL4(dht_getData, username, resource, multi, local);
+#endif
+	}
+
+	entry session::dht_getLocalData() const
+	{
+#ifndef TORRENT_DISABLE_DHT
+		return m_impl->dht_getLocalData();
+#else
+		return entry();
 #endif
 	}
 

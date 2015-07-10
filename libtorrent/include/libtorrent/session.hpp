@@ -438,15 +438,14 @@ namespace libtorrent
 		void add_dht_router(std::pair<std::string, int> const& node);
 
 		// [MF] twister
-		void dht_putData(std::string const &username, std::string const &resource, bool multi,
-						 entry const &value, std::string const &sig_user,
-						 boost::int64_t timeutc, int seq);
-		
-		void dht_putData(std::string const &username, std::string const &resource, bool multi,
-			     entry const &value, std::string const &sig_user,
-                 boost::int64_t timeutc, int seq, std::string const &witness);
+		void dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+		                       entry const &p, std::string const &sig_p, std::string const &sig_user, bool local);
 
-		void dht_getData(std::string const &username, std::string const &resource, bool multi);
+		void dht_putDataSigned(std::string const &username, std::string const &resource, bool multi,
+		                       entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness);
+
+		void dht_getData(std::string const &username, std::string const &resource, bool multi, bool local);
+		entry dht_getLocalData() const;
 
 #ifndef TORRENT_NO_DEPRECATE
 		// deprecated in 0.15

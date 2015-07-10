@@ -150,6 +150,7 @@ extern json_spirit::Value getaddednodeinfo(const json_spirit::Array& params, boo
 
 extern json_spirit::Value dumpprivkey(const json_spirit::Array& params, bool fHelp); // in rpcdump.cpp
 extern json_spirit::Value dumppubkey(const json_spirit::Array& params, bool fHelp); // in rpcdump.cpp
+extern json_spirit::Value testvector(const json_spirit::Array& params, bool fHelp); // in rpcdump.cpp
 extern json_spirit::Value importprivkey(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value dumpwallet(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value importwallet(const json_spirit::Array& params, bool fHelp);
@@ -198,15 +199,21 @@ extern json_spirit::Value gettxout(const json_spirit::Array& params, bool fHelp)
 extern json_spirit::Value verifychain(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getlastsoftcheckpoint(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value dhtput(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value dhtputraw(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value dhtget(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value newpostmsg(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value newpostreply(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value newpostraw(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value newdirectmsg(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value newrtmsg(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value newfavmsg(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getposts(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getdirectmsgs(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getmentions(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getfavs(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value setspammsg(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getspammsg(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value setpreferredspamlang(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getpreferredspamlang(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value follow(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value unfollow(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getfollowing(const json_spirit::Array& params, bool fHelp);
@@ -218,8 +225,14 @@ extern json_spirit::Value recheckusertorrent(const json_spirit::Array& params, b
 extern json_spirit::Value gettrendinghashtags(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getspamposts(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value torrentstatus(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value createrawaccumulatortransaction(const json_spirit::Array& params, bool fHelp); // in accumunet.cpp
-extern json_spirit::Value addwitnesstouser(const json_spirit::Array& params, bool fHelp);
-
+extern json_spirit::Value search(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value creategroup(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value listgroups(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getgroupinfo(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value newgroupinvite(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value newgroupdescription(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value leavegroup(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getpieceavailability(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getpiecemaxseen(const json_spirit::Array& params, bool fHelp);
 
 #endif

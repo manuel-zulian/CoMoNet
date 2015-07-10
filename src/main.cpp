@@ -13,6 +13,7 @@
 #include "ui_interface.h"
 #include "checkqueue.h"
 #include "chainparams.h"
+#include "dhtproxy.h"
 
 #include "twister.h"
 #include "utf8core.h"
@@ -1266,7 +1267,8 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
     }
 
     // add this block to the view's block chain
-    assert(view.SetBestBlock(pindex));
+    bool check = view.SetBestBlock(pindex);
+    assert(check);
 
     // Watch for transactions paying to me
     for (unsigned int i = 0; i < block.vtx.size(); i++)
@@ -1370,7 +1372,8 @@ bool SetBestChain(CValidationState &state, CBlockIndex* pindexNew)
     // Flush changes to global coin state
     int64 nStart = GetTimeMicros();
     int nModified = view.GetCacheSize();
-    assert(view.Flush());
+    bool check = view.Flush();
+    assert(check);
     int64 nTime = GetTimeMicros() - nStart;
     if (fBenchmark)
         printf("- Flush %i transactions: %.2fms (%.4fms/tx)\n", nModified, 0.001 * nTime, 0.001 * nTime / nModified);
@@ -3198,6 +3201,46 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         pfrom->fRelayTxes = true;
     }
 
+    else if (strCommand == "dhtgetreq")
+    {
+        CDHTGetRequest req;
+        vRecv >> req;
+
+        if( DhtProxy::dhtgetRequestReceived(req, pfrom) ) {
+            // ok
+        } else {
+            pfrom->Misbehaving(20);
+        }
+    }
+
+    else if (strCommand == "dhtputreq")
+    {
+        CDHTPutRequest req;
+        vRecv >> req;
+
+        if( DhtProxy::dhtputRequestReceived(req, pfrom) ) {
+            // ok
+        } else {
+            pfrom->Misbehaving(20);
+        }
+    }
+
+    else if (strCommand == "dhtgetreply")
+    {
+        CDHTGetReply reply;
+        vRecv >> reply;
+
+        if( DhtProxy::dhtgetReplyReceived(reply, pfrom) ) {
+            // ok
+        } else {
+            pfrom->Misbehaving(20);
+        }
+    }
+
+    else if (strCommand == "nodhtproxy")
+    {
+        pfrom->fNoDhtProxy = true;
+    }
 
     else
     {

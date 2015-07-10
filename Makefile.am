@@ -1,12 +1,23 @@
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
-  COPYING
+  COPYING twister-control.py
+  
+dist_doc_DATA = README.md
 
-SUBDIRS = src/leveldb
-LEVELDB_LIB = src/leveldb/libleveldb.a src/leveldb/libmemenv.a
+LIBLEVELDB = src/leveldb/libleveldb.a
+LIBMEMENV  = src/leveldb/libmemenv.a
+
+# NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race
+$(LIBLEVELDB): $(LIBMEMENV)
+
+$(LIBLEVELDB) $(LIBMEMENV):
+	@echo "Building LevelDB ..." && $(MAKE) -C $(@D) $(@F) CXX="$(CXX)" \
+	  CC="$(CC)" PLATFORM=$(TARGET_OS) AR="$(AR)" $(LEVELDB_TARGET_FLAGS) \
+          OPT="$(CXXFLAGS) $(CPPFLAGS)"
 
 bin_PROGRAMS = twisterd
+bin_SCRIPTS = twister-control
 
 KADEMLIA_SOURCES = \
   libtorrent/src/kademlia/dht_tracker.cpp      \
@@ -156,34 +167,53 @@ BITCOIN_TWISTER_SOURCES = \
     src/leveldb.cpp \
     src/txdb.cpp \
     src/chainparams.cpp \
+    src/dhtproxy.cpp \
     src/twister.cpp \
+    src/twister_rss.cpp \
     src/twister_utils.cpp \
 	src/accumunet.cpp \
     $(SSE2_SOURCES)
-
-if USE_UPNP
-UPNP_LIB = -lminiupnpc
-endif
 
 twisterd_SOURCES = $(LIBTORRENT_SOURCES) $(BITCOIN_TWISTER_SOURCES)
 
 twisterd_LDFLAGS = @OPENSSL_LDFLAGS@ @DB_CXX_LDFLAGS@
 
-twisterd_DEPENDENCIES = $(LEVELDB_LIB)
+twisterd_DEPENDENCIES = $(LIBLEVELDB) $(LIBMEMENV)
 
-twisterd_LDADD = $(LEVELDB_LIB) $(UPNP_LIB) \
+twisterd_LDADD = $(LIBLEVELDB) $(LIBMEMENV) \
     @BOOST_SYSTEM_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @BOOST_CHRONO_LIB@ @BOOST_LOCALE_LIB@ \
-    @DB_CXX_LIBS@ @OPENSSL_LIBS@
+    @BOOST_REGEX_LIB@ @BOOST_LDFLAGS@ @DB_CXX_LIBS@ @OPENSSL_LIBS@
 
 AM_CPPFLAGS = -ftemplate-depth-100 -DBOOST_SPIRIT_THREADSAFE -D_FILE_OFFSET_BITS=64 \
     -I$(top_srcdir)/libtorrent/include \
     -I$(top_srcdir)/src \
     -I$(top_srcdir)/src/leveldb/include -I$(top_srcdir)/src/leveldb/helpers \
-    @DEBUGFLAGS@ @OPENSSL_INCLUDES@ @DB_CXX_CPPFLAGS@
+    @DEBUGFLAGS@ @BOOST_CPPFLAGS@ @OPENSSL_INCLUDES@ @DB_CXX_CPPFLAGS@
 
 AM_LDFLAGS = @OPENSSL_LDFLAGS@
 
-check_SCRIPTS = greptest.sh
-TESTS = $(check_SCRIPTS)
+twister-control: twister-control.py Makefile
+	cat < $(srcdir)/twister-control.py > twister-control
+	chmod +x twister-control
 
-CLEANFILES = greptest.sh
+CLEANFILES = $(LIBLEVELDB) $(LIBMEMENV) $(bin_SCRIPTS) $(bin_PROGRAMS)
+
+clean-local:
+	-$(MAKE) -C src/leveldb clean
+	rm -f src/leveldb/*/*.gcno src/leveldb/helpers/memenv/*.gcno
+
+cppcheck:
+	cppcheck ./src -j 4 --force --quiet --suppressions ./src/cppcheck-suppressions.txt
+
+pixmapsdir = $(datadir)/pixmaps
+pixmaps_DATA = share/pixmaps/*
+
+desktopdir = $(datadir)/applications
+desktop_DATA = share/applications/twister.desktop share/applications/twister-control.desktop
+
+UPDATE_DESKTOP = update-desktop-database $(datadir)/applications || :
+
+install-data-hook: 
+	$(UPDATE_DESKTOP)
+uninstall-hook: 
+	$(UPDATE_DESKTOP)

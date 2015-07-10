@@ -164,8 +164,10 @@ public:
     void SetSecretBytes(const unsigned char vch[32]) {
         BIGNUM bn;
         BN_init(&bn);
-        assert(BN_bin2bn(vch, 32, &bn));
-        assert(EC_KEY_regenerate_key(pkey, &bn));
+        bool check = BN_bin2bn(vch, 32, &bn);
+        assert(check);
+        check = EC_KEY_regenerate_key(pkey, &bn);
+        assert(check);
         BN_clear_free(&bn);
     }
 
@@ -210,7 +212,8 @@ public:
     bool Sign(const uint256 &hash, std::vector<unsigned char>& vchSig) {
         unsigned int nSize = ECDSA_size(pkey);
         vchSig.resize(nSize); // Make sure it is big enough
-        assert(ECDSA_sign(0, (unsigned char*)&hash, sizeof(hash), &vchSig[0], &nSize, pkey));
+        bool check = ECDSA_sign(0, (unsigned char*)&hash, sizeof(hash), &vchSig[0], &nSize, pkey);
+        assert(check);
         vchSig.resize(nSize); // Shrink to fit actual size
         return true;
     }
@@ -454,6 +457,11 @@ public:
         unsigned int mac_length = cryptex.mac.size();
 
         // At the moment we are generating the hash using encrypted data. At some point we may want to validate the original text instead.
+#if (OPENSSL_VERSION_NUMBER < 0x000909000)
+	HMAC_Init_ex(&hmac, envelope_key + key_length, key_length, ECIES_HASHER, NULL);
+	HMAC_Update(&hmac, reinterpret_cast<const unsigned char *>(cryptex.body.data()), cryptex.body.size());
+	HMAC_Final(&hmac, reinterpret_cast<unsigned char *>(&cryptex.mac[0]), &mac_length);
+#else
         if (HMAC_Init_ex(&hmac, envelope_key + key_length, key_length, ECIES_HASHER, NULL) != 1 ||
             HMAC_Update(&hmac, reinterpret_cast<const unsigned char *>(cryptex.body.data()), cryptex.body.size()) != 1 ||
             HMAC_Final(&hmac, reinterpret_cast<unsigned char *>(&cryptex.mac[0]), &mac_length) != 1) {
@@ -463,9 +471,11 @@ public:
                 HMAC_CTX_cleanup(&hmac);
                 return false;
         }
+#endif
 
         HMAC_CTX_cleanup(&hmac);
         return true;
+
     }
 
     bool Decrypt(ecies_secure_t const &cryptex, std::string &vchText )
@@ -563,6 +573,11 @@ public:
         unsigned char md[EVP_MAX_MD_SIZE];
 
         // At the moment we are generating the hash using encrypted data. At some point we may want to validate the original text instead.
+#if (OPENSSL_VERSION_NUMBER < 0x000909000)
+        HMAC_Init_ex(&hmac, envelope_key + key_length, key_length, ECIES_HASHER, NULL);
+        HMAC_Update(&hmac, reinterpret_cast<const unsigned char *>(cryptex.body.data()), cryptex.body.size());
+	HMAC_Final(&hmac, md, &mac_length);
+#else
         if (HMAC_Init_ex(&hmac, envelope_key + key_length, key_length, ECIES_HASHER, NULL) != 1 ||
             HMAC_Update(&hmac, reinterpret_cast<const unsigned char *>(cryptex.body.data()), cryptex.body.size()) != 1 ||
             HMAC_Final(&hmac, md, &mac_length) != 1) {
@@ -572,6 +587,7 @@ public:
                 HMAC_CTX_cleanup(&hmac);
                 return false;
         }
+#endif
 
         HMAC_CTX_cleanup(&hmac);
 
@@ -580,7 +596,7 @@ public:
 #ifdef DEBUG_ECIES
                 printf("The authentication code was invalid! The ciphered data has been corrupted!\n");
 #endif
-                return NULL;
+                return false;
         }
 
         // Create a buffer to hold the result.

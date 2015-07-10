@@ -96,17 +96,15 @@ namespace libtorrent { namespace dht
 			, address addr, int listen_port, bool seed, bool myself, int list_peers
 			, boost::function<void(std::vector<tcp::endpoint> const&)> f);
 
-		void putData(std::string const &username, std::string const &resource, bool multi,
-					 entry const &value, std::string const &sig_user,
-					 boost::int64_t timeutc, int seq);
-		
-		void putData(std::string const &username, std::string const &resource, bool multi,
-			     entry const &value, std::string const &sig_user,
-                 boost::int64_t timeutc, int seq, std::string const &witness);
+		void putDataSigned(std::string const &username, std::string const &resource, bool multi,
+			     entry const &p, std::string const &sig_p, std::string const &sig_user, bool local);
+
+		void putDataSigned(std::string const &username, std::string const &resource, bool multi,
+			     entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness);
 
 		void getData(std::string const &username, std::string const &resource, bool multi,
 			     boost::function<void(entry::list_type const&)> fdata,
-			     boost::function<void(bool, bool)> fdone);
+			     boost::function<void(bool, bool)> fdone, bool local);
 
 		void dht_status(session_status& s);
 		void network_stats(int& sent, int& received);

@@ -432,26 +432,24 @@ namespace libtorrent { namespace dht
 	{
 		m_dht.announce(trackerName, ih, addr, listen_port, seed, myself, list_peers, f);
 	}
-	
-	void dht_tracker::putData(std::string const &username, std::string const &resource, bool multi,
-							  entry const &value, std::string const &sig_user,
-							  boost::int64_t timeutc, int seq)
+
+	void dht_tracker::putDataSigned(std::string const &username, std::string const &resource, bool multi,
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local)
 	{
-		m_dht.putData(username,resource, multi, value, sig_user, timeutc, seq);
+		m_dht.putDataSigned(username,resource, multi, p, sig_p, sig_user, local);
 	}
 
-	void dht_tracker::putData(std::string const &username, std::string const &resource, bool multi,
-		     entry const &value, std::string const &sig_user,
-             boost::int64_t timeutc, int seq, std::string const &witness)
+	void dht_tracker::putDataSigned(std::string const &username, std::string const &resource, bool multi,
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const& witness)
 	{
-		m_dht.putData(username,resource, multi, value, sig_user, timeutc, seq, witness);
+		m_dht.putDataSigned(username,resource, multi, p, sig_p, sig_user, local, witness);
 	}
 
 	void dht_tracker::getData(std::string const &username, std::string const &resource, bool multi,
 				  boost::function<void(entry::list_type const&)> fdata,
-				  boost::function<void(bool, bool)> fdone)
+				  boost::function<void(bool, bool)> fdone, bool local)
 	{
-		m_dht.getData(username, resource, multi, fdata, fdone);
+		m_dht.getData(username, resource, multi, fdata, fdone, local);
 	}
 
 
@@ -681,7 +679,7 @@ namespace libtorrent { namespace dht
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 			m_total_out_bytes += m_send_buf.size();
 		
-			if (e["h"].string() == "r")
+			if (e["z"].string() == "r")
 			{
 				// TODO: 2 fix this stats logging. For instance,
 				// the stats counters could be factored out into its own
@@ -689,7 +687,7 @@ namespace libtorrent { namespace dht
 //				++m_replies_sent[e["r"]];
 //				m_replies_bytes_sent[e["r"]] += int(m_send_buf.size());
 			}
-			else if (e["h"].string() == "q")
+			else if (e["z"].string() == "q")
 			{
 				m_queries_out_bytes += m_send_buf.size();
 			}

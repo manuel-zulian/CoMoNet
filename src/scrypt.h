@@ -2,6 +2,9 @@
 #define SCRYPT_H
 #include <stdlib.h>
 #include <stdint.h>
+#ifdef __FreeBSD__
+# include <sys/endian.h>
+#endif
 static const int SCRYPT_SCRATCHPAD_SIZE = 131072 + 63;
 
 void scrypt_1024_1_1_256(const char *input, char *output);
@@ -17,6 +20,8 @@ void
 PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen, const uint8_t *salt,
     size_t saltlen, uint64_t c, uint8_t *buf, size_t dkLen);
 
+# ifndef __FreeBSD__
+/* Already defined in sys/endian.h */
 static inline uint32_t le32dec(const void *pp)
 {
         const uint8_t *p = (uint8_t const *)pp;
@@ -32,4 +37,5 @@ static inline void le32enc(void *pp, uint32_t x)
         p[2] = (x >> 16) & 0xff;
         p[3] = (x >> 24) & 0xff;
 }
+# endif
 #endif
