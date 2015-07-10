@@ -291,8 +291,9 @@ private:
 	std::set<traversal_algorithm*> m_running_requests;
 
 	void incoming_request(msg const& h, entry& e);
-	void store_dht_item(dht_storage_item &item, big_number const &target, 
-	                    bool multi, int seq, int height, std::pair<char const*, int> &bufv);
+    bool store_dht_item(dht_storage_item &item, big_number const &target,
+                        bool multi, int seq, int height, std::pair<char const*, int> &bufv);
+    void process_newly_stored_entry(const lazy_entry &p);
 
 	node_id m_id;
 
@@ -303,10 +304,10 @@ public:
 private:
 	table_t m_map;
 	dht_storage_table_t m_storage_table;
+    dht_posts_by_user_t m_posts_by_user;
 
 	ptime m_last_tracker_tick;
-	ptime m_next_storage_refresh;
-	std::pair<node_id, int> m_last_refreshed_item;
+    ptime m_next_storage_refresh;
 
 	// secret random numbers used to create write tokens
 	int m_secret[2];

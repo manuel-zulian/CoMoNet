@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CUR_DIR=~/Documents/Tesi/inst-t
+CUR_DIR=~/Dropbox/Università/Tesi/merged_accumunet/
 BIN=twisterd
 #extip=$EXTIP
 extip=127.0.0.1

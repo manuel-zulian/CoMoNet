@@ -123,8 +123,8 @@ node_impl::node_impl(alert_dispatcher* alert_disp
 	, m_id(nid == (node_id::min)() || !verify_id(nid, external_address) ? generate_id(external_address) : nid)
 	, m_table(m_id, 8, settings)
 	, m_rpc(m_id, m_table, sock, observer)
-	, m_storage_table()
-	, m_posts_by_user()
+    , m_storage_table()
+    , m_posts_by_user()
 	, m_last_tracker_tick(time_now())
 	, m_next_storage_refresh(time_now())
 	, m_post_alert(alert_disp)
@@ -490,13 +490,13 @@ void node_impl::announce(std::string const& trackerName, sha1_hash const& info_h
 void node_impl::putDataSigned(std::string const &username, std::string const &resource, bool multi,
              entry const &p, std::string const &sig_p, std::string const &sig_user, bool local) 
 {
-	node_impl::putData(username, resource, bool multi,
-                        value, sig_user,
-                        timeutc, int seq, std::string("no_witness"));
+    node_impl::putDataSigned(username, resource, multi,
+                        p, sig_p,
+                        sig_user, local, std::string("no_witness"));
 }
 
 void node_impl::putDataSigned(std::string const &username, std::string const &resource, bool multi,
-             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const &witness)
+             entry const &p, std::string const &sig_p, std::string const &sig_user, bool local, std::string const& witness)
 {
     printf("putDataSigned: username=%s,res=%s,multi=%d sig_user=%s\n",
             username.c_str(), resource.c_str(), multi, sig_user.c_str());
@@ -519,12 +519,12 @@ void node_impl::putDataSigned(std::string const &username, std::string const &re
     }
 
 // [MZ] Merge con twister, spero vada qua.
-	if (strcmp("no_witness", witness.c_str())) {
-		p["witness"] = witness;
+    /*if (strcmp("no_witness", witness.c_str())) {
+        p["witness"] = witness;
 		printf(BOLDMAGENTA "witness [%s] added to the put data message to send (%s)" RESET, witness.c_str(), resource.c_str());
 	} else {
 		printf(BOLDMAGENTA "witness not added to the put data message to send (%s)" RESET, resource.c_str());
-	}
+    }*/
 
     if( p.find_key("v") && heightEntry && heightEntry->type() == entry::int_t &&
         (multi || (seqEntry && seqEntry->type() == entry::int_t)) && target &&

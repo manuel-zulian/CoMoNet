@@ -1844,6 +1844,8 @@ void dhtPutData(std::string const &username, std::string const &resource, bool m
                 entry const &value, std::string const &sig_user,
                 boost::int64_t timeutc, int seq)
 {
+    // TODO qui probabilmente devo aggiungere il witness
+
     // construct p dictionary and sign it
     entry p;
     entry& target = p["target"];
@@ -1855,6 +1857,48 @@ void dhtPutData(std::string const &username, std::string const &resource, bool m
     p["time"] = timeutc;
     int height = getBestHeight()-1; // be conservative
     p["height"] = height;
+
+    std::vector<char> pbuf;
+    bencode(std::back_inserter(pbuf), p);
+    std::string str_p = std::string(pbuf.data(),pbuf.size());
+    std::string sig_p = createSignature(str_p, sig_user);
+    if( !sig_p.size() ) {
+        printf("dhtPutData: createSignature error for user '%s'\n", sig_user.c_str());
+        return;
+    }
+
+    if( !DhtProxy::fEnabled ) {
+        dhtPutDataSigned(username,resource,multi,p,sig_p,sig_user, true);
+    } else {
+        DhtProxy::dhtputRequest(username,resource,multi,str_p,sig_p,sig_user);
+    }
+}
+
+void dhtPutData(std::string const &username, std::string const &resource, bool multi,
+                entry const &value, std::string const &sig_user,
+                boost::int64_t timeutc, int seq, std::string const& witness)
+{
+    // TODO qui probabilmente devo aggiungere il witness
+
+    // construct p dictionary and sign it
+    entry p;
+    entry& target = p["target"];
+    target["n"] = username;
+    target["r"] = resource;
+    target["t"] = (multi) ? "m" : "s";
+    if (seq >= 0 && !multi) p["seq"] = seq;
+    p["v"] = value;
+    p["time"] = timeutc;
+    int height = getBestHeight()-1; // be conservative
+    p["height"] = height;
+
+    // [MZ] Merge con twister, spero vada qua.
+        if (strcmp("no_witness", witness.c_str())) {
+            p["witness"] = witness;
+            printf(BOLDMAGENTA "witness [%s] added to the put data message to send (%s)" RESET, witness.c_str(), resource.c_str());
+        } else {
+            printf(BOLDMAGENTA "witness not added to the put data message to send (%s)" RESET, resource.c_str());
+        }
 
     std::vector<char> pbuf;
     bencode(std::back_inserter(pbuf), p);
@@ -1938,10 +1982,12 @@ Value dhtput(const Array& params, bool fHelp)
 
 	if (witness.empty()) {
 		printf(BOLDYELLOW "SENDING MESSAGE(%s) PUT WITHOUT WITNESS" RESET, strResource.c_str());
-		ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq);
+        //ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq);
+        dhtPutData(strUsername, strResource, multi, value, strSigUser, timeutc, seq);
 	} else {
 		printf(BOLDYELLOW "SENDING MESSAGE(%s) PUT WITH WITNESS: [%s]" RESET, strResource.c_str(), witness.c_str());
-		ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq, witness);
+        //ses->dht_putData(strUsername, strResource, multi, value, strSigUser, timeutc, seq, witness);
+        dhtPutData(strUsername, strResource, multi, value, strSigUser, timeutc, seq, witness);
 	}
 
     return Value();
@@ -2073,7 +2119,7 @@ Value dhtget(const Array& params, bool fHelp)
                     }
                 }
             }
-            //printf("dhtget: got %zd entries %zd unique\n", dhtLst.size(), uniqueSigPs.size());
+            printf("dhtget: got %zd entries %zd unique\n", dhtLst.size(), uniqueSigPs.size());
         } else {
             // cast failed => dht_reply_data_done_alert => no data
             break;
@@ -2081,7 +2127,7 @@ Value dhtget(const Array& params, bool fHelp)
 
         if( repliesReceived++ < minMultiReplies ) {
             timeToWait = timeToWaitMulti;
-            //printf("dhtget: wait again repliesReceived=%d lastSeq=%d\n", repliesReceived, lastSeq);
+            printf("dhtget: wait again repliesReceived=%d lastSeq=%d\n", repliesReceived, lastSeq);
         } else {
             break;
         }

@@ -13,6 +13,7 @@
 #include "base58.h"
 #include "bitcoinrpc.h"
 #include "twister.h"
+#include "libtorrent/bencode.hpp"
 
 #include <cstdlib>
 #include <openssl/sha.h>
@@ -24,7 +25,8 @@
 #include "libtorrent/entry.hpp"
 #include "libtorrent/session.hpp"
 
-extern libtorrent::session *ses;
+using namespace libtorrent;//extern libtorrent::session *ses;
+static boost::shared_ptr<session> m_ses;
 const char* admin_str = "_admin_";	///< special username representing users
 									///< with special rights
 mp_int last_accumulator_cache = {};
@@ -245,14 +247,22 @@ Value addwitnesstouser(const Array& params, bool fHelp)
 	
 	printf(BOLDMAGENTA "\nfilling entry" RESET);
 	libtorrent::entry v = witness; // TODO: [AP] ovviamente ci andrebbe anche la firma!
-	
-	
+
+    // [MZ] Prova a mettere questa firma, anche se no ho ancora capito in che contesto venga usata.
+    std::vector<char> pbuf;
+    bencode(std::back_inserter(pbuf), v);
+    std::string str_p = std::string(pbuf.data(),pbuf.size());
+    std::string sig_p = createSignature(str_p, username);
+
+    boost::shared_ptr<session> ses(m_ses);
+
 	if (ses) {
 		// publish witness to dht
 		printf(BOLDMAGENTA "\npublish witness to dht:" RESET);
 		printf(BOLDMAGENTA "\n[ username: %s, v: %s ]" RESET, username.c_str(), v.string().c_str());
-		ses->dht_putData(username, string("witness"), RES_T_SINGLE,
-						 v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?
+        ses->dht_putDataSigned(username, string("witness"), false, v, sig_p, username, true);
+        /*ses->dht_putData(username, string("witness"), RES_T_SINGLE,
+                         v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?*/
 	}
 	
 	printf(BOLDMAGENTA "\nwriting on disk" RESET);
