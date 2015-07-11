@@ -17,7 +17,8 @@
 
 #include <cstdlib>
 #include <openssl/sha.h>
-#include <random>
+//#include <random>
+#include <boost/random.hpp>
 #include <algorithm>
 #include "libtorrent/include/libtorrent/peer_id.hpp"
 #include "libtorrent/include/libtorrent/hasher.hpp"
@@ -146,13 +147,23 @@ int updateAccumulator() {
 	}
 }
 
-int cb(unsigned char *dst, int len, void* dat) {
+/*int cb(unsigned char *dst, int len, void* dat) {
 	std::minstd_rand0* point = (std::minstd_rand0*)dat;
 	int i;
 	for (i = 0; i < len; i++) {
 		dst[i]=static_cast<unsigned char>(point->operator()());
 	}
 	return i;
+}*/
+
+int cb(unsigned char *dst, int len, void* dat) {
+    boost::random::mt19937* gen = (boost::random::mt19937*) dat;
+
+    int i;
+    for (i = 0; i < len; i++) {
+        dst[i]=static_cast<unsigned char>(gen->operator ()());
+    }
+    return i;
 }
 
 /**
@@ -164,12 +175,13 @@ int mapToPrime(mp_int* prime_image, const std::string username) {
 	
 	// 2) seeding
 	unsigned seed = static_cast<unsigned>(hash.Get64());
-	std::minstd_rand0 generator (seed);
+    //std::minstd_rand0 generator (seed);
+    boost::random::mt19937 gen(seed);
 	
 	// 3) prime generation
 	const int dim_bit = 256; // dimensione numero primo in bit
 	const int safetyp = 8; // parametro per il miller-rabin (?)
-	mp_prime_random_ex(prime_image, safetyp, dim_bit, LTM_PRIME_SAFE, cb, &generator);
+    mp_prime_random_ex(prime_image, safetyp, dim_bit, LTM_PRIME_SAFE, cb, &gen);
 	return 0;
 }
 
