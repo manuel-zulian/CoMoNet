@@ -157,7 +157,7 @@ int updateAccumulator() {
 }*/
 
 int cb(unsigned char *dst, int len, void* dat) {
-    boost::random::mt19937* gen = (boost::random::mt19937*) dat;
+    boost::random::minstd_rand0* gen = (boost::random::minstd_rand0*) dat;
 
     int i;
     for (i = 0; i < len; i++) {
@@ -176,7 +176,7 @@ int mapToPrime(mp_int* prime_image, const std::string username) {
 	// 2) seeding
 	unsigned seed = static_cast<unsigned>(hash.Get64());
     //std::minstd_rand0 generator (seed);
-    boost::random::mt19937 gen(seed);
+    boost::random::minstd_rand0 gen(seed);
 	
 	// 3) prime generation
 	const int dim_bit = 256; // dimensione numero primo in bit
@@ -272,7 +272,8 @@ Value addwitnesstouser(const Array& params, bool fHelp)
 		// publish witness to dht
 		printf(BOLDMAGENTA "\npublish witness to dht:" RESET);
 		printf(BOLDMAGENTA "\n[ username: %s, v: %s ]" RESET, username.c_str(), v.string().c_str());
-        ses->dht_putDataSigned(username, string("witness"), false, v, sig_p, username, true);
+        ses->dht_putDataSigned(username, string("witness"), false, v, sig_p, username, 0);
+        /* RES_T_SINGLE era definito come false */
         /*ses->dht_putData(username, string("witness"), RES_T_SINGLE,
                          v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?*/
 	}

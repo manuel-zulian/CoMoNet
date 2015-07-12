@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CUR_DIR=~/Dropbox/Università/Tesi/merged_accumunet/
+CUR_DIR=~/accumunet-mz
 BIN=twisterd
 #extip=$EXTIP
 extip=127.0.0.1
@@ -38,7 +38,7 @@ if [ "$1" = "start" ]; then
 	fi
 	# scrive su file il suo pid in modo da poter essere killato in automatico
 	echo "./$BIN -datadir=$CUR_DIR/acc-$i -port=$pb$i -genproclimit=1 -daemon -rpcport=$pb2$i -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid"
-	./$BIN -datadir=$CUR_DIR/acc-$i -port="$pb$i" -genproclimit=1 -daemon -rpcport="$pb2$i" -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid > /dev/null
+	./$BIN -datadir=$CUR_DIR/acc-$i -port="$pb$i" -genproclimit=1 -daemon -rpcport="$pb2$i" -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -pid=$CUR_DIR/$i.pid > debugoutput
     done
     echo -n "Starting servers"
     for i in $(seq $2 $(($end_node-$rnodes)))

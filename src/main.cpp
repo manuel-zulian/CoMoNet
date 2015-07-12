@@ -3708,7 +3708,7 @@ static bool CreateSpamMsgTx(CTransaction &txNew, std::vector<unsigned char> &sal
       }
     }
 
-    printf("CreateSpamMsgTx: keyId = %s\n", keyID.ToString().c_str() );
+    //printf("CreateSpamMsgTx: keyId = %s\n", keyID.ToString().c_str() );
 
     // compute message hash and sign it
     CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
@@ -3733,9 +3733,9 @@ static bool CreateSpamMsgTx(CTransaction &txNew, std::vector<unsigned char> &sal
       }
     }
 
-    printf("CreateSpamMsgTx: msg = %s user = %s hash = %s signedhash = %s\n",
+    /*printf("CreateSpamMsgTx: msg = %s user = %s hash = %s signedhash = %s\n",
            txNew.message.ToString().c_str(), strUsername.c_str(),
-           hashMsg.ToString().c_str(), EncodeBase64(&vchSig[0], vchSig.size()).c_str() );
+           hashMsg.ToString().c_str(), EncodeBase64(&vchSig[0], vchSig.size()).c_str() );*/
 
     // add username and signature
     txNew.userName = CScript() << strUsername;
@@ -3746,7 +3746,7 @@ static bool CreateSpamMsgTx(CTransaction &txNew, std::vector<unsigned char> &sal
 
     CValidationState state;
     bool ret = CheckTransaction(txNew, state);
-    printf("CreateSpamMsgTx: CheckTransaction returned %d\n", ret );
+    //printf("CreateSpamMsgTx: CheckTransaction returned %d\n", ret );
 
     return true;
 }
