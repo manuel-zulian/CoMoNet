@@ -236,7 +236,7 @@ void node_impl::unreachable(udp::endpoint const& ep)
 void node_impl::incoming(msg const& m)
 {
 	// is this a reply?
-	lazy_entry const* y_ent = m.message.dict_find_string("z");
+    lazy_entry const* y_ent = m.message.dict_find_string("h");
 	if (!y_ent || y_ent->string_length() == 0)
 	{
 		entry e;
@@ -262,7 +262,7 @@ void node_impl::incoming(msg const& m)
 		case 'q':
 		{
 			// new request received
-			TORRENT_ASSERT(m.message.dict_find_string_value("z") == "q");
+            TORRENT_ASSERT(m.message.dict_find_string_value("h") == "q");
 			entry e;
 			incoming_request(m, e);
 			m_sock->send_packet(e, m.addr, 0);
@@ -317,9 +317,9 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["z"] = "q";
+            e["h"] = "q";
 			e["q"] = "announcePeer";
-			entry& a = e["x"];
+            entry& a = e["g"];
 			a["infoHash"] = ih.to_string();
 			a["port"] = listen_port;
 			a["token"] = i->second;
@@ -398,9 +398,9 @@ namespace
 			o->m_in_constructor = false;
 #endif
 			entry e;
-			e["z"] = "q";
+            e["h"] = "q";
 			e["q"] = "putData";
-			entry& a = e["x"];
+            entry& a = e["g"];
 			a["token"] = i->second;
 
             a["p"] = p;
@@ -457,7 +457,7 @@ void node_impl::add_node(udp::endpoint node)
 	o->m_in_constructor = false;
 #endif
 	entry e;
-	e["z"] = "q";
+    e["h"] = "q";
 	e["q"] = "ping";
 	m_rpc.invoke(e, node, o);
 }
@@ -1154,7 +1154,7 @@ bool verify_message(lazy_entry const* msg, key_desc_t const desc[], lazy_entry c
 
 void incoming_error(entry& e, char const* msg)
 {
-	e["z"] = "e";
+    e["h"] = "e";
 	entry::list_type& l = e["e"].list();
 	l.push_back(entry(203));
 	l.push_back(entry(msg));
@@ -1164,12 +1164,12 @@ void incoming_error(entry& e, char const* msg)
 void node_impl::incoming_request(msg const& m, entry& e)
 {
 	e = entry(entry::dictionary_t);
-	e["z"] = "r";
+    e["h"] = "r";
 	e["t"] = m.message.dict_find_string_value("t");
 
 	key_desc_t top_desc[] = {
 		{"q", lazy_entry::string_t, 0, 0},
-		{"x", lazy_entry::dict_t, 0, key_desc_t::parse_children},
+        {"g", lazy_entry::dict_t, 0, key_desc_t::parse_children},
 			{"id", lazy_entry::string_t, 20, key_desc_t::last_child},
 	};
 
