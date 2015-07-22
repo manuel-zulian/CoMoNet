@@ -45,7 +45,7 @@ twister::twister()
 //#define DEBUG_NEIGHBOR_TORRENT 1
 
 using namespace libtorrent;
-static boost::shared_ptr<session> m_ses;
+boost::shared_ptr<session> m_ses;
 static bool m_shuttingDownSession = false;
 static bool m_usingProxy;
 static int num_outstanding_resume_data;

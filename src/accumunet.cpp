@@ -27,7 +27,7 @@
 #include "libtorrent/session.hpp"
 
 using namespace libtorrent;//extern libtorrent::session *ses;
-static boost::shared_ptr<session> m_ses;
+extern boost::shared_ptr<session> m_ses;
 const char* admin_str = "_admin_";	///< special username representing users
 									///< with special rights
 mp_int last_accumulator_cache = {};
@@ -258,11 +258,22 @@ Value addwitnesstouser(const Array& params, bool fHelp)
     string witness = params[1].get_str();
 	
 	printf(BOLDMAGENTA "\nfilling entry" RESET);
+    entry p;
+    entry& target = p["target"];
+    target["n"] = username;
+    target["r"] = string("witness");
+    target["t"] = "s";
+    p["seq"] = 0;  /* TODO solo per farlo funzionare, bisognerebbe mettere il valore giusto (vedere se c'è già
+    un accumulatore, incrementare etc...?) */
+    p["time"] = GetAdjustedTime();
+    int height = getBestHeight()-1; // be conservative
+    p["height"] = height;
 	libtorrent::entry v = witness; // TODO: [AP] ovviamente ci andrebbe anche la firma!
+    p["v"] = v;
 
     // [MZ] Prova a mettere questa firma, anche se no ho ancora capito in che contesto venga usata.
     std::vector<char> pbuf;
-    bencode(std::back_inserter(pbuf), v);
+    bencode(std::back_inserter(pbuf), p);
     std::string str_p = std::string(pbuf.data(),pbuf.size());
     std::string sig_p = createSignature(str_p, username);
 
@@ -272,7 +283,7 @@ Value addwitnesstouser(const Array& params, bool fHelp)
 		// publish witness to dht
 		printf(BOLDMAGENTA "\npublish witness to dht:" RESET);
 		printf(BOLDMAGENTA "\n[ username: %s, v: %s ]" RESET, username.c_str(), v.string().c_str());
-        ses->dht_putDataSigned(username, string("witness"), false, v, sig_p, username, 0);
+        ses->dht_putDataSigned(username, string("witness"), false, p, sig_p, username, 0);
         /* RES_T_SINGLE era definito come false */
         /*ses->dht_putData(username, string("witness"), RES_T_SINGLE,
                          v, username, GetAdjustedTime(), 0); ///<-- [AP] se abbiamo il tempo k può essere 0?*/
