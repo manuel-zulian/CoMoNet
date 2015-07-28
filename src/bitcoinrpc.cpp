@@ -282,6 +282,7 @@ static const CRPCCommand vRPCCommands[] =
     { "getpiecemaxseen",        &getpiecemaxseen,        false,     true,       true },
 	{ "createrawaccumulatortransaction", &createrawaccumulatortransaction, true, true, true},
 	{ "addwitnesstouser",		&addwitnesstouser,		 true,		false,		true},
+    { "createmultisig",		&createmultisig,		 true,		false,		true},
 };
 
 CRPCTable::CRPCTable()
