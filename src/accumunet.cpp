@@ -241,6 +241,25 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
     return HexStr(ss.begin(), ss.end());
 }
 
+Value getprimefromusername(const Array& params, bool fHelp) {
+    if (fHelp || params.size() != 1) {
+        throw runtime_error(
+                            "getprimefromusername <username> \n"
+                            "Get the prime number associated with the username.");
+    }
+
+    string username_str = params[0].get_str();
+
+    mp_int prime_image;
+    mp_init(&prime_image);
+    mapToPrime(&prime_image, username_str);
+
+    char *prime = (char*)malloc(65);
+    mp_tohex(&prime_image, prime);
+
+    return prime;
+}
+
 Value addwitnesstouser(const Array& params, bool fHelp)
 {
 	printf(BOLDMAGENTA "\nadding new witness" RESET);
