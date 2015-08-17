@@ -1,0 +1,41 @@
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 decoderawtransaction 010000000008075f61646d696e5f0403ffffff2120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e76e330000
+{
+    "txid" : "128ca5ef2e8c803b58474df9876a210e670609dd4785fedd8a064f5be85501ff",
+    "version" : 1,
+    "message" : "",
+    "username" : "_admin_",
+    "pubKey" : [
+        "ffffff"
+    ],
+    "accumulator" : [
+        "450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7"
+    ],
+    "nonce" : 13166
+}
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 getprimefromusername utente1
+C0BE5762F01227B3AE7C0A456DBAC88041124C8404DDFE1B36B11746F418F5AB
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 getprimefromusername utente2
+F1F93345271CEFA71250BFC6AF271E24B5FF75ECD9D14093BCCEA45F36FDE90F
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 getprimefromusername utente3
+DEDE890621DA2BA78870D313DA376B5F57571E70C162570283D8510CD42D20FB
+
+# Signature del nuovo accumulatore (non sono univoche!!! http://bitcoin.stackexchange.com/questions/29674/why-does-re-signing-a-message-in-bitcoin-qt-produce-a-different-hash)
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente1 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
+H8ua4euma0zif30gi8MlpxVx4xjS63PyoeZoilmDMXVlh0R7CvoAwhfJCeybH5LxdyM2nJEees314trM7Q9hZV0=
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente2 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
+IFQlgt3QTA5DlMpZmm0zgTTtX4LasKDJGBiwE8W30fiNGpfQquau9eg1bo6XXAYrpw5PgCvWxNQnxd+wP7oOTdc=
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
+IABLlt1yDyT6SGj4Guvra9rWSkpBvYPViVmtUg6AgNLHfYExBfN0iyM61mY1Ul7O45uOpFUHq2PAQkzkqjOTyDQ=
+
+# Transazione con l'accumulatore aggiornato. La chiave pubblica è "_admin_2" in hex ed è l'indirizzo dove sono memorizate le firme.
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_2 5f61646d696e5f32 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5
+010000000009085f61646d696e5f3209085f61646d696e5f32212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5f5760000
+
+# Transazione per l'accumulatore vecchio, ma questa volta con _admin_1
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_1 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
+010000000009085f61646d696e5f3109085f61646d696e5f312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7af250000

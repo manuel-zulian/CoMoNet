@@ -120,11 +120,33 @@ bool isAdmin(const char* username, const char* witness, char* error) {
 int updateAccumulator() {
 	CTransaction txAccumulator;
 	uint256 acc_hashBlock;
+
+    // 1024 tentativi è un numero arbitrario
+    for(int i = 1; i < 1024; i++) {
+        string next_try = admin_str + itostr(i);
+        printf( BLUE "Trying: %s", next_try.c_str());
+
+        if (!GetTransaction(next_try, txAccumulator, acc_hashBlock)) {
+                printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
+                return ACC_ERROR;
+        }
+
+        next_try = admin_str + itostr(i + 1);
+        printf( BLUE "Checking: %s", next_try.c_str());
+
+        CTransaction temp;
+        uint256 temp2;
+
+        // Se non lo trova è arrivato all'ultimo, interrompi.
+        if (!GetTransaction(next_try, temp, temp2)) {
+            break;
+        }
+    }
 	
-	if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
+    /*if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
 		printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
 		return ACC_ERROR;
-	}
+    }*/
 	
 	mp_int new_acc;
 	mp_init(&new_acc);
