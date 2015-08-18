@@ -20,6 +20,7 @@
 //#include <random>
 #include <boost/random.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/hex.hpp>
 #include <algorithm>
 #include "libtorrent/entry.hpp"
 #include "libtorrent/session.hpp"
@@ -148,11 +149,29 @@ int updateAccumulator() {
         }
     }
 
+    string dht_address;
+    dht_address = boost::algorithm::unhex(txAccumulator.pubKey.ToString());
+
+    /**
+     * Recupera il numero di firme necessarie, cioè metà degli utenti
+     * nell'accumulatore precedente + 1. Se è la prima transazione, serve l'unanimità.
+     * */
+    int needed_signatures;
+    printf( YELLOW "\nSearching signatures at address: %s\n", dht_address.c_str());
+    if(next_try == "_admin_2") {
+        printf( YELLOW "\nFirst transaction\n");
+        needed_signatures = computeNeededSignatures(dht_address);
+    } else {
+        printf( YELLOW "\nNot first transaction\n");
+        needed_signatures = computeNeededSignatures(dht_address);
+    }
+    printf( RED "\nNeeds %i valid signatures to accept the current accumulator\n", needed_signatures);
+
     /**
      * Recupera le firme dalla rete dht.
      */
     Array p;
-    p.push_back("utente1");
+    p.push_back(dht_address);
     p.push_back("signature");
     p.push_back("s");
     Array result = dhtget(p, false).get_array();
@@ -161,17 +180,6 @@ int updateAccumulator() {
         printf( RED "\nNo signatures found\n");
     } else {
         printf( RED "\nSignatures:\n%s\n", result[0]);
-    }
-
-    /**
-     * Recupera il numero di firme necessarie, cioè metà degli utenti
-     * nell'accumulatore precedente + 1. Se è la prima transazione, serve l'unanimità.
-     * */
-    int needed_signatures;
-    if(next_try == "_admin_2") {
-        needed_signatures = computeNeededSignatures(txAccumulator.message.ToString());
-    } else {
-        needed_signatures = computeNeededSignatures(previousAccumulator.message.ToString());
     }
 
     // Verifica le firme.
@@ -187,13 +195,13 @@ int updateAccumulator() {
                     if( pitem.name_ == "v" && pitem.value_.type() == obj_type ) {
                         Object signatures = pitem.value_.get_obj();
 
-                        printf( YELLOW "\narrivo qua");
+                        //printf( YELLOW "\narrivo qua");
 
                         BOOST_FOREACH(const Pair& signature_pair, signatures) {
                             string username = signature_pair.name_;
                             string signature = signature_pair.value_.get_str();
 
-                            printf( YELLOW "\nSignature for: %s\n", username);
+                            printf( YELLOW "\nSignature for: %s\n", username.c_str());
                             printf( YELLOW "\nSignature length: %i\n", signature.size());
 
                             Array temp;
@@ -214,11 +222,6 @@ int updateAccumulator() {
             }
         }
     }
-	
-    /*if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
-		printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
-		return ACC_ERROR;
-    }*/
 	
 	mp_int new_acc;
 	mp_init(&new_acc);
@@ -242,6 +245,7 @@ int updateAccumulator() {
 }
 
 /**
+ * Calcola il numero di firme necessarie a considerare valido il prossimo accumulatore.
  * @param dht_address L'indirizzo a cui recuperare le firme dell'accumulatore precedente.
  * @return Il numero di firme necessario a validare l'accumulatore.
  */
@@ -273,6 +277,7 @@ int computeNeededSignatures(string dht_address) {
 
                         BOOST_FOREACH(const Pair& signature_pair, signatures) {
                             temp++;
+                            printf( RED "\nIncrement number of sig\n");
                         }
                     }
                 }
@@ -361,14 +366,14 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
     //if( !pubkey.IsValid() )
 	//	throw JSONRPCError(RPC_INTERNAL_ERROR, "pubkey is not valid");
 	
-    rawTx.pubKey << vch;
+    //rawTx.pubKey << vch;
     //if( params.size() > 2) {
     //    vector<unsigned char> vchSign(ParseHexV(params[2], "signedByOldKey"));
     //    rawTx.pubKey << vchSign;
     //}
 
     string address = params[3].get_str();
-    //rawTx.message = CScript() << address;
+    rawTx.pubKey = CScript() << address;
 	
 	vector<unsigned char> ach(ParseHexV(params[2], "accumulator"));
 	rawTx.accumulator = CScript() << ach;
