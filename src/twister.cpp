@@ -1844,8 +1844,6 @@ void dhtPutData(std::string const &username, std::string const &resource, bool m
                 entry const &value, std::string const &sig_user,
                 boost::int64_t timeutc, int seq)
 {
-    // TODO qui probabilmente devo aggiungere il witness
-
     // construct p dictionary and sign it
     entry p;
     entry& target = p["target"];

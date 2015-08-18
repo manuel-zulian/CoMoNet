@@ -32,6 +32,16 @@ IFQlgt3QTA5DlMpZmm0zgTTtX4LasKDJGBiwE8W30fiNGpfQquau9eg1bo6XXAYrpw5PgCvWxNQnxd+w
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
 IABLlt1yDyT6SGj4Guvra9rWSkpBvYPViVmtUg6AgNLHfYExBfN0iyM61mY1Ul7O45uOpFUHq2PAQkzkqjOTyDQ=
 
+# Signature accumulatore vecchio
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente1 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
+IERBSmoEVSPPX0qAWwAfQCiOCbnbZX+byDnVAgx9+RtUxlZXiXykPkmRu7L9XQtt576uMbbgxn7xc5A+3k4ZSno=
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente2 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
+IIosg4mvqyeFMuzxgcGnP1tKlo2YQxldrsa+lF85dXdMbU4ix8weCky/UlVZnajPf4NgiQBqXXGyt4knWPyUBQM=
+
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
+IH0Elt5grgoEzFrJBBGBh6gs5dJNsJhvxA8gGB7TGOVhbnN8IlCA78szNfp7SLEOUkTFccOS1vBqoyBXy9JKKU0=
+
 # Transazione con l'accumulatore aggiornato. La chiave pubblica è "_admin_2" in hex ed è l'indirizzo dove sono memorizate le firme.
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_2 5f61646d696e5f32 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5
 010000000009085f61646d696e5f3209085f61646d696e5f32212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5f5760000
@@ -39,3 +49,30 @@ IABLlt1yDyT6SGj4Guvra9rWSkpBvYPViVmtUg6AgNLHfYExBfN0iyM61mY1Ul7O45uOpFUHq2PAQkzk
 # Transazione per l'accumulatore vecchio, ma questa volta con _admin_1
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_1 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
 010000000009085f61646d696e5f3109085f61646d696e5f312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7af250000
+
+# Esempio di dhtput per caricare le firme
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtput utente1 signature s '["asd","assd"]' utente1 0 
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtget utente1 signature                            
+error: {"code":-1,"message":"dhtget <username> <resource> <s(ingle)/m(ulti)> [timeout_ms] [timeout_multi_ms] [min_multi]\nGet resource from dht network"}
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtget utente1 signature s
+[
+    {
+        "p" : {
+            "height" : 165,
+            "seq" : 0,
+            "target" : {
+                "n" : "utente1",
+                "r" : "signature",
+                "t" : "s"
+            },
+            "time" : 1439884411,
+            "v" : [
+                "asd",
+                "assd"
+            ],
+            "witness" : "357d626250e41eb0390d60e4c33859369681fec371ab532e428b63059e97c6a7"
+        },
+        "sig_p" : "2076cc0f3a989a4516c1e50a1d54646793823f98db2f59447839a86c0139c50c8d7e0e0c3c9c8a1c1ccf8f8fe115e8962d4fb4304ccecc7d21e757780f13027c47",
+        "sig_user" : "utente1"
+    }
+]

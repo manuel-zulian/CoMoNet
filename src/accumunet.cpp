@@ -26,6 +26,8 @@
 #include "libtorrent/entry.hpp"
 #include "libtorrent/session.hpp"
 
+using namespace std;
+using namespace json_spirit;
 using namespace libtorrent;//extern libtorrent::session *ses;
 extern boost::shared_ptr<session> m_ses;
 const char* admin_str = "_admin_";	///< special username representing users
@@ -61,6 +63,7 @@ bool isAdmin(const char* username, const char* witness, char* error) {
 		*error = E_EMPTY_WITNESS;
 		return false;
 	}
+    printf(YELLOW "%s", username);
 	std::string username_str(username);
 	CTransaction txOut;
 	uint256 hashBlock;
@@ -142,6 +145,19 @@ int updateAccumulator() {
             break;
         }
     }
+
+    // Check signatures
+    Array p;
+    p.push_back("utente1");
+    p.push_back("signature");
+    p.push_back("s");
+    Array result = dhtget(p, false).get_array();
+
+    if(!result.size()) {
+        printf( RED "\nNo signatures found\n");
+    } else {
+        printf( RED "\nSignatures:\n%s\n", result[0]);
+    }
 	
     /*if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
 		printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
@@ -219,9 +235,6 @@ bool mp_intTouint256(uint256* dest, mp_int* src){
 	mp_to_unsigned_bin(src, dest->begin());
 	return true;
 }
-
-using namespace std;
-using namespace json_spirit;
 
 extern vector<unsigned char> ParseHexV(const Value& v, string strName);
 Value createrawaccumulatortransaction(const Array& params, bool fHelp)
