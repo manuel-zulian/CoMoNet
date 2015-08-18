@@ -50,29 +50,32 @@ IH0Elt5grgoEzFrJBBGBh6gs5dJNsJhvxA8gGB7TGOVhbnN8IlCA78szNfp7SLEOUkTFccOS1vBqoyBX
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_1 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
 010000000009085f61646d696e5f3109085f61646d696e5f312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7af250000
 
-# Esempio di dhtput per caricare le firme
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtput utente1 signature s '["asd","assd"]' utente1 0 
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtget utente1 signature                            
-error: {"code":-1,"message":"dhtget <username> <resource> <s(ingle)/m(ulti)> [timeout_ms] [timeout_multi_ms] [min_multi]\nGet resource from dht network"}
+# Esempio di dhtput per caricare le firme e relativo dhtget
+/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtput utente1 signature s '{"utente1":"IERBSmoEVSPPX0qAWwAfQCiOCbnbZX+byDnVAgx9+RtUxlZXiXykPkmRu7L9XQtt576uMbbgxn7xc5A+3k4ZSno=","utente2":"IIosg4mvqyeFMuzxgcGnP1tKlo2YQxldrsa+lF85dXdMbU4ix8weCky/UlVZnajPf4NgiQBqXXGyt4knWPyUBQM="}' utente1 0
+
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtget utente1 signature s
 [
     {
         "p" : {
-            "height" : 165,
+            "height" : 97,
             "seq" : 0,
             "target" : {
                 "n" : "utente1",
                 "r" : "signature",
                 "t" : "s"
             },
-            "time" : 1439884411,
-            "v" : [
-                "asd",
-                "assd"
-            ],
+            "time" : 1439903792,
+            "v" : {
+                "utente1" : "IERBSmoEVSPPX0qAWwAfQCiOCbnbZX+byDnVAgx9+RtUxlZXiXykPkmRu7L9XQtt576uMbbgxn7xc5A+3k4ZSno=",
+                "utente2" : "IIosg4mvqyeFMuzxgcGnP1tKlo2YQxldrsa+lF85dXdMbU4ix8weCky/UlVZnajPf4NgiQBqXXGyt4knWPyUBQM="
+            },
             "witness" : "357d626250e41eb0390d60e4c33859369681fec371ab532e428b63059e97c6a7"
         },
-        "sig_p" : "2076cc0f3a989a4516c1e50a1d54646793823f98db2f59447839a86c0139c50c8d7e0e0c3c9c8a1c1ccf8f8fe115e8962d4fb4304ccecc7d21e757780f13027c47",
+        "sig_p" : "20ec82816a112c650ff423ec1341622e781f1d14ca0ad71cb97a702545508eff4548f17df5733afbaa8f3f7c786949ab844761d4e4764d94c695c5c4f4b5551a99",
         "sig_user" : "utente1"
     }
 ]
+
+# Transazione iniziale
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_1 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7 utente1
+0100000008077574656e74653109085f61646d696e5f310403ffffff2120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e70e760000

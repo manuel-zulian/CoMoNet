@@ -35,12 +35,13 @@ $BIN cmd 3 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8e
 sleep 0.5
 $BIN cmd 1 setgenerate true 1
 sleep 0.5
+sleep 8
 echo "starting miner..."
 echo -e "\nPress any button when the dht is loaded"
 read -n1
-$BIN cmd 1 dhtput utente1 signature s '["IERBSmoEVSPPX0qAWwAfQCiOCbnbZX+byDnVAgx9+RtUxlZXiXykPkmRu7L9XQtt576uMbbgxn7xc5A+3k4ZSno=","IIosg4mvqyeFMuzxgcGnP1tKlo2YQxldrsa+lF85dXdMbU4ix8weCky/UlVZnajPf4NgiQBqXXGyt4knWPyUBQM="]' utente1 0
+$BIN cmd 1 dhtput utente1 signature s '{"utente1":"IERBSmoEVSPPX0qAWwAfQCiOCbnbZX+byDnVAgx9+RtUxlZXiXykPkmRu7L9XQtt576uMbbgxn7xc5A+3k4ZSno=","utente2":"IIosg4mvqyeFMuzxgcGnP1tKlo2YQxldrsa+lF85dXdMbU4ix8weCky/UlVZnajPf4NgiQBqXXGyt4knWPyUBQM="}' utente1 0
 # Bisogna aspettare un po' altrimenti i comandi successivi non vedono niente
-sleep 10
+sleep 4
 $BIN cmd 1 newpostmsg utente1 1 \"Primo_post_utente1\"
 $BIN cmd 1 newpostmsg utente1 2 \"Vendo_vino_buono\"
 $BIN cmd 2 newpostmsg utente2 1 \"Ciao_sono_utente2\"

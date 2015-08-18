@@ -19,10 +19,8 @@
 #include <openssl/sha.h>
 //#include <random>
 #include <boost/random.hpp>
+#include <boost/algorithm/string.hpp>
 #include <algorithm>
-#include "libtorrent/include/libtorrent/peer_id.hpp"
-#include "libtorrent/include/libtorrent/hasher.hpp"
-#include "libtorrent/include/libtorrent/tommath.h"
 #include "libtorrent/entry.hpp"
 #include "libtorrent/session.hpp"
 
@@ -121,21 +119,22 @@ bool isAdmin(const char* username, const char* witness, char* error) {
 }
 
 int updateAccumulator() {
+    CTransaction previousAccumulator;
 	CTransaction txAccumulator;
 	uint256 acc_hashBlock;
 
+    // Recupera la prima transazione
+    string next_try;
+    next_try = admin_str + itostr(1);
+    printf(RED "\n%s\n", next_try.c_str());
+    if (!GetTransaction(next_try, txAccumulator, acc_hashBlock)) {
+            printf( RED "Can't retrieve the first accumulator, aborting" RESET "\n");
+            return ACC_ERROR;
+    }
+
     // 1024 tentativi è un numero arbitrario
-    for(int i = 1; i < 1024; i++) {
-        string next_try = admin_str + itostr(i);
-        printf( BLUE "Trying: %s", next_try.c_str());
-
-        if (!GetTransaction(next_try, txAccumulator, acc_hashBlock)) {
-                printf( RED "Can't retrieve the accumulator, aborting" RESET "\n");
-                return ACC_ERROR;
-        }
-
-        next_try = admin_str + itostr(i + 1);
-        printf( BLUE "Checking: %s", next_try.c_str());
+    for(int i = 2; i < 1024; i++) {
+        next_try = admin_str + itostr(i);
 
         CTransaction temp;
         uint256 temp2;
@@ -143,10 +142,15 @@ int updateAccumulator() {
         // Se non lo trova è arrivato all'ultimo, interrompi.
         if (!GetTransaction(next_try, temp, temp2)) {
             break;
+        } else {
+            previousAccumulator = txAccumulator;
+            txAccumulator = temp;
         }
     }
 
-    // Check signatures
+    /**
+     * Recupera le firme dalla rete dht.
+     */
     Array p;
     p.push_back("utente1");
     p.push_back("signature");
@@ -157,6 +161,58 @@ int updateAccumulator() {
         printf( RED "\nNo signatures found\n");
     } else {
         printf( RED "\nSignatures:\n%s\n", result[0]);
+    }
+
+    /**
+     * Recupera il numero di firme necessarie, cioè metà degli utenti
+     * nell'accumulatore precedente + 1. Se è la prima transazione, serve l'unanimità.
+     * */
+    int needed_signatures;
+    if(next_try == "_admin_2") {
+        needed_signatures = computeNeededSignatures(txAccumulator.message.ToString());
+    } else {
+        needed_signatures = computeNeededSignatures(previousAccumulator.message.ToString());
+    }
+
+    // Verifica le firme.
+    for( size_t i = 0; i < result.size(); i++ ) {
+        if( result.at(i).type() != obj_type )
+            continue;
+        Object resDict = result.at(i).get_obj();
+
+        BOOST_FOREACH(const Pair& item, resDict) {
+            if( item.name_ == "p" && item.value_.type() == obj_type ) {
+                Object pDict = item.value_.get_obj();
+                BOOST_FOREACH(const Pair& pitem, pDict) {
+                    if( pitem.name_ == "v" && pitem.value_.type() == obj_type ) {
+                        Object signatures = pitem.value_.get_obj();
+
+                        printf( YELLOW "\narrivo qua");
+
+                        BOOST_FOREACH(const Pair& signature_pair, signatures) {
+                            string username = signature_pair.name_;
+                            string signature = signature_pair.value_.get_str();
+
+                            printf( YELLOW "\nSignature for: %s\n", username);
+                            printf( YELLOW "\nSignature length: %i\n", signature.size());
+
+                            Array temp;
+                            temp.push_back(username);
+                            temp.push_back(signature);
+                            string uppercase_acc = boost::to_upper_copy(txAccumulator.accumulator.ToString());
+                            temp.push_back(uppercase_acc);
+
+                            // Qui avviene l'effettiva validazione
+                            Value validate = verifymessage(temp, false);
+                            bool valid = validate.get_bool();
+                            printf( YELLOW "\nValid: %d\n", valid);
+
+
+                        }
+                    }
+                }
+            }
+        }
     }
 	
     /*if (!GetTransaction(admin_str, txAccumulator, acc_hashBlock)) {
@@ -183,6 +239,50 @@ int updateAccumulator() {
 		printf( RED "Can't decode the accumulator, aborting" RESET "\n");
 		return ACC_ERROR;
 	}
+}
+
+/**
+ * @param dht_address L'indirizzo a cui recuperare le firme dell'accumulatore precedente.
+ * @return Il numero di firme necessario a validare l'accumulatore.
+ */
+int computeNeededSignatures(string dht_address) {
+    Array p;
+    p.push_back(dht_address);
+    p.push_back("signature");
+    p.push_back("s");
+    Array result = dhtget(p, false).get_array();
+
+    if(!result.size()) {
+        printf( RED "\nNo signatures found\n");
+    }
+
+    int needed = 0;
+    int temp = 0;
+
+    for( size_t i = 0; i < result.size(); i++ ) {
+        if( result.at(i).type() != obj_type )
+            continue;
+        Object resDict = result.at(i).get_obj();
+
+        BOOST_FOREACH(const Pair& item, resDict) {
+            if( item.name_ == "p" && item.value_.type() == obj_type ) {
+                Object pDict = item.value_.get_obj();
+                BOOST_FOREACH(const Pair& pitem, pDict) {
+                    if( pitem.name_ == "v" && pitem.value_.type() == obj_type ) {
+                        Object signatures = pitem.value_.get_obj();
+
+                        BOOST_FOREACH(const Pair& signature_pair, signatures) {
+                            temp++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    needed = ceil(temp / 2) + 1;
+
+    return needed;
 }
 
 /*int cb(unsigned char *dst, int len, void* dat) {
@@ -239,11 +339,12 @@ bool mp_intTouint256(uint256* dest, mp_int* src){
 extern vector<unsigned char> ParseHexV(const Value& v, string strName);
 Value createrawaccumulatortransaction(const Array& params, bool fHelp)
 {
-	if (fHelp || params.size() != 3)
+    if (fHelp || params.size() != 4)
         throw runtime_error(
-							"createrawaccumulatortransaction <username> <pubKey> <accumulator>\n"
+                            "createrawaccumulatortransaction <username> <pubKey> <accumulator> <address>\n"
 							"Create a transaction registering a new group username\n"
 							"pubKey and accumulator must be in hex format\n"
+                            "address is the dht address where the signatures of the accumulator are stored\n"
 							"Returns hex-encoded raw transaction.\n"
 							"it is not stored in the wallet or transmitted to the network.");
 	
@@ -265,6 +366,9 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
     //    vector<unsigned char> vchSign(ParseHexV(params[2], "signedByOldKey"));
     //    rawTx.pubKey << vchSign;
     //}
+
+    string address = params[3].get_str();
+    //rawTx.message = CScript() << address;
 	
 	vector<unsigned char> ach(ParseHexV(params[2], "accumulator"));
 	rawTx.accumulator = CScript() << ach;

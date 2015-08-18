@@ -10,7 +10,7 @@ sleep 1
 sleep 1
 ./50nodes-exp cmd 1 setgenerate true 4
 sleep 0.5
-./50nodes-exp cmd 2 sendrawtransaction 010000000009085f61646d696e5f3109085f61646d696e5f312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7af250000
+./50nodes-exp cmd 2 sendrawtransaction 0100000008077574656e74653109085f61646d696e5f310403ffffff2120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e70e760000
 ./50nodes-exp cmd 2 createwalletuser utente1
 ./50nodes-exp cmd 2 createwalletuser utente2
 ./50nodes-exp cmd 2 createwalletuser utente3
