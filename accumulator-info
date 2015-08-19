@@ -23,14 +23,14 @@ F1F93345271CEFA71250BFC6AF271E24B5FF75ECD9D14093BCCEA45F36FDE90F
 DEDE890621DA2BA78870D313DA376B5F57571E70C162570283D8510CD42D20FB
 
 # Signature del nuovo accumulatore (non sono univoche!!! http://bitcoin.stackexchange.com/questions/29674/why-does-re-signing-a-message-in-bitcoin-qt-produce-a-different-hash)
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente1 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
-H8ua4euma0zif30gi8MlpxVx4xjS63PyoeZoilmDMXVlh0R7CvoAwhfJCeybH5LxdyM2nJEees314trM7Q9hZV0=
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente1 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5
+H8EmLQjjAwjtYzSldmKi/SqCx4wBvfxqZsCW9Td4+GFdCG1BQluI293q4WEPZMtZnAfiNBwbyfZx40t80bXTxpo=
 
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente2 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
-IFQlgt3QTA5DlMpZmm0zgTTtX4LasKDJGBiwE8W30fiNGpfQquau9eg1bo6XXAYrpw5PgCvWxNQnxd+wP7oOTdc=
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente2 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5
+IPrI4rpbaoVuuDu4hMAJ8m9B8ec0pxm5XjCEkbiwErnBqSn1tPzBTS82o8i+qh2mNjEpwNjiQR9/g6cKdIIrfhI=
 
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 7eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5
-IABLlt1yDyT6SGj4Guvra9rWSkpBvYPViVmtUg6AgNLHfYExBfN0iyM61mY1Ul7O45uOpFUHq2PAQkzkqjOTyDQ=
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5
+IH0BKBchpaPsgRGQtVPKvX4oX9iV9oD4AvbHOv4GpR12Ts70p+r8kMf3BH40904CVEWny7ohVG/BXBOfYz+3aMU=
 
 # Signature accumulatore vecchio
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente1 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
@@ -42,13 +42,13 @@ IPyAistijtTqgXLTmC1Z1w4er5EZAEDlCRGDScfV+uQbImH4p3agJ8xHsD/OiyCdclevSo2kFCDBE0Ha
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
 H0M3H562iKMTmaHYHSXfEkQCgdgte4YZp4YT5VVemkfw9M+2UPnKbpIEB83gF0jmnTcofZRg6l4qBo5i4PVnxNs=
 
-# Transazione con l'accumulatore aggiornato. La chiave pubblica è "_admin_2" in hex ed è l'indirizzo dove sono memorizate le firme.
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_2 5f61646d696e5f32 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5
-010000000009085f61646d696e5f3209085f61646d696e5f32212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5f5760000
+# Transazione con l'accumulatore aggiornato. Il nome è "_admin_2" in hex e utente1 è l'indirizzo dht dove sono memorizzate le firme.
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_2 ffffff 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5 utente1
+010000000009085f61646d696e5f3208077574656e746531212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5b6500000
 
 # Transazione per l'accumulatore vecchio, ma questa volta con _admin_1
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 createrawaccumulatortransaction _admin_1 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
-010000000009085f61646d696e5f3109085f61646d696e5f312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7af250000
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_2 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7 utente1
+010000000009085f61646d696e5f3208077574656e7465312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7c80d0000
 
 # Esempio di dhtput per caricare le firme e relativo dhtget
 /twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 dhtput utente1 signature s '{"utente1":"IERBSmoEVSPPX0qAWwAfQCiOCbnbZX+byDnVAgx9+RtUxlZXiXykPkmRu7L9XQtt576uMbbgxn7xc5A+3k4ZSno=","utente2":"IIosg4mvqyeFMuzxgcGnP1tKlo2YQxldrsa+lF85dXdMbU4ix8weCky/UlVZnajPf4NgiQBqXXGyt4knWPyUBQM="}' utente1 0
@@ -75,7 +75,3 @@ H0M3H562iKMTmaHYHSXfEkQCgdgte4YZp4YT5VVemkfw9M+2UPnKbpIEB83gF0jmnTcofZRg6l4qBo5i
         "sig_user" : "utente1"
     }
 ]
-
-# Transazione iniziale
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_1 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7 utente1
-010000000009085f61646d696e5f3108077574656e7465312120450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e74b100000

@@ -35,20 +35,31 @@ $BIN cmd 3 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8e
 sleep 0.5
 $BIN cmd 1 setgenerate true 1
 sleep 0.5
-sleep 8
 echo "starting miner..."
+echo "wait a moment for the dht to be ready"
+sleep 5
 echo -e "\nPress any button when the dht is loaded"
 read -n1
 $BIN cmd 1 dhtput utente1 signature s '{"utente1":"HwctHmA3eskXqU8XZvZ5UYOuv6kLyPvfk440kpfXQXaXtjhb/CQuzg+bUscIQc9vNk7eXPH46Xkmq7ICQ8dnePw=","utente2":"IPyAistijtTqgXLTmC1Z1w4er5EZAEDlCRGDScfV+uQbImH4p3agJ8xHsD/OiyCdclevSo2kFCDBE0HaepIiSYM="}' utente1 0
-# Bisogna aspettare un po' altrimenti i comandi successivi non vedono niente
-sleep 4
 $BIN cmd 1 newpostmsg utente1 1 \"Primo_post_utente1\"
 $BIN cmd 1 newpostmsg utente1 2 \"Vendo_vino_buono\"
 $BIN cmd 2 newpostmsg utente2 1 \"Ciao_sono_utente2\"
 $BIN cmd 2 newpostmsg utente2 2 \"Vendo_vino_buonissimo\"
-$BIN cmd 1 follow utente1 [\"utente1\",\"utente2\"]
+$BIN cmd 3 newpostmsg utente3 1 \"test_di_messaggio\"
+$BIN cmd 1 follow utente1 [\"utente1\",\"utente2\",\"utente3\"]
 $BIN cmd 2 follow utente2 [\"utente1\",\"utente2\"]
 $BIN cmd 3 follow utente3 [\"utente1\",\"utente2\"] 
 $BIN cmd 1 dhtput utente1 home s [\"utente1\",\"utente2\"] utente1 0
+
+echo "Press a button to publish the new accumulator with related signatures"
+read -n1
+$BIN cmd 1 dhtput utente1 signature s '{"utente1":"H8EmLQjjAwjtYzSldmKi/SqCx4wBvfxqZsCW9Td4+GFdCG1BQluI293q4WEPZMtZnAfiNBwbyfZx40t80bXTxpo=","utente2":"IPrI4rpbaoVuuDu4hMAJ8m9B8ec0pxm5XjCEkbiwErnBqSn1tPzBTS82o8i+qh2mNjEpwNjiQR9/g6cKdIIrfhI="}' utente1 1
+sleep 2
+$BIN cmd 1 sendrawtransaction 010000000009085f61646d696e5f3208077574656e746531212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5b6500000
+echo "Wait for the transaction to be included in the blockchain"
+read -n1
+$BIN cmd 3 newpostmsg utente3 1 \"test_di_messaggio\"
+$BIN cmd 1 follow utente1 [\"utente1\",\"utente2\",\"utente3\"]
+
 #in futuro l'utente che firma può essere diverso dall'utente specificato, tipo _admin_ mette il nome e utente1, che è accumulato può firmare a nome di tutti.
 echo "done!"

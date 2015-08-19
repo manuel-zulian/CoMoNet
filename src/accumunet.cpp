@@ -127,9 +127,9 @@ int updateAccumulator() {
     // Recupera la prima transazione
     string next_try;
     next_try = admin_str + itostr(1);
-    printf(RED "\n%s\n", next_try.c_str());
+    printf( YELLOW "\n%s\n", next_try.c_str());
     if (!GetTransaction(next_try, txAccumulator, acc_hashBlock)) {
-            printf( RED "Can't retrieve the first accumulator, aborting" RESET "\n");
+            printf( RED "\nCan't retrieve the first accumulator, aborting\n" RESET "\n");
             return ACC_ERROR;
     }
 
@@ -142,6 +142,7 @@ int updateAccumulator() {
 
         // Se non lo trova è arrivato all'ultimo, interrompi.
         if (!GetTransaction(next_try, temp, temp2)) {
+            printf( YELLOW "\nAdmin transaction %s not found\n", next_try.c_str());
             break;
         } else {
             previousAccumulator = txAccumulator;
@@ -165,7 +166,7 @@ int updateAccumulator() {
         printf( YELLOW "\nNot first transaction\n");
         needed_signatures = computeNeededSignatures(dht_address);
     }
-    printf( RED "\nNeeds %i valid signatures to accept the current accumulator\n", needed_signatures);
+    printf( YELLOW "\nNeeds %i valid signatures to accept the current accumulator\n", needed_signatures);
 
     /**
      * Recupera le firme dalla rete dht.
@@ -178,9 +179,10 @@ int updateAccumulator() {
 
     if(!result.size()) {
         printf( RED "\nNo signatures found\n");
-    } else {
-        printf( RED "\nSignatures:\n%s\n", result[0]);
+        return ACC_ERROR;
     }
+
+    int validated_signatures = 0;
 
     // Verifica le firme.
     for( size_t i = 0; i < result.size(); i++ ) {
@@ -202,6 +204,7 @@ int updateAccumulator() {
                             string signature = signature_pair.value_.get_str();
 
                             printf( YELLOW "\nSignature for: %s\n", username.c_str());
+                            printf( YELLOW "\nSignature: %s\n", signature.c_str());
                             printf( YELLOW "\nSignature length: %i\n", signature.size());
 
                             Array temp;
@@ -215,12 +218,20 @@ int updateAccumulator() {
                             bool valid = validate.get_bool();
                             printf( YELLOW "\nValid: %d\n", valid);
 
-
+                            if(valid) {
+                                validated_signatures++;
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    if(validated_signatures < needed_signatures) {
+        return ACC_ERROR;
+    } else {
+        printf( YELLOW "\nA sufficient number of signatures has been found\n");
     }
 	
 	mp_int new_acc;
@@ -233,8 +244,10 @@ int updateAccumulator() {
 			mp_init(&last_accumulator_cache);
 		mp_read_unsigned_bin(&new_acc, vch.data(), vch.end()-vch.begin());
 		if (mp_cmp(&last_accumulator_cache, &new_acc) == MP_EQ) {
+            printf( YELLOW "Accumulator unchanged");
 			return ACC_UNCHANGED;
 		} else {
+            printf( YELLOW "Accumulator changed");
 			mp_copy(&new_acc, &last_accumulator_cache);
 			return ACC_CHANGED;
 		}
@@ -277,7 +290,7 @@ int computeNeededSignatures(string dht_address) {
 
                         BOOST_FOREACH(const Pair& signature_pair, signatures) {
                             temp++;
-                            printf( RED "\nIncrement number of sig\n");
+                            printf( YELLOW "\nIncrement number of sig\n");
                         }
                     }
                 }
