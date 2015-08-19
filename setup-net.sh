@@ -60,6 +60,7 @@ echo "Wait for the transaction to be included in the blockchain"
 read -n1
 $BIN cmd 3 newpostmsg utente3 1 \"test_di_messaggio\"
 $BIN cmd 1 follow utente1 [\"utente1\",\"utente2\",\"utente3\"]
+$BIN cmd 1 dhtput utente1 home s [\"utente1\",\"utente2\",\"utente3\"] utente1 1
 
 #in futuro l'utente che firma può essere diverso dall'utente specificato, tipo _admin_ mette il nome e utente1, che è accumulato può firmare a nome di tutti.
 echo "done!"

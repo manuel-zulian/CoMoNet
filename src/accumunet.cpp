@@ -153,18 +153,25 @@ int updateAccumulator() {
     string dht_address;
     dht_address = boost::algorithm::unhex(txAccumulator.pubKey.ToString());
 
+    string dht_address_previous_accumulator;
+    if(next_try == "_admin_2") {
+        dht_address_previous_accumulator = boost::algorithm::unhex(txAccumulator.pubKey.ToString());
+    } else {
+        dht_address_previous_accumulator = boost::algorithm::unhex(previousAccumulator.pubKey.ToString());
+    }
+
     /**
      * Recupera il numero di firme necessarie, cioè metà degli utenti
      * nell'accumulatore precedente + 1. Se è la prima transazione, serve l'unanimità.
      * */
     int needed_signatures;
-    printf( YELLOW "\nSearching signatures at address: %s\n", dht_address.c_str());
+    printf( YELLOW "\nSearching signatures at address: %s\n", dht_address_previous_accumulator.c_str());
     if(next_try == "_admin_2") {
         printf( YELLOW "\nFirst transaction\n");
-        needed_signatures = computeNeededSignatures(dht_address);
+        needed_signatures = computeNeededSignatures(dht_address_previous_accumulator);
     } else {
         printf( YELLOW "\nNot first transaction\n");
-        needed_signatures = computeNeededSignatures(dht_address);
+        needed_signatures = computeNeededSignatures(dht_address_previous_accumulator);
     }
     printf( YELLOW "\nNeeds %i valid signatures to accept the current accumulator\n", needed_signatures);
 
