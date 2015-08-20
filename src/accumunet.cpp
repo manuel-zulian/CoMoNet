@@ -368,8 +368,9 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
         throw runtime_error(
                             "createrawaccumulatortransaction <username> <pubKey> <accumulator> <address>\n"
 							"Create a transaction registering a new group username\n"
-							"pubKey and accumulator must be in hex format\n"
+                            "accumulator must be in hex format\n"
                             "address is the dht address where the signatures of the accumulator are stored\n"
+                            "pubkey parameter is not used (even though the address is stored in that field in the transaction)\n"
 							"Returns hex-encoded raw transaction.\n"
 							"it is not stored in the wallet or transmitted to the network.");
 	
@@ -400,6 +401,37 @@ Value createrawaccumulatortransaction(const Array& params, bool fHelp)
 	
     DoTxProofOfWork(rawTx);
 	
+    CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+    ss << rawTx;
+    return HexStr(ss.begin(), ss.end());
+}
+
+Value createrawstructuretransaction(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 4)
+        throw runtime_error(
+                            "createrawstructuretransaction <username> <pubKey> <structure> <message>\n"
+                            "Create a transaction registering a new structure\n"
+                            "pubKey contains the address of the signatures\n"
+                            "structure follows a particular syntax"
+                            "Returns hex-encoded raw transaction.\n"
+                            "it is not stored in the wallet or transmitted to the network.");
+
+    CTransaction rawTx; // transazione da compilare
+
+    if (params[0].type() != str_type)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "username must be string");
+    string username = params[0].get_str();
+    rawTx.userName = CScript() << vector<unsigned char>((const unsigned char*)username.data(), (const unsigned char*)username.data() + username.size());
+
+    string address = params[1].get_str();
+    rawTx.pubKey = CScript() << address;
+
+    string structure = params[2].get_str();
+    rawTx.accumulator = CScript() << structure;
+
+    DoTxProofOfWork(rawTx);
+
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << rawTx;
     return HexStr(ss.begin(), ss.end());
