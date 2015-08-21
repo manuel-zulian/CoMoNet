@@ -168,10 +168,10 @@ int updateAccumulator() {
     printf( YELLOW "\nSearching signatures at address: %s\n", dht_address_previous_accumulator.c_str());
     if(next_try == "_admin_2") {
         printf( YELLOW "\nFirst transaction\n");
-        needed_signatures = computeNeededSignatures(dht_address_previous_accumulator);
+        needed_signatures = computeNeededSignatures(dht_address_previous_accumulator, true);
     } else {
         printf( YELLOW "\nNot first transaction\n");
-        needed_signatures = computeNeededSignatures(dht_address_previous_accumulator);
+        needed_signatures = computeNeededSignatures(dht_address_previous_accumulator, false);
     }
     printf( YELLOW "\nNeeds %i valid signatures to accept the current accumulator\n", needed_signatures);
 
@@ -269,7 +269,7 @@ int updateAccumulator() {
  * @param dht_address L'indirizzo a cui recuperare le firme dell'accumulatore precedente.
  * @return Il numero di firme necessario a validare l'accumulatore.
  */
-int computeNeededSignatures(string dht_address) {
+int computeNeededSignatures(string dht_address, bool isFirst) {
     Array p;
     p.push_back(dht_address);
     p.push_back("signature");
@@ -305,7 +305,12 @@ int computeNeededSignatures(string dht_address) {
         }
     }
 
-    needed = ceil(temp / 2) + 1;
+    /* Se è la prima transazione richiedi l'unanimità */
+    if(!isFirst) {
+        needed = ceil(temp / 2) + 1;
+    } else {
+        needed = temp;
+    }
 
     return needed;
 }
