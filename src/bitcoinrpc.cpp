@@ -284,6 +284,7 @@ static const CRPCCommand vRPCCommands[] =
     { "createrawstructuretransaction", &createrawstructuretransaction, true, true, true},
 	{ "addwitnesstouser",		&addwitnesstouser,		 true,		false,		true},
     { "getprimefromusername",   &getprimefromusername,   true,		false,		true},
+    { "getstructure",   &getstructure,   true,		false,		true},
 };
 
 CRPCTable::CRPCTable()

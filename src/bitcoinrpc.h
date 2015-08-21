@@ -238,5 +238,6 @@ extern json_spirit::Value createrawaccumulatortransaction(const json_spirit::Arr
 extern json_spirit::Value addwitnesstouser(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getprimefromusername(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value createrawstructuretransaction(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getstructure(const json_spirit::Array& params, bool fHelp);
 
 #endif

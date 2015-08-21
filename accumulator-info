@@ -75,3 +75,8 @@ H0M3H562iKMTmaHYHSXfEkQCgdgte4YZp4YT5VVemkfw9M+2UPnKbpIEB83gF0jmnTcofZRg6l4qBo5i
         "sig_user" : "utente1"
     }
 ]
+
+## Structure work
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawstructuretransaction _structure_1 utente1 '{"rows":3,"columns":3,"order":["utente1","utente2"]}' null   
+01000000000d0c5f7374727563747572655f3108077574656e74653135347b22726f7773223a332c22636f6c756d6e73223a332c226f72646572223a5b227574656e746531222c227574656e746532225d7ded4b0000
+

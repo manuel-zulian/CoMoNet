@@ -31,6 +31,7 @@ using namespace libtorrent;//extern libtorrent::session *ses;
 extern boost::shared_ptr<session> m_ses;
 const char* admin_str = "_admin_";	///< special username representing users
 									///< with special rights
+const char* structure_str = "_structure_";                              
 mp_int last_accumulator_cache = {};
 // TODO: potrebbe diventare una mappa in cui ad ogni "gruppo"
 // associo una cache del suo accumulatore.
@@ -440,6 +441,44 @@ Value createrawstructuretransaction(const Array& params, bool fHelp)
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << rawTx;
     return HexStr(ss.begin(), ss.end());
+}
+
+Value getstructure(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error("getstructure\n""Returns a json with the structure\n");
+
+	CTransaction txStructure;
+	uint256 acc_hashBlock;
+
+    // Recupera la prima transazione
+    string next_try;
+    next_try = structure_str + itostr(1);
+    printf( YELLOW "\n%s\n", next_try.c_str());
+    if (!GetTransaction(next_try, txStructure, acc_hashBlock)) {
+        printf( RED "\nCould not retrieve structure\n");
+        throw runtime_error("getstructure() : could not retrieve structure\n");
+    }
+
+    // 1024 tentativi è un numero arbitrario
+    for(int i = 2; i < 1024; i++) {
+        next_try = structure_str + itostr(i);
+
+        CTransaction temp;
+        uint256 temp2;
+
+        // Se non lo trova è arrivato all'ultimo, interrompi.
+        if (!GetTransaction(next_try, temp, temp2)) {
+            printf( YELLOW "\nStructure transaction %s not found\n", next_try.c_str());
+            break;
+        } else {
+            txStructure = temp;
+        }
+    }
+    
+    printf( YELLOW "\nStructure found: %s\n", txStructure.accumulator);
+
+    return boost::algorithm::unhex(txStructure.accumulator.ToString());
 }
 
 Value getprimefromusername(const Array& params, bool fHelp) {

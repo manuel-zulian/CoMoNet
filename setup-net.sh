@@ -35,6 +35,7 @@ $BIN cmd 3 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8e
 sleep 0.5
 $BIN cmd 1 setgenerate true 1
 sleep 0.5
+$BIN cmd 1 sendrawtransaction 01000000000d0c5f7374727563747572655f3108077574656e74653135347b22726f7773223a332c22636f6c756d6e73223a332c226f72646572223a5b227574656e746531222c227574656e746532225d7ded4b0000
 echo "starting miner..."
 echo "wait a moment for the dht to be ready"
 sleep 5
