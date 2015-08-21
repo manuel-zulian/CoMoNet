@@ -35,6 +35,6 @@ bool uint256tomp_int(mp_int* dest, uint256* src);
 
 bool mp_intTouint256(uint256* dest, mp_int* src);
 
-int computeNeededSignatures(std::string dht_address);
+int computeNeededSignatures(std::string dht_address, bool isFirst);
 
 #endif /* defined(__accomunet__accumunet__) */

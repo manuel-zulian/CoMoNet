@@ -415,7 +415,7 @@ Value createrawstructuretransaction(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 4)
         throw runtime_error(
-                            "createrawstructuretransaction <username> <pubKey> <structure> <message>\n"
+                            "createrawstructuretransaction <name> <pubKey> <structure> <message>\n"
                             "Create a transaction registering a new structure\n"
                             "pubKey contains the address of the signatures\n"
                             "structure follows a particular syntax"
