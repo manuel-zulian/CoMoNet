@@ -281,6 +281,7 @@ static const CRPCCommand vRPCCommands[] =
     { "getpieceavailability",   &getpieceavailability,   false,     true,       true },
     { "getpiecemaxseen",        &getpiecemaxseen,        false,     true,       true },
 	{ "createrawaccumulatortransaction", &createrawaccumulatortransaction, true, true, true},
+    { "createrawstructuretransaction", &createrawstructuretransaction, true, true, true},
 	{ "addwitnesstouser",		&addwitnesstouser,		 true,		false,		true},
     { "getprimefromusername",   &getprimefromusername,   true,		false,		true},
 };
