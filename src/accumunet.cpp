@@ -475,6 +475,8 @@ Value getstructure(const Array& params, bool fHelp)
             txStructure = temp;
         }
     }
+
+    // TODO verificare se le firme ci sono e sono valide all'indirizzo dht
     
     printf( YELLOW "\nStructure found: %s\n", txStructure.accumulator);
 

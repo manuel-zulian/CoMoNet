@@ -1,40 +1,53 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html class="no-js" data-ng-app="main">
-<!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Accumunet</title>
+    <title>AccumunetV2</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Local libraries for faster debugging -->
+    <script src="js/angular.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.3.js"></script>
+    <script src="js/angular-route.js"></script>
+
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/jquery.json-2.4.js"></script>
     <script src="js/jquery.jsonrpcclient.js"></script>
     <script src="js/twister_io.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lobster|Open+Sans+Condensed:300,300italic' rel='stylesheet' type='text/css'>
 </head>
 
 <body data-ng-controller="MainController">
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- Add your site or application content here -->
-    <div id="wrapper">
-        <header><h1 id="title">Accumunet</h1></header>
+    <div id="page" class="container">
+        <header class="page-header">
+            <h1>
+                Accumunet <small>V2</small>
+            </h1>
+        </header>
+        <div class="description">
+            <p class="lead">Check the latest products from your local vendors</p>
+        </div>
+        <div class="actions">
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <a class="btn">Add a product</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Posts -->
+    </div>
+<!--    <div id="wrapper">
+        <header><h1 id="title">AccumunetV2</h1></header>
         <nav data-ng-controller="NavigationController">
             <a id="home-button" class="nav-button" href="#/">Home</a>
             <a class="nav-button" href="#/ordinazioni" data-ng-show="isAdmin">Ordinazioni</a>
@@ -42,8 +55,7 @@
             <a id="current-user">{{current_user}}</a>
         </nav>
         <div data-ng-view id="main-content"></div>
-    </div>
-
+    </div>-->
 
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
