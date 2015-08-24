@@ -442,26 +442,6 @@ nav {
     margin-right: auto;
 }
 
-header {
-    width: 100%;
-    position: relative;
-    height: 330px;
-    background-image: url(https://yy2.staticflickr.com/3245/2605498464_bea7c31df9_z.jpg?zz=1);
-    background-size: 100%;
-    background-position: bottom;
-    background-color: rgba(230, 220, 256, 0.2);
-    vertical-align: bottom;
-    display: inline-block;
-}
-
-body {
-    background-image: url(http://upload.wikimedia.org/wikipedia/commons/5/51/Adobe_guadalupe_winery.jpg);
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-attachment: fixed;
-    background-size: 1270px;
-}
-
 .nav-button {
     color: rgb(100,0,0);
 }

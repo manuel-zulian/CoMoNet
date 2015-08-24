@@ -64,11 +64,18 @@
                     deferred.resolve(posts);
                 });
                 return deferred.promise;
+            },
+            getstructure: function () {
+                var deferred = $q.defer();
+                globals.getstructure(function(structure){
+                    deferred.resolve(structure);
+                });
+                return deferred.promise;
             }
         };
     });
     
-    main.controller('MainController', ['main_state', '$scope', '$modal', function (main_state, $scope, $modal) {
+    main.controller('MainController', function (main_state, $scope, $modal, rpcQuery) {
         var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
@@ -89,10 +96,12 @@
                 var error;
             });
         }
+
+        rpcQuery.getstructure().then(function(structure){
+            $scope.rows = structure.rows;
+        });
         
-        
-        
-    }]);
+    });
     
     main.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
         $scope.items = ['utente1', 'utente2', 'utente3'];

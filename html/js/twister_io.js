@@ -262,6 +262,20 @@
         
             getlasthave = function (current_user, reloadCallback) {
                 twisterRpc("getlasthave", [current_user], processLastHave, reloadCallback);
+            },
+
+            getStructure = function (cbFunc) {
+                var resultArg = null, errorArg = null;
+                twisterRpc("getstructure", [], function(resultArg, result) {
+                    var structure;
+                    console.log(result);
+                    structure = JSON.parse(result);
+                    console.log(structure);
+                    cbFunc(structure);
+                }, resultArg,
+                function(errorArg, error) {
+                    console.log(error);
+                }, errorArg);
             };
         
         globals.twisterRpc  = twisterRpc;
@@ -269,6 +283,7 @@
         globals.getposts    = getposts;
         globals.getlasthave = getlasthave;
         globals.dhtput      = dhtput;
+        globals.getstructure = getStructure;
     }());
 
 }(this));
