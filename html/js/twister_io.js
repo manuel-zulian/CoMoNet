@@ -13,17 +13,17 @@
     // join multiple dhtgets to the same resources in this map
     var dhtgetPendingMap = {},
 
-        // number of dhtgets in progress (requests to the daemon)
+    // number of dhtgets in progress (requests to the daemon)
         dhtgetsInProgress = 0,
 
-        // keep maxDhtgets smaller than the number of daemon/browser sockets
-        // most browsers limit to 6 per domain (see http://www.browserscope.org/?category=network)
+    // keep maxDhtgets smaller than the number of daemon/browser sockets
+    // most browsers limit to 6 per domain (see http://www.browserscope.org/?category=network)
         maxDhtgets = 5,
 
-        // requests not yet sent to the daemon due to maxDhtgets limit
+    // requests not yet sent to the daemon due to maxDhtgets limit
         queuedDhtgets = [],
-        
-        // last post we got for every user
+
+    // last post we got for every user
         lastHaveMap = {};
 
     // private function to define a key in _dhtgetPendingMap
@@ -84,13 +84,13 @@
             console.log("warning: _dhtgetAbortPending with unknown locator " + locator);
         }
     }
-    
+
     function dhtgetInternal(username, resource, multi, timeoutArgs) {
         var locator = dhtgetLocator(username, resource, multi),
             argsList = [username, resource, multi],
             locatorSplit;
         dhtgetsInProgress += 1;
-        
+
         if (typeof timeoutArgs !== 'undefined') {
             argsList = argsList.concat(timeoutArgs);
         }
@@ -157,13 +157,13 @@
                 cbArg: cbArg
             });
     }
-    
+
     // handle getlasthave response. the increase in lasthave cannot be assumed to
     // produce new items for timeline since some posts might be directmessages (which
     // won't be returned by getposts, normally).
     function processLastHave(reloadCallback, userHaves) {
         var user, should_reload;
-        for (user in userHaves ) {
+        for (user in userHaves) {
             if (userHaves.hasOwnProperty(user)) {
                 if (lastHaveMap.hasOwnProperty(user)) {
                     if (userHaves[user] > lastHaveMap[user]) {
@@ -177,15 +177,15 @@
             reloadCallback();
         }
     }
-    
+
     /****************************
      * Exporting variables
      ****************************/
-    
+
     (function () {
         var posts = [],
-            
-            // store value at the dht resource
+
+        // store value at the dht resource
             dhtput = function (username, resource, multi, value, sig_user, seq, cbFunc, cbArg) {
                 globals.twisterRpc("dhtput", [username, resource, multi, value, sig_user, seq],
                     function (args, ret) {
@@ -203,8 +203,8 @@
                         }
                     }, cbArg);
             },
-            
-            // main json rpc method. receives callbacks for success and error
+
+        // main json rpc method. receives callbacks for success and error
             twisterRpc = function (method, params, resultFunc, resultArg, errorFunc, errorArg) {
                 var foo = new $.JsonRpcClient({
                     ajaxUrl: '/',
@@ -220,12 +220,12 @@
                             errorFunc(errorArg, ret);
                         }
                     }
-                        );
+                );
             },
 
-            // get data from dht resource
-            // the value ["v"] is extracted from response and returned to callback
-            // null is passed to callback in case of an error
+        // get data from dht resource
+        // the value ["v"] is extracted from response and returned to callback
+        // null is passed to callback in case of an error
             dhtget = function (username, resource, multi, cbFunc, cbArg, timeoutArgs) {
                 var locator = dhtgetLocator(username, resource, multi);
                 if (dhtgetPendingMap.hasOwnProperty(locator)) {
@@ -242,9 +242,9 @@
                     }
                 }
             },
-            
-            // calls cbFunc(req, posts) with posts being an array of post
-            // this is the real one
+
+        // calls cbFunc(req, posts) with posts being an array of post
+        // this is the real one
             getposts = function (username, cbFunc, cbArgs, limit, max, since) {
                 var paramObj = {"username": username},
                     p_limit = 10;
@@ -259,30 +259,41 @@
                 }
                 twisterRpc("getposts", [p_limit, [paramObj]], cbFunc, cbArgs);
             },
-        
+
             getlasthave = function (current_user, reloadCallback) {
                 twisterRpc("getlasthave", [current_user], processLastHave, reloadCallback);
             },
 
             getStructure = function (cbFunc) {
                 var resultArg = null, errorArg = null;
-                twisterRpc("getstructure", [], function(resultArg, result) {
-                    var structure;
-                    console.log(result);
-                    structure = JSON.parse(result);
-                    console.log(structure);
-                    cbFunc(structure);
-                }, resultArg,
-                function(errorArg, error) {
-                    console.log(error);
-                }, errorArg);
+                twisterRpc("getstructure", [], function (resultArg, result) {
+                        var structure;
+                        console.log(result);
+                        // Si suppone che la struttura sia una json benformata.
+                        structure = JSON.parse(result);
+                        console.log(structure);
+
+                        // Per non intasare la blockchain, l'ordine in cui mostrare gli utenti va a prenderlo in dht.
+                        twisterRpc("dhtget", [structure.order, "order", "s"], function (resultArgs, result) {
+                                console.log(result);
+                                structure.order = result[0].p.v;
+                                console.log(structure);
+                                cbFunc(structure);
+                            }, resultArg,
+                            function (errorArg, error) {
+
+                            }, errorArg);
+                    }, resultArg,
+                    function (errorArg, error) {
+                        console.log(error);
+                    }, errorArg);
             };
-        
-        globals.twisterRpc  = twisterRpc;
-        globals.dhtget      = dhtget;
-        globals.getposts    = getposts;
+
+        globals.twisterRpc = twisterRpc;
+        globals.dhtget = dhtget;
+        globals.getposts = getposts;
         globals.getlasthave = getlasthave;
-        globals.dhtput      = dhtput;
+        globals.dhtput = dhtput;
         globals.getstructure = getStructure;
     }());
 

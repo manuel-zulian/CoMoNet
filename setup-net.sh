@@ -1,5 +1,25 @@
 #!/bin/bash
 
+function coloredEcho(){
+    local exp=$1;
+    local color=$2;
+    if ! [[ $color =~ '^[0-9]$' ]] ; then
+       case $(echo $color | tr '[:upper:]' '[:lower:]') in
+        black) color=0 ;;
+        red) color=1 ;;
+        green) color=2 ;;
+        yellow) color=3 ;;
+        blue) color=4 ;;
+        magenta) color=5 ;;
+        cyan) color=6 ;;
+        white|*) color=7 ;; # white or invalid color
+       esac
+    fi
+    tput setaf $color;
+    echo -e $exp;
+    tput sgr0;
+}
+
 BIN=./aLaunch
 
 echo "Do you want to restart all? [y/N]"
@@ -33,15 +53,21 @@ $BIN cmd 2 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8e
 $BIN cmd 1 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7
 $BIN cmd 3 addwitnesstouser utente3 450da364ae10b42c83f180d01fecf5cbd0901d4b1b8eed22d8490d46a42a65e7
 sleep 0.5
+coloredEcho "starting miner..." yellow
 $BIN cmd 1 setgenerate true 1
 sleep 0.5
-$BIN cmd 1 sendrawtransaction 01000000000d0c5f7374727563747572655f3108077574656e74653135347b22726f7773223a332c22636f6c756d6e73223a332c226f72646572223a5b227574656e746531222c227574656e746532225d7ded4b0000
-echo "starting miner..."
-echo "wait a moment for the dht to be ready"
+coloredEcho "Creating structure" yellow
+# Transazione di struttura
+$BIN cmd 1 sendrawtransaction 01000000000d0c5f7374727563747572655f3108077574656e74653129287b22726f7773223a332c22636f6c756d6e73223a332c226f72646572223a227574656e746531227dc59b0000
+coloredEcho "\nwait a moment for the dht to be ready" red
 sleep 5
-echo -e "\nPress any button when the dht is loaded"
+coloredEcho "\nPress any button when the dht is loaded" blue
 read -n1
+coloredEcho "Publishing order for structure" yellow
+$BIN cmd 1 dhtput utente1 order s '["utente1","utente2"]' utente1 0
+coloredEcho "Publishing signatures for accumulator" yellow
 $BIN cmd 1 dhtput utente1 signature s '{"utente1":"HwctHmA3eskXqU8XZvZ5UYOuv6kLyPvfk440kpfXQXaXtjhb/CQuzg+bUscIQc9vNk7eXPH46Xkmq7ICQ8dnePw=","utente2":"IPyAistijtTqgXLTmC1Z1w4er5EZAEDlCRGDScfV+uQbImH4p3agJ8xHsD/OiyCdclevSo2kFCDBE0HaepIiSYM="}' utente1 0
+sleep 2
 $BIN cmd 1 newpostmsg utente1 1 \"Primo_post_utente1\"
 $BIN cmd 1 newpostmsg utente1 2 \"Vendo_vino_buono\"
 $BIN cmd 2 newpostmsg utente2 1 \"Ciao_sono_utente2\"
@@ -52,16 +78,15 @@ $BIN cmd 2 follow utente2 [\"utente1\",\"utente2\"]
 $BIN cmd 3 follow utente3 [\"utente1\",\"utente2\"] 
 $BIN cmd 1 dhtput utente1 home s [\"utente1\",\"utente2\"] utente1 0
 
-echo "Press a button to publish the new accumulator with related signatures"
+coloredEcho "\nPress a button to publish the new accumulator with related signatures" blue
 read -n1
-$BIN cmd 1 dhtput utente1 signature s '{"utente1":"H8EmLQjjAwjtYzSldmKi/SqCx4wBvfxqZsCW9Td4+GFdCG1BQluI293q4WEPZMtZnAfiNBwbyfZx40t80bXTxpo=","utente2":"IPrI4rpbaoVuuDu4hMAJ8m9B8ec0pxm5XjCEkbiwErnBqSn1tPzBTS82o8i+qh2mNjEpwNjiQR9/g6cKdIIrfhI="}' utente1 1
+$BIN cmd 1 dhtput utente1 signature s '{"utente1":"H8EmLQjjAwjtYzSldmKi/SqCx4wBvfxqZsCW9Td4+GFdCG1BQluI293q4WEPZMtZnAfiNBwbyfZx40t80bXTxpo=","utente2":"IPrI4rpbaoVuuDu4hMAJ8m9B8ec0pxm5XjCEkbiwErnBqSn1tPzBTS82o8i+qh2mNjEpwNjiQR9/g6cKdIIrfhI="}' utente1 0
 sleep 2
 $BIN cmd 1 sendrawtransaction 010000000009085f61646d696e5f3208077574656e746531212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5b6500000
-echo "Wait for the transaction to be included in the blockchain"
+coloredEcho "\nWait for the transaction to be included in the blockchain" red
 read -n1
 $BIN cmd 3 newpostmsg utente3 1 \"test_di_messaggio\"
 $BIN cmd 1 follow utente1 [\"utente1\",\"utente2\",\"utente3\"]
 $BIN cmd 1 dhtput utente1 home s [\"utente1\",\"utente2\",\"utente3\"] utente1 1
 
-#in futuro l'utente che firma può essere diverso dall'utente specificato, tipo _admin_ mette il nome e utente1, che è accumulato può firmare a nome di tutti.
 echo "done!"

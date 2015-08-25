@@ -37,25 +37,16 @@
         <div class="actions">
             <div class="btn-toolbar">
                 <div class="btn-group">
-                    <a class="btn">Add a product</a>
+                    <a class="btn btn-success" href="#/dashboard">Dashboard</a>
+                    <a class="btn btn-success">Add a product</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div data-ng-view class="container">
-        <p>{{rows}}</p>
+    <div data-ng-view class="container" id="main-content">
+
     </div>
-<!--    <div id="wrapper">
-        <header><h1 id="title">AccumunetV2</h1></header>
-        <nav data-ng-controller="NavigationController">
-            <a id="home-button" class="nav-button" href="#/">Home</a>
-            <a class="nav-button" href="#/ordinazioni" data-ng-show="isAdmin">Ordinazioni</a>
-            <a class="nav-button" href="#/">About</a>
-            <a id="current-user">{{current_user}}</a>
-        </nav>
-        <div data-ng-view id="main-content"></div>
-    </div>-->
 
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>

@@ -373,12 +373,14 @@ nav {
 
 
 #main-content {
-    width: 100%;
-    position: relative;
-    background-color: rgba(250,256,254,0.8);
-    padding-top: 20px;
-    padding-bottom: 50px;
+    margin-top: 20px;
 }
+
+#producer-well {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 .author-mini {
     color: #663535;
     background-color: rgb(249,225,123);
