@@ -478,7 +478,7 @@ Value getstructure(const Array& params, bool fHelp)
 
     // TODO verificare se le firme ci sono e sono valide all'indirizzo dht
     
-    printf( YELLOW "\nStructure found: %s\n", txStructure.accumulator);
+    printf( YELLOW "\nStructure found: %s\n", txStructure.accumulator.ToString().c_str());
 
     return boost::algorithm::unhex(txStructure.accumulator.ToString());
 }

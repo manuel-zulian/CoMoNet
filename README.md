@@ -11,7 +11,7 @@ There are three ways to start this software, corresponding to three different sc
 - launch-mock: this script start either a one- or a two-node network, and the folders of the clients are located in the system temporary directory. It is useful to generate a fresh blockchain with some transactions already in it (the accumulator one for example) and to generate a new wallet. Then to use the newly created blockchain, it is enough to copy the file blocks/block.000 etc... to the folder of the client of interest renaming it to bootstrap.dat. The wallet can be copied as it is.
 - setup-sh-net: this script runs a full three node network which simulates all the dynamics of this project. Clients can be accesses via rpc-calls and one can see the home page using a browser.
 
-Below are left twister build instructions for reference.  
+Twister build instructions are left below for reference.  
 
 # twister - p2p microblogging
 
