@@ -23,7 +23,7 @@ ENV HOME /root
 VOLUME /root/.twister
 
 # Run twisterd by default
-ENTRYPOINT ["/accumunet/twisterd", "-rpcuser=user", "-rpcpassword=pwd", "-rpcallowip=172.17.42.1", "-htmldir=/accumunet/html"]
+ENTRYPOINT ["/accumunet/twisterd", "-rpcuser=user", "-rpcpassword=pwd", "-rpcallowip=172.17.42.1", "-htmldir=/accumunet/html", "-port=28333"]
 EXPOSE 28332
 EXPOSE 28333
 EXPOSE 29333

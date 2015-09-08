@@ -42,9 +42,9 @@ IPyAistijtTqgXLTmC1Z1w4er5EZAEDlCRGDScfV+uQbImH4p3agJ8xHsD/OiyCdclevSo2kFCDBE0Ha
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48001 signmessage utente3 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7
 H0M3H562iKMTmaHYHSXfEkQCgdgte4YZp4YT5VVemkfw9M+2UPnKbpIEB83gF0jmnTcofZRg6l4qBo5i4PVnxNs=
 
-# Transazione con l'accumulatore aggiornato. Il nome è "_admin_2" in hex e utente1 è l'indirizzo dht dove sono memorizzate le firme.
-./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_2 ffffff 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5 utente1
-010000000009085f61646d696e5f3208077574656e746531212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5b6500000
+# Transazione con l'accumulatore aggiornato. Il nome è "_admin_2" in hex e utente2 è l'indirizzo dht dove sono memorizzate le firme.
+./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_2 ffffff 07EEDC174BA9061088BC764189ECB85D351A615F0CA5781C77436735F23224C5 utente2
+010000000009085f61646d696e5f3208077574656e746532212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5afed0000
 
 # Transazione per l'accumulatore vecchio, ma questa volta con _admin_1
 ./twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd -rpcallowip=127.0.0.1 -rpcport=48002 createrawaccumulatortransaction _admin_2 ffffff 450DA364AE10B42C83F180D01FECF5CBD0901D4B1B8EED22D8490D46A42A65E7 utente1
