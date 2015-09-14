@@ -54,7 +54,7 @@ coloredEcho "Publishing signatures for accumulator" yellow
 ~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd dhtput utente1 signature s '{"utente1":"HwctHmA3eskXqU8XZvZ5UYOuv6kLyPvfk440kpfXQXaXtjhb/CQuzg+bUscIQc9vNk7eXPH46Xkmq7ICQ8dnePw=","utente2":"IPyAistijtTqgXLTmC1Z1w4er5EZAEDlCRGDScfV+uQbImH4p3agJ8xHsD/OiyCdclevSo2kFCDBE0HaepIiSYM="}' utente1 0
 ~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd dhtput utente2 signature s '{"utente1":"H8EmLQjjAwjtYzSldmKi/SqCx4wBvfxqZsCW9Td4+GFdCG1BQluI293q4WEPZMtZnAfiNBwbyfZx40t80bXTxpo=","utente2":"IPrI4rpbaoVuuDu4hMAJ8m9B8ec0pxm5XjCEkbiwErnBqSn1tPzBTS82o8i+qh2mNjEpwNjiQR9/g6cKdIIrfhI="}' utente2 0
 sleep 2
-~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd newpostmsg utente1 1 \"Primo_post_utente1\"
+~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd newpostmsg utente1 1 \"Primo post utente1\"
 ~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd newpostmsg utente1 2 \"Vendo_vino_buono\"
 ~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd newpostmsg utente2 1 \"Ciao_sono_utente2\"
 ~/accumunet/twisterd -genproclimit=1 -rpcuser=user -rpcpassword=pwd newpostmsg utente2 2 \"Vendo_vino_buonissimo\"

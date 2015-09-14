@@ -76,7 +76,7 @@
     });
 
     main.controller('MainController', function (main_state, $scope, $modal, rpcQuery) {
-        var modalInstance = $modal.open({
+        /*var modalInstance = $modal.open({
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
             backdrop: 'static',
@@ -85,7 +85,7 @@
                     return $scope.items;
                 }
             }
-        });
+        });*/
         if (main_state.s.current_user === undefined) {
 
 /*            modalInstance.result.then(function (selectedItem) {
@@ -130,7 +130,17 @@
         $scope.columnswidth = 3;
 
         var fillPosts = function (posts) {
-                $scope.posts = posts;
+                $scope.posts = [];
+                posts.forEach(function(item){
+                    var post = {};
+                    var temp = item.userpost.msg.split("#");
+                    var temp2 = temp[0].split(":");
+                    post.text = temp2[1].replace("_", " ");
+                    var temp3 = temp[1].split(":");
+                    post.img = temp3[1].replace(/^"|"$/, "");
+                    $scope.posts.push(post);
+                });
+                //$scope.posts = posts;
             },
             send = function (dmsg) {
                 globals.dhtput($routeParams.name, "dmgs", "m", dmsg, main_state.s.current_user, 0);
