@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Local libraries for faster debugging -->
@@ -25,28 +26,35 @@
 </head>
 
 <body data-ng-controller="MainController">
-    <div id="page" class="container">
-        <header class="page-header">
-            <h1>
-                Accumunet <small>V2</small>
-            </h1>
-        </header>
-        <div class="description">
-            <p class="lead">Check the latest products from your local vendors</p>
-        </div>
-        <div class="actions">
-            <div class="btn-toolbar">
-                <div class="btn-group">
-                    <a class="btn btn-success" href="#/dashboard">Dashboard</a>
-                    <!--<a class="btn btn-success">Add a product</a>-->
-                </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand">Accumunet 0.2</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/dashboard">Home</a></li>
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <div id="page" class="container">
+        <div class="page-header">
+            <h1>The Local Bag  Artisan</h1>
+        </div>
+        <p class="lead">Check the latest products from this great Artisan</p>
     </div>
 
     <div data-ng-view class="container" id="main-content">
 
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">Made in <a href="https://angularjs.org/">AngularJS</a></p>
+        </div>
+    </footer>
 
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>

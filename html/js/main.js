@@ -135,9 +135,11 @@
                     var post = {};
                     var temp = item.userpost.msg.split("#");
                     var temp2 = temp[0].split(":");
-                    post.text = temp2[1].replace("_", " ");
+                    post.text = temp2[1].replace(/_/g, " ");
                     var temp3 = temp[1].split(":");
                     post.img = temp3[1].replace(/^"|"$/, "");
+                    var temp4 = temp[2].split(":");
+                    post.title = temp4[1].replace(/_/g, " ").replace(/^"|"$/, "");
                     $scope.posts.push(post);
                 });
                 //$scope.posts = posts;

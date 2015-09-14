@@ -70,11 +70,11 @@ $BIN cmd 1 dhtput utente1 signature s '{"utente1":"HwctHmA3eskXqU8XZvZ5UYOuv6kLy
 $BIN cmd 1 dhtput utente2 signature s '{"utente1":"H8EmLQjjAwjtYzSldmKi/SqCx4wBvfxqZsCW9Td4+GFdCG1BQluI293q4WEPZMtZnAfiNBwbyfZx40t80bXTxpo=","utente2":"IPrI4rpbaoVuuDu4hMAJ8m9B8ec0pxm5XjCEkbiwErnBqSn1tPzBTS82o8i+qh2mNjEpwNjiQR9/g6cKdIIrfhI="}' utente2 0
 sleep 2
 
-$BIN cmd 1 newpostmsg utente1 2 \"Vendo_vino_buono\"
-$BIN cmd 1 newpostmsg utente1 1 \"txt:Mocca_caffè\#img:moka.jpg\"
-$BIN cmd 2 newpostmsg utente2 1 \"Ciao_sono_utente2\"
-$BIN cmd 2 newpostmsg utente2 2 \"Vendo_vino_buonissimo\"
-$BIN cmd 3 newpostmsg utente3 1 \"test_di_messaggio\"
+$BIN cmd 1 newpostmsg utente1 2 \"txt:Nice_Cross-Body_Bag\#img:1.jpg\#title:The_Sak_Silverlake\"
+$BIN cmd 1 newpostmsg utente1 1 \"txt:Nice_Cross-Body_Bag\#img:2.jpg\#title:The_Rebecca_Minkoff\"
+$BIN cmd 2 newpostmsg utente2 1 \"txt:Nice_Cross-Body_Bag\#img:3.jpg\#title:The_Angelica_Klein\"
+$BIN cmd 2 newpostmsg utente2 2 \"txt:Nice_Cross-Body_Bag\#img:4.jpg\#title:The_Aldo_Anakardo\"
+$BIN cmd 3 newpostmsg utente3 1 \"txt:Nice_Cross-Body_Bag\#img:5.jpg\#title:The_Loeffler_Randall\"
 $BIN cmd 1 follow utente1 [\"utente1\",\"utente2\",\"utente3\"]
 $BIN cmd 2 follow utente2 [\"utente1\",\"utente2\"]
 $BIN cmd 3 follow utente3 [\"utente1\",\"utente2\"] 
@@ -87,7 +87,7 @@ sleep 2
 $BIN cmd 1 sendrawtransaction 010000000009085f61646d696e5f3208077574656e746532212007eedc174ba9061088bc764189ecb85d351a615f0ca5781c77436735f23224c5afed0000
 coloredEcho "\nWait for the transaction to be included in the blockchain" red
 read -n1
-$BIN cmd 3 newpostmsg utente3 1 \"test_di_messaggio\"
+$BIN cmd 3 newpostmsg utente3 1 \"txt:Nice_Cross-Body_Bag\#img:5.jpg\#title:The_Loeffler_Randall\"
 $BIN cmd 1 follow utente1 [\"utente1\",\"utente2\",\"utente3\"]
 
 echo "done!"

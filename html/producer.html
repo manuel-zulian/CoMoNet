@@ -1,7 +1,10 @@
 <div class="row">
-    <div class="well col-md-{{columnswidth}}" data-ng-repeat="post in posts" id="producer-well">
-        <img class="img-responsive" src="img/{{post.img}}"/>
-        <h4>{{post.text}}</h4>
+    <div class="col-md-4" data-ng-repeat="post in posts" id="producer-well">
+        <div class="wrapper">
+            <h1>{{post.title}}</h1>
+            <img src="img/{{post.img}}" class="img-thumbnail">
+            <p class="lead">{{post.text}}</p>
+        </div>
     </div>
 </div>
 
