@@ -1,4 +1,4 @@
-# Accumunet V2
+# CoMoNet
 
 This project builds on the original versione of Accumunet, of which this is a fork. It adds the capability of updating the accumulator, which is used to authenticate a user against a particular group, and it adds a central entry point thought for sellers, in which they can show some kind of information (the products they sell in particular).
 
